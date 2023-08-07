@@ -18,13 +18,16 @@ module.exports = {
           100: "#F5F8FF",
         },
         "text-primary": "#444445",
+        "text-secondary": "#2D2E34",
         "dark-blue": "#34384E",
+        "light-grey": "#E8E7E7",
         "secondary-orange": "#f79761",
         "light-white": {
           DEFAULT: "rgba(59,60,152,0.03)",
           100: "rgba(59,60,152,0.02)",
         },
         grey: "#808080",
+        fill: "#F7FAFB",
       },
       backgroundImage: {
         pattern: "url('/pattern.png')",

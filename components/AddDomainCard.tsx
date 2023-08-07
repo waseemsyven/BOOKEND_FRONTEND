@@ -1,8 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
+import CreateDomainModal from "./CreateDomainModal";
 
 function AddDomainCard() {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClose = () => {
+    setIsOpen(false);
+  };
   return (
     <div className="flex grow flex-col mx-auto p-4">
       <div className="flex flex-col items-center border rounded-[8px] p-4">
@@ -24,9 +31,10 @@ function AddDomainCard() {
           title="Add Domain +"
           containerStyles="bg-[#8080800D] rounded-[8px] py-[11px] px-8 border border-grey hover-white"
           textStyles="text-[15px] font-medium text-dark-blue"
-          // handleClick={() => setIsOpen(true)}
+          handleClick={() => setIsOpen(true)}
         />
       </div>
+      {isOpen && <CreateDomainModal handleClose={handleClose} />}
     </div>
   );
 }

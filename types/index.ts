@@ -11,3 +11,14 @@ export interface CustomButtonProps {
     handleClick?: MouseEventHandler<HTMLButtonElement>;
   }
   
+
+export interface createDomainProps {
+    handleClose : () => void
+}
+
+export enum createDomainModalStates{
+  default = 0,
+  select_users = 2,
+  add_models = 3,
+  success = 4
+}

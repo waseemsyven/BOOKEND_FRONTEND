@@ -40,6 +40,10 @@ body{
   @apply flex relative justify-center items-center outline-none;
 }
 
+.example::-webkit-scrollbar {
+  display: none;
+}
+
 .hover-blue:hover{
   background-color: #34384E; 
   color: #ffffff;
@@ -50,13 +54,60 @@ body{
   border: 1px solid transparent;
   color: #34384E;
   box-shadow: none;
-  transition: border 0.3s, color 0.3s, box-shadow 0.3s; /* Specify the properties to transition and the duration */
+  transition: border 0.1s, color 0.1s, box-shadow 0.1s; /* Specify the properties to transition and the duration */
 }
 
 .hover-white:hover{
   border:1px solid #34384E;
   color: #ffffff;
   box-shadow: 0 0 10px #34384E;
+}
+
+.modal-overlay{
+  position: fixed;
+  top: 0;
+  left:0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(52, 56, 78, 0.80);
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+
+.modal{
+  background-color: #FFF;
+  box-shadow: 0px 2px 8px 0px rgba(87, 114, 129, 0.16);
+  position: relative;
+  border-radius: 8px;
+}
+
+.close{
+  position: absolute;
+  right: 16px;
+  top:16px;
+  cursor: pointer;
+  
+}
+
+.input_primary{
+display: flex;
+width: 268px;
+padding: 10px 24px;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+gap: 8px;
+border-radius: 4px;
+border: 1px solid #C0C0C0;
+background: var(--white-100, #FFF);
+text-align: center;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
 }
 
 /* END: General styles */

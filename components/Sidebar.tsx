@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
-  console.log(pathname);
   const handleHover = () => {
     setIsHovered(true);
   };
@@ -24,6 +28,12 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
     return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-75";
   };
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [useSession]);
 
   return (
     <div className="flex">
@@ -128,11 +138,11 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </h2>
               )}
             </Link>
-            <Link
-              href="/"
+            <div
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px]`}
+              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] cursor-pointer`}
+              onClick={() => signOut()}
             >
               <Image
                 src="/logout.svg"
@@ -146,7 +156,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                   Logout
                 </h2>
               )}
-            </Link>
+            </div>
           </div>
         </div>
       </div>

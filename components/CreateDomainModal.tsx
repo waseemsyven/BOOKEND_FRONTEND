@@ -85,9 +85,12 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
                 <Image src="/search.svg" alt="search" width={24} height={24} />
               </div>
               <div className="w-[244px] border border-light-grey mt-4 mb-2"></div>
-              {[0, 1, 2, 3, 4, 5].map(() => {
+              {[0, 1, 2, 3, 4, 5].map((item, index) => {
                 return (
-                  <div className="flex items-center gap-4 w-full py-3 p-4">
+                  <div
+                    key={index}
+                    className="flex items-center gap-4 w-full py-3 p-4"
+                  >
                     <input className="w-6 h-6" type="checkbox" />
                     <div className="flex items-center gap-2">
                       <Image

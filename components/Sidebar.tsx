@@ -33,7 +33,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     if (!session) {
       router.push("/");
     }
-  }, [useSession]);
+  }, [session]);
 
   return (
     <div className="flex">

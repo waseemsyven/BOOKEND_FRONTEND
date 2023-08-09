@@ -24,7 +24,7 @@ function HeroCard() {
             to operationalize and leverage the power of AI models, empowering
             businesses to harness creativity, enhance productivity, and drive
             innovation. Discover the transformative potential of Generative AI
-            for your organization's success.
+            for your organization success.
           </p>
           <div className="flex justify-start items-center gap-4">
             <CustomButton

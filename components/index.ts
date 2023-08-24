@@ -7,14 +7,18 @@ import Sidebar from "./Sidebar";
 // import SearchBar from "./Searchbar";
 import HeroCard from "./HeroCard";
 import CarauselCard from "./CarauselCard";
+import ModelsTabWrapper from './ModelsTabWrapper'
+import BarChart from './BarChart'
+import DatasetDropdown from './DatasetDropdown'
 
 export {
   HeroCard,
   AddDomainCard,
   CustomButton,
   CarauselCard,
-//   Footer,
+  BarChart,
   Navbar,
   Sidebar,
-//   SearchBar,
+  ModelsTabWrapper,
+  DatasetDropdown
 };

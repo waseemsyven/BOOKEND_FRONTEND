@@ -4,7 +4,7 @@ import Image from "next/image";
 function CarauselCard() {
   return (
     <div className="w-[380px] mx-auto p-4">
-      <div className="flex flex-col items-center border rounded-[8px] p-4">
+      <div className="flex flex-col items-center border rounded-[8px] p-4 px-6">
         <h2 className="text-primary text-base font-semibold pt-2 pb-4 w-full">
           Blogs /Articles
         </h2>{" "}

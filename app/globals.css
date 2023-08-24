@@ -40,15 +40,20 @@ body{
   @apply flex relative justify-center items-center outline-none;
 }
 
+.custom-btn:disabled{
+  opacity: 0.5;
+}
+
 .example::-webkit-scrollbar {
   display: none;
 }
 
-.hover-blue:hover{
+.hover-blue:hover:enabled{
   background-color: #34384E; 
   color: #ffffff;
   box-shadow: 0 0 10px #34384E;
 }
+
 .hover-white {
   /* Initial styles */
   border: 1px solid transparent;
@@ -88,9 +93,24 @@ body{
   position: absolute;
   right: 16px;
   top:16px;
-  cursor: pointer;
-  
+  cursor: pointer;  
 }
+
+/* BarChart.css */
+
+.bar {
+  display: inline-block;
+  width: 20px; /* Adjust the width as needed */
+  background-color: blue; /* Set the color of the bars */
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap:60px;
+}
+
 
 .input_primary{
 display: flex;

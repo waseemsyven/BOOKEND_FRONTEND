@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { NextAuthProvider } from "./providers";
+import { Navbar, Sidebar } from "@/components";
 
 export const metadata: Metadata = {
   title: "Bookend",
@@ -15,7 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <NextAuthProvider>
+          <Sidebar>
+            <Navbar />
+            {children}
+          </Sidebar>
+        </NextAuthProvider>
       </body>
     </html>
   );

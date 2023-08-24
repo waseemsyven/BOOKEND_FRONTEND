@@ -4,16 +4,24 @@ import { CustomButton } from "@/components";
 import HomeNavbar from "@/components/HomeNavbar";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data: session } = useSession();
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
-  useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
+
+  const handleSignInClick = async () => {
+    setLoading(true);
+    try {
+      await signIn("okta", { callbackUrl: "/dashboard" });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-  }, [session, router]);
+  };
 
   return (
     <main className="flex flex-col items-center justify-start text-white">
@@ -27,7 +35,8 @@ export default function Home() {
           containerStyles="rounded-[8px] py-[8px] px-6 hover-whit mt-4 hover-blue"
           textStyles="text-[15px] font-medium text-white mr-2"
           rightIcon="/arrow_right.svg"
-          handleClick={() => signIn("okta")}
+          handleClick={handleSignInClick}
+          isDisabled={loading}
         />
       </div>
     </main>

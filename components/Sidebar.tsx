@@ -21,6 +21,16 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     setIsHovered(false);
   };
 
+  useEffect(() => {
+    if (!session && status !== "loading") {
+      router.push("/");
+    }
+  }, [session]);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   const renderSidebarStyles = () => {
     if (isHovered) {
       return "w-[200px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-75";
@@ -29,11 +39,9 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-75";
   };
 
-  useEffect(() => {
-    if (!session) {
-      router.push("/");
-    }
-  }, [session]);
+  if (!session && status === "unauthenticated") {
+    return <div className="flex flex-col w-full">{children}</div>;
+  }
 
   return (
     <div className="flex">
@@ -55,7 +63,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
           )}
         </Link>
         <div className="border border-white w-[100%] mt-2"></div>
-        <div className="flex flex-col justify-between h-full pb-4">
+        <div className="flex flex-col justify-between h-full">
           <div>
             {" "}
             <Link
@@ -99,10 +107,12 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               )}
             </Link>{" "}
             <Link
-              href="/"
+              href="/models"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px]`}
+              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
+                pathname === "/models" && "bg-grey"
+              }`}
             >
               <Image
                 src="/plugin.svg"
@@ -141,8 +151,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             <div
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] cursor-pointer`}
-              onClick={() => signOut()}
+              } items-center mt-6 px-2 w-full hover:bg-grey rounded-[8px] cursor-pointer`}
+              onClick={() => handleSignOut()}
             >
               <Image
                 src="/logout.svg"

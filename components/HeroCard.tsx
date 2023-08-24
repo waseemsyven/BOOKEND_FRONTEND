@@ -4,7 +4,7 @@ import { CustomButton } from ".";
 
 function HeroCard() {
   return (
-    <div className="flex flex-col items-start justify-start mt-2 w-full mx-auto p-4">
+    <div className="flex flex-col items-start justify-start mt-2 w-full mx-auto p-4 px-6">
       <h2 className="text-primary text-base font-semibold pb-2">Dashboard</h2>
       <div className="flex items-center w-full border rounded-[8px] p-4">
         {" "}

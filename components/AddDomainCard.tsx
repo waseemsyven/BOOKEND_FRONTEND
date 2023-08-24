@@ -11,7 +11,7 @@ function AddDomainCard() {
     setIsOpen(false);
   };
   return (
-    <div className="flex grow flex-col mx-auto p-4">
+    <div className="flex grow flex-col mx-auto p-4 px-6">
       <div className="flex flex-col items-center border rounded-[8px] p-4">
         <h2 className="text-primary text-base font-semibold pt-2 pb-4 w-full">
           Domains

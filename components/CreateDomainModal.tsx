@@ -217,55 +217,7 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
                 <input type="checkbox" className="mt-2" />
                 <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
                   <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
-                  </h2>
-                </div>
-              </div>
-              <div className="flex justify-start items-start gap-4">
-                <input type="checkbox" className="mt-2" />
-                <div className="w-[228px] bg-light-grey h-28 rounded-md relative">
-                  <h2 className="bg-dark-blue py-1 text-xs font-medium absolute top-2 left-2 px-4 rounded-md text-white">
-                    Model Name 1
+                    facebook/bart-large-cnn
                   </h2>
                 </div>
               </div>

@@ -8,17 +8,21 @@ import Sidebar from "./Sidebar";
 import HeroCard from "./HeroCard";
 import CarauselCard from "./CarauselCard";
 import ModelsTabWrapper from './ModelsTabWrapper'
-import BarChart from './BarChart'
-import DatasetDropdown from './DatasetDropdown'
+import ModalStateCard from "./ModalStateCard";
+import ModelOverview from "./ModelOverview";
+import TestModel from "./TestModel";
+import ModelDescription from "./ModelDescription";
 
 export {
   HeroCard,
   AddDomainCard,
   CustomButton,
   CarauselCard,
-  BarChart,
   Navbar,
   Sidebar,
   ModelsTabWrapper,
-  DatasetDropdown
+  ModalStateCard,
+  ModelOverview,
+  ModelDescription,
+  TestModel
 };

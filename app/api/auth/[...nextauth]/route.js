@@ -1,5 +1,4 @@
 import Okta from "next-auth/providers/okta";
-
 import NextAuth from "next-auth";
 
 const handler = NextAuth({

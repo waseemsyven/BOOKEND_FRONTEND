@@ -3,7 +3,7 @@ import React from "react";
 
 function page() {
   return (
-    <div className="h-full w-full bg-white rounded-bl-2xl">
+    <div className="h-full w-full bg-white rounded-bl-2xl py-6">
       <div className="flex gap-4 px-8 mb-8">
         <h2 className="text-[22px] font-bold text-dark-blue">Models</h2>
         <CustomButton

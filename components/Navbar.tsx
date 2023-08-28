@@ -10,7 +10,7 @@ const Navbar = () => {
   const { data: session } = useSession();
   const [OrganizationName, setOrganizationName] = useState("Organization");
   const pathname = usePathname();
-  console.log(pathname);
+
   useEffect(() => {
     const email = session?.user?.email;
     if (email) {

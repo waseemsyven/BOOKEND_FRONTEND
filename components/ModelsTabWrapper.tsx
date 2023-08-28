@@ -116,7 +116,7 @@ export default function Example() {
               >
                 <ul>
                   {posts.map((post: any) => (
-                    <Link href={`models/${post.title}`}>
+                    <Link href={`models/${post.id}`}>
                       <li
                         key={post.id}
                         className="relative rounded-md p-3 hover:bg-gray-100 border"

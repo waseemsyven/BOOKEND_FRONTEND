@@ -17,10 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <NextAuthProvider>
-          <Sidebar>
-            <Navbar />
-            {children}
-          </Sidebar>
+          <Sidebar>{children}</Sidebar>
         </NextAuthProvider>
       </body>
     </html>

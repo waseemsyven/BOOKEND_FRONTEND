@@ -10,6 +10,7 @@ function AddDomainCard() {
   const handleClose = () => {
     setIsOpen(false);
   };
+
   return (
     <div className="flex grow flex-col mx-auto p-4 px-6">
       <div className="flex flex-col items-center border rounded-[8px] p-4">

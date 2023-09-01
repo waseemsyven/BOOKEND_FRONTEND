@@ -40,6 +40,8 @@ body{
   @apply flex relative justify-center items-center outline-none;
 }
 
+
+
 .custom-btn:disabled{
   opacity: 0.5;
 }
@@ -111,6 +113,16 @@ body{
   gap:60px;
 }
 
+.ag-header-cell {
+  height: 90px; 
+}
+
+.ag-header-cell-label  {
+  font-size: 12px;
+  font-weight: 400;
+  color:  #808080;
+  border-bottom: 1px solid #808080;
+}
 
 .input_primary{
 display: flex;

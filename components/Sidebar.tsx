@@ -127,6 +127,27 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </h2>
               )}
             </Link>
+            <Link
+              href="/datasets"
+              className={`flex ${
+                isHovered ? "justify-start" : "justify-center"
+              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
+                pathname === "/datasets" && "bg-grey"
+              }`}
+            >
+              <Image
+                src="/database.svg"
+                alt="Datasets"
+                width={24}
+                height={24}
+                className="object-contain py-4"
+              />
+              {isHovered && (
+                <h2 className="text-[13px] font-semibold text-white ml-3">
+                  Datasets
+                </h2>
+              )}
+            </Link>
           </div>
           <div>
             <Link

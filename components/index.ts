@@ -12,6 +12,11 @@ import ModalStateCard from "./ModalStateCard";
 import ModelOverview from "./ModelOverview";
 import TestModel from "./TestModel";
 import ModelDescription from "./ModelDescription";
+import DomainDashboardHeader from "./DomainDashboardHeader";
+import DomainOverview from "./DomainOverview";
+import DomainDashboardTable from "./DomainDashboardTable";
+import DatasetsTable from './DatasetsTable'
+import TrainModelPopup from "./TrainModelPopup";
 
 export {
   HeroCard,
@@ -24,5 +29,10 @@ export {
   ModalStateCard,
   ModelOverview,
   ModelDescription,
-  TestModel
+  TestModel,
+  DomainDashboardHeader,
+  DomainOverview,
+  DomainDashboardTable,
+  DatasetsTable,
+  TrainModelPopup
 };

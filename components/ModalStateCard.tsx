@@ -1,13 +1,13 @@
 import React from "react";
 import { CustomButton } from ".";
 
-function ModalStateCard() {
+function ModalStateCard({ modelName }: any) {
   return (
     <div className="px-6 bg-white pt-6 pb-2">
       <div className=" flex justify-between items-center">
         <div className="">
           <h2 className="text-[22px] text-dark-blue font-bold">
-            SD-XL 1.0-base Model Card
+            {modelName} Model Card
           </h2>
         </div>
         <div className="flex gap-4">
@@ -38,7 +38,7 @@ function ModalStateCard() {
           <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
             Status
           </h2>
-          <p className="font-medium	pr-6  text-xs text-black">Deployed</p>
+          <p className="font-medium	pr-6  text-xs text-black">available</p>
         </div>
         <div className="flex flex-col items-center gap-2">
           <h2 className="font-normal border-r-2 w-full text-center border-[#C0C0C0] text-xs text-[#666]">
@@ -58,7 +58,7 @@ function ModalStateCard() {
           <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
             Tier
           </h2>
-          <p className="font-medium	pr-6  text-xs text-black">Diamond</p>
+          <p className="font-medium	pr-6  text-xs text-black">NA</p>
         </div>
       </div>
     </div>

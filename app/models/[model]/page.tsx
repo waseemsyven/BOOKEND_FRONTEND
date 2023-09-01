@@ -6,10 +6,11 @@ import {
 } from "@/components";
 import React from "react";
 
-function page() {
+function page({ params }: any) {
+  const { model } = params;
   return (
     <div className="h-full w-full bg-fill">
-      <ModalStateCard />
+      <ModalStateCard modelName={model} />
       <div className="flex justify-between items-center my-4">
         <div className="flex justify-start items-center gap-6 px-6">
           <div className="text-black text-lg font-semibold cursor-pointer">
@@ -24,6 +25,7 @@ function page() {
       <ModelOverview />
       <ModelDescription />
       <TestModel />
+      {/* <TrainModelPopup /> */}
     </div>
   );
 }

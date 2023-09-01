@@ -25,8 +25,11 @@ function DatasetsTable({ datasetsList }) {
     <>
       <Table className="bg-white py-4 rounded-[8px] shadow-md">
         <TableHeader>
-          {columns.map((items) => (
-            <TableColumn className="text-sm font-normal text-[#808080] border-b border-[rgba(128, 128, 128, 0.8)] pb-2 min-w-[100px]">
+          {columns.map((items, index) => (
+            <TableColumn
+              className="text-sm font-normal text-[#808080] border-b border-[rgba(128, 128, 128, 0.8)] pb-2 min-w-[100px]"
+              key={index}
+            >
               {items.name}
             </TableColumn>
           ))}

@@ -36,7 +36,7 @@ export default function Example() {
     <div className="w-full px-8 mt-4">
       <Tab.Group>
         <Tab.List className="flex gap-10">
-          {ModelStatArray.map((stat) => (
+          {ModelStatArray.map((stat, index) => (
             <Tab
               className={({ selected }) =>
                 classNames(
@@ -44,6 +44,7 @@ export default function Example() {
                   selected ? "text-[#2D2E34] font-semibold" : "text-[#808080]"
                 )
               }
+              key={index}
             >
               {stat}
             </Tab>

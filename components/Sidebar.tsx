@@ -25,7 +25,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     if (!session && status !== "loading") {
       router.push("/");
     }
-  }, [session]);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();

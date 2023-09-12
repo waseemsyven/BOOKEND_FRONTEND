@@ -17,7 +17,7 @@ export default function Example() {
 
   const getModels = async () => {
     const response = await fetch(
-      "https://control-plane-gateway-44gp1iu3.uc.gateway.dev/syven-pdp/models/list",
+      "https://control-plane-qomhxh6ofa-uc.a.run.app/syven-pdp/models/list",
       {
         headers: {
           Authorization: `Basic cmFqZW5kcmEubmF5YWxAc3l2ZW4uY29tOjY0TlU5UDVtdDJ3`,

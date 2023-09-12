@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
@@ -45,6 +46,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex">
+      <ToastContainer />
       <div
         className={renderSidebarStyles()}
         onMouseEnter={handleHover}
@@ -71,7 +73,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
               } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
-                pathname === "/dashboard" && "bg-grey"
+                pathname.includes("dashboard") ? "bg-grey" : ""
               }`}
             >
               <Image
@@ -87,14 +89,14 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </h2>
               )}
             </Link>{" "}
-            <Link
+            {/* <Link
               href="/org-management"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
               } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px]`}
             >
               <Image
-                src="/network.svg"
+                src="/domain_icon.svg"
                 alt="network"
                 width={24}
                 height={24}
@@ -102,11 +104,11 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               />
               {isHovered && (
                 <h2 className="text-[13px] font-semibold text-white ml-3">
-                  Org Management
+                  My Domain
                 </h2>
               )}
-            </Link>{" "}
-            <Link
+            </Link>{" "} */}
+            {/* <Link
               href="/models"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
@@ -115,7 +117,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               }`}
             >
               <Image
-                src="/plugin.svg"
+                src="/sidebar_model_icon.svg"
                 alt="logo_bookend"
                 width={24}
                 height={24}
@@ -126,7 +128,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                   Models
                 </h2>
               )}
-            </Link>
+            </Link> */}
             <Link
               href="/datasets"
               className={`flex ${

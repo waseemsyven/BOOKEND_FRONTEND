@@ -1,66 +1,162 @@
-import React from "react";
-import { CustomButton } from ".";
+"use client";
+import React, { useState } from "react";
+import { CustomButton, TrainModelPopup } from ".";
+import { toast } from "react-toastify";
 
-function ModalStateCard({ modelName }: any) {
+function ModalStateCard({ model }: any) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const isTrained = model && model.status && model.status == "TRAINED";
+  const isTraining = model && model.status && model.status == "TRAINING";
+
+  const deployModelFunction = async () => {
+    setLoading(true);
+    toast.success("Deployment in Process!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    try {
+      const queryParams = new URLSearchParams({
+        model_id: model.model_id,
+        task: model.task,
+        tier: "silver",
+      });
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      toast.success("Deployment successfull!", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setLoading(false);
+      console.log(data);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="px-6 bg-white pt-6 pb-2">
       <div className=" flex justify-between items-center">
         <div className="">
-          <h2 className="text-[22px] text-dark-blue font-bold">
-            {modelName} Model Card
-          </h2>
+          {model && model.model_name ? (
+            <h2 className="text-[22px] text-dark-blue font-bold capitalize">
+              {model.model_name} Model Card
+            </h2>
+          ) : (
+            <div className="h-8 w-[200px] bg-gray-200 rounded animate-pulse"></div>
+          )}
         </div>
         <div className="flex gap-4">
-          <CustomButton
-            title="Train Model"
-            containerStyles="bg-white border-2 border-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-white"
-            textStyles="text-[15px] font-medium text-dark-blue"
-            rightIcon="/bolt.svg"
-            // handleClick={() => setIsOpen(true)}
-          />
+          {isTraining ? (
+            <CustomButton
+              title="Training in Progress..."
+              containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
+              textStyles="text-[15px] font-medium text-white"
+              // rightIcon="/bolt_white.svg"
+            />
+          ) : (
+            <CustomButton
+              title="Train Model"
+              containerStyles="bg-white border-2 border-[#131A44] rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue hover:text-white capitalize"
+              textStyles="text-[15px] font-medium"
+              leftIcon="/bolt.svg"
+              rightIcon="/more_vert.svg"
+              handleClick={() => setIsOpen(true)}
+            />
+          )}
+
           <CustomButton
             title="Deploy"
             containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
             textStyles="text-[15px] font-medium text-white"
-            rightIcon="/rocket.svg"
-            // handleClick={() => setIsOpen(true)}
+            leftIcon="/rocket.svg"
+            rightIcon="/arrow_down.svg"
+            isDisabled={!isTrained || loading}
+            handleClick={() => deployModelFunction()}
           />
         </div>
       </div>
-      <div className="flex gap-6 py-4">
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
-            Model Type
-          </h2>
-          <p className="font-medium	pr-6  text-xs text-black">Public</p>
+      {!!model ? (
+        <div className="flex py-4">
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-normal text-xs text-[#666] border-r-2 border-[#C0C0C0] w-full pr-8">
+              Model Type
+            </h2>
+            <p className="font-medium text-xs text-black pr-8 capitalize">
+              {model.source}
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-normal border-r-2 px-8 border-[#C0C0C0] text-xs text-[#666]">
+              Status
+            </h2>
+            <p className="font-medium	px-8 text-xs text-black capitalize">
+              {model.status ? model.status.toLowerCase() : "available"}
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-normal border-r-2 w-full text-center border-[#C0C0C0] text-xs text-[#666] px-8">
+              Added-on
+            </h2>
+            <p className="font-medium text-xs text-black px-8">NA</p>
+          </div>
+
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-normal border-r-2 px-8  border-[#C0C0C0] text-xs text-[#666]">
+              Tier
+            </h2>
+            <p className="font-medium	px-8 text-xs text-black capitalize">
+              {model.tier ? model.tier : "NA"}
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <h2 className="font-normal text-xs text-[#666] px-6">Task</h2>
+            <p className="font-medium text-xs text-black capitalize px-8">
+              {model.task}
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
-            Status
-          </h2>
-          <p className="font-medium	pr-6  text-xs text-black">available</p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-normal border-r-2 w-full text-center border-[#C0C0C0] text-xs text-[#666]">
-            Added-on
-          </h2>
-          <p className="font-medium text-xs text-black px-4">
-            MM DD YYYY, HH:MM
-          </p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
-            Training Method
-          </h2>
-          <p className="font-medium	pr-6  text-xs text-black">Fine-tuned</p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <h2 className="font-normal border-r-2 pr-6  border-[#C0C0C0] text-xs text-[#666]">
-            Tier
-          </h2>
-          <p className="font-medium	pr-6  text-xs text-black">NA</p>
-        </div>
-      </div>
+      ) : (
+        <div className="bg-gray-200 rounded animate-pulse w-[600px] h-[60px]"></div>
+      )}
+
+      {isOpen && (
+        <TrainModelPopup
+          handleClose={handleClose}
+          modelName={model.model_name}
+          task={model.task}
+        />
+      )}
     </div>
   );
 }

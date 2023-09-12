@@ -12,8 +12,8 @@ function DomainDashboardHeader() {
         height={20}
         className="object-contain"
       />
-      <h2 className="text-[22px] font-bold flex justify-center items-center">
-        Dev Workspace{" "}
+      <h2 className="text-[22px] font-bold flex justify-center items-center capitalize">
+        {process.env.NEXT_PUBLIC_BOOKEND_DOMAIN}{" "}
         <Image
           src="/arrow_dropdown.svg"
           alt="dropdown logo"

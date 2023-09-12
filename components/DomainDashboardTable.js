@@ -19,14 +19,14 @@ function DomainDashboardTable({ modelsList }) {
     { name: "Tier", uid: "tier" },
     { name: "Dataset Name", uid: "dataset_name" },
     { name: "Status", uid: "status" },
-    { name: "task", uid: "task" },
+    { name: "Task", uid: "task" },
   ]);
 
   const [rowData, setRowData] = useState(modelsList);
   const router = useRouter();
 
-  const openModelPage = (modelName) => {
-    router.push(`/models/${modelName}`);
+  const openModelPage = (model_id) => {
+    router.push(`/dashboard/${model_id}`);
   };
 
   return (
@@ -47,7 +47,7 @@ function DomainDashboardTable({ modelsList }) {
             <TableRow
               key={index}
               className="cursor-pointer hover:bg-[#F7FAFB]"
-              onClick={() => openModelPage(item.model_name)}
+              onClick={() => openModelPage(item.model_id)}
             >
               <TableCell className="flex gap-2 py-2">
                 <Image
@@ -67,19 +67,19 @@ function DomainDashboardTable({ modelsList }) {
                   </p>
                 </div>
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#2D2E34]">
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
                 {item.source}
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#2D2E34]">
-                {item.tier}
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
+                {item.tier === null ? "NA" : item.tier}
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#2D2E34]">
-                {item.dataset_name}
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
+                {item.dataset_name === null ? "NA" : item.dataset_name}
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#2D2E34]">
-                {item.status}
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
+                {item.status === null ? "Available" : item.status.toLowerCase()}
               </TableCell>
-              <TableCell className="text-sm font-medium text-[#2D2E34]">
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
                 {item.task}
               </TableCell>
             </TableRow>

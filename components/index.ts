@@ -10,13 +10,16 @@ import CarauselCard from "./CarauselCard";
 import ModelsTabWrapper from './ModelsTabWrapper'
 import ModalStateCard from "./ModalStateCard";
 import ModelOverview from "./ModelOverview";
-import TestModel from "./TestModel";
+import Summarization from "./Summarization";
 import ModelDescription from "./ModelDescription";
 import DomainDashboardHeader from "./DomainDashboardHeader";
 import DomainOverview from "./DomainOverview";
 import DomainDashboardTable from "./DomainDashboardTable";
 import DatasetsTable from './DatasetsTable'
 import TrainModelPopup from "./TrainModelPopup";
+import DatasetsDropdown from './DatasetsDropdown'
+import DatasetUploader from './DatasetUploader';
+import QuestionAnswering from "./QuestionAnswering";
 
 export {
   HeroCard,
@@ -29,10 +32,13 @@ export {
   ModalStateCard,
   ModelOverview,
   ModelDescription,
-  TestModel,
+  Summarization,
   DomainDashboardHeader,
   DomainOverview,
   DomainDashboardTable,
   DatasetsTable,
-  TrainModelPopup
+  TrainModelPopup,
+  DatasetsDropdown,
+  DatasetUploader,
+  QuestionAnswering
 };

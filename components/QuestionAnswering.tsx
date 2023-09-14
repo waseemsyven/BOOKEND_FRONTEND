@@ -73,7 +73,6 @@ function QuestionAnswering({ task }: any) {
         containerStyles="bg-light-grey rounded-[8px] py-[8px] px-6 gap-2 mb-4"
         textStyles="text-[15px] text-[#C0C0C0] font-medium"
         rightIcon="/history.svg"
-        // handleClick={() => setIsOpen(true)}
       />
     </div>
   );

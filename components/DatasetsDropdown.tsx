@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import { useParams } from "next/navigation";
 
 export default function DatasetsDropdown({
   setSelectedOption,
@@ -50,9 +48,12 @@ export default function DatasetsDropdown({
       </button>
       <div className="dropdown-content w-full max-h-60 rounded-sm overflow-y-scroll">
         {dataSetsList &&
-          filteredDataSets.map((item: any) => {
+          filteredDataSets.map((item: any, index: any) => {
             return (
-              <a onClick={() => handleOptionClick(item.dataset_name)}>
+              <a
+                onClick={() => handleOptionClick(item.dataset_name)}
+                key={index}
+              >
                 {item?.dataset_name}
               </a>
             );

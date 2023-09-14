@@ -25,9 +25,6 @@ function CarauselCard() {
           applications, challenges, and benefits. Enhance innovation and
           decision-making processes.
         </p>
-        {/* <button className="border px-4 py-2 my-4 rounded">
-          Explore Models
-        </button> */}
       </div>
     </div>
   );

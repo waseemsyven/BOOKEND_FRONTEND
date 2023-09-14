@@ -137,7 +137,6 @@ function Summarization({ filteredModel, task }: any) {
         containerStyles="bg-light-grey rounded-[8px] py-[8px] px-6 gap-2 ml-6 mb-4"
         textStyles="text-[15px] text-[#C0C0C0] font-medium"
         rightIcon="/history.svg"
-        // handleClick={() => setIsOpen(true)}
       />
       {showModal && <InferenceModal handleClose={handleClose} />}
     </div>

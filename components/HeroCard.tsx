@@ -31,14 +31,12 @@ function HeroCard() {
               title="Learn More"
               containerStyles="bg-[#8080800D] rounded-[8px] py-[8px] px-6 hover-white"
               textStyles="text-[15px] font-medium text-dark-blue"
-              // handleClick={() => setIsOpen(true)}
             />
             <CustomButton
               title="Explore Models"
               containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
               textStyles="text-[15px] font-medium text-white"
               rightIcon="/arrow_right.svg"
-              // handleClick={() => setIsOpen(true)}
             />
           </div>
         </div>

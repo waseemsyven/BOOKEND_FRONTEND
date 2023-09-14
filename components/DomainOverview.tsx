@@ -159,7 +159,7 @@ function DomainOverview({ modelsList }: any) {
         </div>
         <div className="w-[272px] h-[160px] rounded-[8px] bg-[#131A44] shadow flex flex-col items-start justify-center py-2 px-4">
           <h2 className="font-semibold text-lg text-white">
-            Explore Bookedn.ai <br></br>Models
+            Explore Bookend.ai <br></br>Models
           </h2>
           <p className="text-white font-normal	text-xs">
             Explore implementing Generative AI for businesses. Learn enterprise

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { formatCountWithLeadingZeros } from "@/utils";
 import "react-toastify/dist/ReactToastify.css";
 
-function page() {
+function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [datasetsList, setdatasetsList] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -96,4 +96,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

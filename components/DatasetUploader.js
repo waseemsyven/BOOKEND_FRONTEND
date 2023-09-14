@@ -106,16 +106,16 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
         <div className="flex justify-center items-center gap-4 h-[275px]">
           {" "}
           <input
-            name="datasetName" // Set the name attribute to identify the field
-            value={uploadInfo.datasetName} // Bind the value to the state
-            onChange={handleInputChange} // Handle input changes
+            name="datasetName"
+            value={uploadInfo.datasetName}
+            onChange={handleInputChange}
             placeholder="Enter the Dataset Name here"
             className="input_primary"
           />{" "}
           <input
-            name="datasetTask" // Set the name attribute to identify the field
-            value={uploadInfo.datasetTask} // Bind the value to the state
-            onChange={handleInputChange} // Handle input changes
+            name="datasetTask"
+            value={uploadInfo.datasetTask}
+            onChange={handleInputChange}
             placeholder="Enter the Dataset Task here"
             className="input_primary"
           />

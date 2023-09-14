@@ -15,7 +15,6 @@ import DatasetListPopup from "./DatasetListPopup";
 function DatasetsTable({ datasetsList, getDataSetsList }) {
   const [columns] = useState([
     { name: "Name", uid: "dataset_name" },
-    // { name: "Added on", uid: "" },
     { name: "Source", uid: "source" },
     { name: "Dataset Id", uid: "dataset_name" },
     { name: "Task", uid: "task" },

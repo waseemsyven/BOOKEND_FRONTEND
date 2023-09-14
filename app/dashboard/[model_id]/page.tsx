@@ -3,10 +3,9 @@ import { ModalStateCard } from "@/components";
 import React, { useEffect, useState } from "react";
 import ModelMetrics from "@/components/ModelMetrics";
 
-function page({ params }: any) {
-  const [modelList, setmodelList] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
+function Page({ params }: any) {
   const { model_id } = params;
+  const [modelList, setModelList] = useState<any>([]);
 
   const getModelsList = async () => {
     try {
@@ -20,11 +19,9 @@ function page({ params }: any) {
         }
       );
       const data = await response.json();
-      setmodelList(data);
-      setLoading(false);
+      setModelList(data);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setLoading(false);
     }
   };
 
@@ -44,4 +41,4 @@ function page({ params }: any) {
   );
 }
 
-export default page;
+export default Page;

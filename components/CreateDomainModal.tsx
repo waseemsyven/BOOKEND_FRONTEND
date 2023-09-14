@@ -4,7 +4,6 @@ import { CustomButton } from ".";
 import { createDomainModalStates, createDomainProps } from "@/types";
 
 function CreateDomainModal({ handleClose }: createDomainProps) {
-  const [DomainName, setDomainName] = useState<string>("");
   const [modalState, setmodalState] = useState<createDomainModalStates>(
     createDomainModalStates.default
   );

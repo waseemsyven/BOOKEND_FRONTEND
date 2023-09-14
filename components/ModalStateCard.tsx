@@ -13,39 +13,13 @@ function ModalStateCard({ model }: any) {
 
   const isTrained = model && model.status && model.status == "TRAINED";
   const isTraining = model && model.status && model.status == "TRAINING";
+  const isDeploying = model && model.status && model.status == "DEPLOYING";
+  const isDeployed = model && model.status && model.status == "DEPLOYED";
 
   const deployModelFunction = async () => {
-    setLoading(true);
-    toast.success("Deployment in Process!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-    try {
-      const queryParams = new URLSearchParams({
-        model_id: model.model_id,
-        task: model.task,
-        tier: "silver",
-      });
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      toast.success("Deployment successfull!", {
-        position: "top-left",
+    if (isDeployed) {
+      toast.success("Model is Already Deployed!", {
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -54,9 +28,67 @@ function ModalStateCard({ model }: any) {
         progress: undefined,
         theme: "light",
       });
-      setLoading(false);
-      console.log(data);
+      return;
+    }
+    if (isDeploying) {
+      toast.success("Deployment Already in Process!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    setLoading(true);
+    try {
+      const queryParams = new URLSearchParams({
+        model_id: model.model_id,
+        task: model.task,
+        tier: "silver",
+        sync: "false",
+      });
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const status = response.status;
+      if (status == 200) {
+        toast.success("Deployment in process!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
+      } else {
+        throw new Error(`something went wrong`);
+      }
     } catch (error) {
+      toast.error("something went wrong", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setLoading(false);
       console.error("Error fetching data:", error);
     } finally {
@@ -76,35 +108,50 @@ function ModalStateCard({ model }: any) {
             <div className="h-8 w-[200px] bg-gray-200 rounded animate-pulse"></div>
           )}
         </div>
-        <div className="flex gap-4">
-          {isTraining ? (
-            <CustomButton
-              title="Training in Progress..."
-              containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
-              textStyles="text-[15px] font-medium text-white"
-              // rightIcon="/bolt_white.svg"
-            />
-          ) : (
-            <CustomButton
-              title="Train Model"
-              containerStyles="bg-white border-2 border-[#131A44] rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue hover:text-white capitalize"
-              textStyles="text-[15px] font-medium"
-              leftIcon="/bolt.svg"
-              rightIcon="/more_vert.svg"
-              handleClick={() => setIsOpen(true)}
-            />
-          )}
+        {model && model.model_name ? (
+          <div className="flex gap-4">
+            {isTraining ? (
+              <CustomButton
+                title="Training in Progress..."
+                containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
+                textStyles="text-[15px] font-medium text-white"
+                // rightIcon="/bolt_white.svg"
+              />
+            ) : (
+              <CustomButton
+                title="Train Model"
+                containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
+                textStyles="text-[15px] font-medium text-white"
+                rightIcon="/bolt_white.svg"
+                handleClick={() => setIsOpen(true)}
+              />
+            )}
 
-          <CustomButton
-            title="Deploy"
-            containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
-            textStyles="text-[15px] font-medium text-white"
-            leftIcon="/rocket.svg"
-            rightIcon="/arrow_down.svg"
-            isDisabled={!isTrained || loading}
-            handleClick={() => deployModelFunction()}
-          />
-        </div>
+            {!isDeploying ? (
+              <CustomButton
+                title="Deploy"
+                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
+                textStyles="text-[15px] font-medium text-white"
+                leftIcon="/rocket.svg"
+                rightIcon="/arrow_down.svg"
+                isDisabled={loading}
+                handleClick={() => deployModelFunction()}
+              />
+            ) : (
+              <CustomButton
+                title="Deploying"
+                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
+                textStyles="text-[15px] font-medium text-white"
+                leftIcon="/rocket.svg"
+                rightIcon="/arrow_down.svg"
+                isDisabled={loading}
+                handleClick={() => deployModelFunction()}
+              />
+            )}
+          </div>
+        ) : (
+          <div className="h-12 w-[300px] bg-gray-200 rounded animate-pulse"></div>
+        )}
       </div>
       {!!model ? (
         <div className="flex py-4">

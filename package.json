@@ -9,9 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.16",
     "@nextui-org/button": "^2.0.15",
-    "@nextui-org/checkbox": "^2.0.19",
     "@nextui-org/dropdown": "^2.1.7",
     "@nextui-org/system": "^2.0.5",
     "@nextui-org/table": "^2.0.17",

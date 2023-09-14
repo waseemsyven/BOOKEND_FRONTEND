@@ -191,6 +191,11 @@ body{
   border-bottom: 1px solid #808080;
 }
 
+.shadow{
+  box-shadow: 0px 2px 8px 0px rgba(87, 114, 129, 0.16);
+}
+
+
 .input_primary{
 display: flex;
 width: 268px;

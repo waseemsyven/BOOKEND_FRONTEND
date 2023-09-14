@@ -11,8 +11,6 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
   const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const tier = "silver";
-
   const isDisabled = !modelNameInputValue || !selectedOption || loading;
 
   const trainModelFunction = async () => {
@@ -24,6 +22,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
         dataset_name: selectedOption,
         task: task,
         tier: "silver",
+        sync: "false",
       });
 
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/train?${queryParams}`;
@@ -38,6 +37,16 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
 
       const data = await response.json();
       handleClose();
+      toast.success("Training in Progress", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       router.push(`/dashboard/${data.model_id}`);
       console.log(data);
     } catch (error) {
@@ -61,7 +70,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal w-[884px] h-[560px] rounded-[8px] flex justify-start flex-col items-center px-6">
+      <div className="modal w-[884px] h-[560px] rounded-[8px] flex justify-start flex-col items-center px-6 pb-4">
         {" "}
         <Image
           src="/close.svg"
@@ -128,7 +137,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
             containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-2 hover-blue w-[153px]"
             textStyles="text-[15px] font-medium text-white"
             handleClick={() => trainModelFunction()}
-            isDisabled={isDisabled || loading}
+            isDisabled={isDisabled}
           />
         </div>
       </div>

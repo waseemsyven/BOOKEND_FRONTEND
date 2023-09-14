@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ToastContainer } from "react-toastify";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
@@ -34,10 +33,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   const renderSidebarStyles = () => {
     if (isHovered) {
-      return "w-[200px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-75";
+      return "w-[200px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-200";
     }
 
-    return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-75";
+    return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-200";
   };
 
   if (!session && status === "unauthenticated") {
@@ -46,25 +45,32 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex">
-      <ToastContainer />
       <div
         className={renderSidebarStyles()}
         onMouseEnter={handleHover}
         onMouseLeave={handleMouseLeave}
       >
         <Link href="/" className="flex justify-center items-center">
-          <Image
-            src="/logo_bookend.svg"
-            alt="logo_bookend"
-            width={32}
-            height={32}
-            className="object-contain py-2"
-          />
+          {!isHovered && (
+            <Image
+              src="/logo_bookend_closed.svg"
+              alt="logo_bookend"
+              width={32}
+              height={32}
+              className="object-contain py-2"
+            />
+          )}
           {isHovered && (
-            <h2 className="text-[22px] font-bold text-white m-2">Bookend</h2>
+            <Image
+              src="/logo_bookend.svg"
+              alt="logo_bookend"
+              width={132}
+              height={22}
+              className="object-contain py-2 pb-4"
+            />
           )}
         </Link>
-        <div className="border border-white w-[100%] mt-2"></div>
+        <div className="w-full bg-[#F7FAFB] opacity-30 h-[1px] mt-2"></div>
         <div className="flex flex-col justify-between h-full">
           <div>
             {" "}
@@ -72,8 +78,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               href="/dashboard"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
-                pathname.includes("dashboard") ? "bg-grey" : ""
+              } items-center my-6 px-2 w-full hover:[#2B59C5] rounded-[8px] ${
+                pathname.includes("dashboard") ? "bg-[#2B59C5]" : ""
               }`}
             >
               <Image
@@ -89,52 +95,12 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </h2>
               )}
             </Link>{" "}
-            {/* <Link
-              href="/org-management"
-              className={`flex ${
-                isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px]`}
-            >
-              <Image
-                src="/domain_icon.svg"
-                alt="network"
-                width={24}
-                height={24}
-                className="object-contain py-4"
-              />
-              {isHovered && (
-                <h2 className="text-[13px] font-semibold text-white ml-3">
-                  My Domain
-                </h2>
-              )}
-            </Link>{" "} */}
-            {/* <Link
-              href="/models"
-              className={`flex ${
-                isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
-                pathname === "/models" && "bg-grey"
-              }`}
-            >
-              <Image
-                src="/sidebar_model_icon.svg"
-                alt="logo_bookend"
-                width={24}
-                height={24}
-                className="object-contain py-4"
-              />
-              {isHovered && (
-                <h2 className="text-[13px] font-semibold text-white ml-3">
-                  Models
-                </h2>
-              )}
-            </Link> */}
             <Link
               href="/datasets"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px] ${
-                pathname === "/datasets" && "bg-grey"
+              } items-center my-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px] ${
+                pathname === "/datasets" && "bg-[#2B59C5]"
               }`}
             >
               <Image
@@ -156,7 +122,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               href="/"
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-grey rounded-[8px]`}
+              } items-center my-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px]`}
             >
               <Image
                 src="/question.svg"
@@ -171,10 +137,29 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 </h2>
               )}
             </Link>
+            <div className="w-full bg-[#F7FAFB] opacity-30 h-[1px]"></div>
             <div
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center mt-6 px-2 w-full hover:bg-grey rounded-[8px] cursor-pointer`}
+              } items-center mt-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px] cursor-pointer`}
+            >
+              <Image
+                src="/user_icon.svg"
+                alt="logo_bookend"
+                width={32}
+                height={32}
+                className="object-contain py-4"
+              />
+              {isHovered && (
+                <h2 className="text-[13px] font-semibold text-white ml-3">
+                  Waseem
+                </h2>
+              )}
+            </div>
+            <div
+              className={`flex ${
+                isHovered ? "justify-start" : "justify-center"
+              } items-center mt-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px] cursor-pointer`}
               onClick={() => handleSignOut()}
             >
               <Image
@@ -194,7 +179,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
 
-      <div className="flex flex-col w-full">{children}</div>
+      <div className="flex flex-col w-full"> {children}</div>
     </div>
   );
 };

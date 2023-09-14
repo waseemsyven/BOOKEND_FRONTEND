@@ -35,7 +35,7 @@ export default function DatasetsDropdown({
   useEffect(() => {
     getDataSets();
   }, []);
-  console.log(filteredDataSets);
+
   return (
     <div className="dropdown">
       <button className="dropbtn flex justify-between items-center w-[350px]">
@@ -48,7 +48,7 @@ export default function DatasetsDropdown({
           className="object-contain py-2"
         />
       </button>
-      <div className="dropdown-content w-full h-60 rounded-sm overflow-y-scroll">
+      <div className="dropdown-content w-full max-h-60 rounded-sm overflow-y-scroll">
         {dataSetsList &&
           filteredDataSets.map((item: any) => {
             return (

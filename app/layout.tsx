@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { NextAuthProvider } from "./providers";
-import { Navbar, Sidebar } from "@/components";
+import { Sidebar } from "@/components";
 import { NextUiProvider } from "./nextUiProvider";
+import ToastProvider from "./toastProvider";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Bookend",
@@ -19,7 +21,9 @@ export default function RootLayout({
       <body>
         <NextAuthProvider>
           <NextUiProvider>
-            <Sidebar>{children}</Sidebar>
+            <ToastProvider>
+              <Sidebar>{children}</Sidebar>
+            </ToastProvider>
           </NextUiProvider>
         </NextAuthProvider>
       </body>

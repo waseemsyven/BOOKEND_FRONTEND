@@ -4,7 +4,7 @@ import Image from "next/image";
 function ModelOverview() {
   return (
     <div className="grid grid-cols-2 mx-6 my-4 gap-4">
-      <div className="bg-white rounded-lg shadow-lg flex justify-between items-start p-4 h-[200px] relative">
+      <div className="bg-white rounded-lg shadow flex justify-between items-start p-4 h-[200px] relative">
         <h2 className="text-[15px] font-medium flex items-center gap-2 blur-[2px]">
           {" "}
           Response/Second
@@ -25,7 +25,7 @@ function ModelOverview() {
           </div>
         )}
       </div>
-      <div className="bg-white rounded-lg shadow-lg flex justify-between items-start p-4 h-[200px] relative">
+      <div className="bg-white rounded-lg shadow flex justify-between items-start p-4 h-[200px] relative">
         <h2 className="text-[15px] font-medium flex items-center gap-2 blur-[2px]">
           {" "}
           Predictions/Second
@@ -45,7 +45,7 @@ function ModelOverview() {
           </div>
         )}
       </div>
-      <div className="bg-white rounded-lg shadow-lg flex justify-between items-start p-4 h-[200px] relative">
+      <div className="bg-white rounded-lg shadow flex justify-between items-start p-4 h-[200px] relative">
         <h2 className="text-[15px] font-medium flex items-center gap-2 blur-[2px]">
           {" "}
           Request/Second
@@ -68,7 +68,7 @@ function ModelOverview() {
 
       <div className="flex justify-between gap-4 h-[200px]">
         {" "}
-        <div className="bg-white rounded-lg shadow-lg flex justify-between items-start p-4 w-[60%] relative">
+        <div className="bg-white rounded-lg shadow flex justify-between items-start p-4 w-[60%] relative">
           <h2 className="text-[15px] font-medium blur-[2px]">
             {" "}
             Hardware Utilization
@@ -84,7 +84,7 @@ function ModelOverview() {
             </div>
           )}
         </div>
-        <div className="bg-white rounded-lg shadow-lg flex justify-between items-start p-4 w-[40%]  relative">
+        <div className="bg-white rounded-lg shadow flex justify-between items-start p-4 w-[40%]  relative">
           <h2 className="text-[15px] font-medium blur-[2px]">Model Latency</h2>
           {true && (
             <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center flex-col text-center gap-2">

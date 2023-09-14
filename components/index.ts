@@ -1,13 +1,9 @@
 import AddDomainCard from "./AddDomainCard";
 import CustomButton from "./CustomButton";
-// import CustomFilter from "./CustomFilter";
-// import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-// import SearchBar from "./Searchbar";
 import HeroCard from "./HeroCard";
 import CarauselCard from "./CarauselCard";
-import ModelsTabWrapper from './ModelsTabWrapper'
 import ModalStateCard from "./ModalStateCard";
 import ModelOverview from "./ModelOverview";
 import Summarization from "./Summarization";
@@ -20,6 +16,7 @@ import TrainModelPopup from "./TrainModelPopup";
 import DatasetsDropdown from './DatasetsDropdown'
 import DatasetUploader from './DatasetUploader';
 import QuestionAnswering from "./QuestionAnswering";
+import DeletePopup from './DeletePopup';
 
 export {
   HeroCard,
@@ -28,7 +25,6 @@ export {
   CarauselCard,
   Navbar,
   Sidebar,
-  ModelsTabWrapper,
   ModalStateCard,
   ModelOverview,
   ModelDescription,
@@ -40,5 +36,6 @@ export {
   TrainModelPopup,
   DatasetsDropdown,
   DatasetUploader,
-  QuestionAnswering
+  QuestionAnswering,
+  DeletePopup
 };

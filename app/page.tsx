@@ -4,7 +4,8 @@ import { CustomButton } from "@/components";
 import HomeNavbar from "@/components/HomeNavbar";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const { data: session } = useSession();

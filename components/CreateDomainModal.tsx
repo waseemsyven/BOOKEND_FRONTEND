@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
 import { createDomainModalStates, createDomainProps } from "@/types";

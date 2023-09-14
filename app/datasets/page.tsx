@@ -34,10 +34,6 @@ function page() {
     }
   };
 
-  const handleUploadSuccess = () => {
-    getDataSetsList();
-  };
-
   useEffect(() => {
     getDataSetsList();
   }, []);
@@ -76,7 +72,10 @@ function page() {
           </h2>
         )}
         {datasetsList.length > 0 ? (
-          <DatasetsTable datasetsList={datasetsList} />
+          <DatasetsTable
+            datasetsList={datasetsList}
+            getDataSetsList={getDataSetsList}
+          />
         ) : (
           <div className="animate-pulse px-4 mt-4 space-y-2">
             <div className="h-8 bg-gray-200 rounded"></div>
@@ -90,7 +89,7 @@ function page() {
       {isOpen && (
         <DatasetUploader
           handleClose={handleClose}
-          onUploadSuccess={handleUploadSuccess}
+          getDataSetsList={getDataSetsList}
         />
       )}
     </div>

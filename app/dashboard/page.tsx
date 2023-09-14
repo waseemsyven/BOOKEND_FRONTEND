@@ -27,7 +27,12 @@ const page = () => {
         }
       );
       const data = await response.json();
-      setmodelList(data);
+
+      const filteredModelList = data.filter(
+        (model: any) => model.status !== "DELETED"
+      );
+
+      setmodelList(filteredModelList);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -67,7 +72,10 @@ const page = () => {
           )}
 
           {modelList.length > 0 ? (
-            <DomainDashboardTable modelsList={modelList} />
+            <DomainDashboardTable
+              modelsList={modelList}
+              getModelsList={getModelsList}
+            />
           ) : (
             <div className="animate-pulse px-4 mt-4 space-y-2">
               <div className="h-8 bg-gray-200 rounded"></div>

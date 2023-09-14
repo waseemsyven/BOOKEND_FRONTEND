@@ -1,8 +1,66 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
+import { toast } from "react-toastify";
+import InferenceModal from "./InferenceModal";
 
-function Summarization({ task }: any) {
+function Summarization({ filteredModel, task }: any) {
+  const [showModal, setshowModal] = useState(false);
+  const [input, setinput] = useState("");
+  const [output, setoutput] = useState("");
+
+  const handleClose = () => {
+    setshowModal(false);
+  };
+
+  const predictFunction = async () => {
+    try {
+      const queryParams = new URLSearchParams({
+        model_id: filteredModel.model_id,
+        task: filteredModel.task,
+        text: input,
+        question: "None",
+        context: "None",
+        instruction: "None",
+      });
+
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/predict?${queryParams}`;
+
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setoutput(data[0].summary);
+      toast.success("Computation Completed", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error("something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } finally {
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg mx-6 my-4 p-4 border flex flex-col justify-start items-start">
       <h2 className="w-full border-b border-[#808080] pb-2 flex gap-2 text-[15px] font-medium">
@@ -29,7 +87,10 @@ function Summarization({ task }: any) {
                 className="object-contain "
               />
             </h2>{" "}
-            <h2 className="flex gap-2 text-[13px] font-medium">
+            <h2
+              className="flex gap-2 text-[13px] font-medium cursor-pointer"
+              onClick={() => setshowModal(true)}
+            >
               Get End-Point{" "}
               <Image
                 src="/expand_circle.svg"
@@ -41,13 +102,21 @@ function Summarization({ task }: any) {
             </h2>
           </div>
           <div className="flex flex-col mt-6 ml-4 gap-4 pb-2 items-start">
-            <textarea className="w-full border border-[#E8E7E7]"></textarea>
+            <textarea
+              className="w-full border border-[#E8E7E7] p-2"
+              value={input}
+              onChange={(e: any) => setinput(e.target.value)}
+            ></textarea>
             <CustomButton
               title="Compute"
               containerStyles="bg-dark-blue rounded-[6px] gap-2 hover-blue py-2 px-4"
               textStyles="text-[16px] font-medium text-white"
+              handleClick={() => predictFunction()}
             />
-            <input className="w-full bg-[#F5F9FF] h-40 border rounded-sm"></input>
+            <textarea
+              className="w-full bg-[#F5F9FF] h-40 border rounded-sm flex items-start p-2"
+              value={output}
+            ></textarea>
           </div>
         </div>
         <div className="bg-[#F7FAFB] flex flex-col w-[324px] my-2 gap-2 p-4 rounded-lg h-[400px]">
@@ -70,6 +139,7 @@ function Summarization({ task }: any) {
         rightIcon="/history.svg"
         // handleClick={() => setIsOpen(true)}
       />
+      {showModal && <InferenceModal handleClose={handleClose} />}
     </div>
   );
 }

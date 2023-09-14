@@ -12,21 +12,49 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
-function DomainDashboardTable({ modelsList }) {
+import ModelListPopup from "./ModelListPopup";
+import { DeletePopup } from ".";
+
+function DomainDashboardTable({ modelsList, getModelsList }) {
   const [columns] = useState([
     { name: "Model Name", uid: "model_name" },
+    { name: "Base Model", uid: "base_model" },
     { name: "Source", uid: "source" },
     { name: "Tier", uid: "tier" },
     { name: "Dataset Name", uid: "dataset_name" },
     { name: "Status", uid: "status" },
     { name: "Task", uid: "task" },
+    { name: "More", uid: "more" },
   ]);
 
   const [rowData, setRowData] = useState(modelsList);
+
+  useState(() => {
+    setRowData(modelsList);
+  }, [modelsList]);
+
   const router = useRouter();
 
   const openModelPage = (model_id) => {
     router.push(`/dashboard/${model_id}`);
+  };
+
+  const [openPopupRowIndex, setOpenPopupRowIndex] = useState(-1);
+  const [showDeletePopup, setshowDeletePopup] = useState(-1);
+
+  const openDeletePopup = (index) => {
+    setshowDeletePopup(index);
+  };
+
+  const closeDeletePopup = () => {
+    setshowDeletePopup(-1);
+  };
+
+  const openPopup = (index) => {
+    setOpenPopupRowIndex(index);
+  };
+  const closePopup = () => {
+    setOpenPopupRowIndex(-1);
   };
 
   return (
@@ -34,7 +62,13 @@ function DomainDashboardTable({ modelsList }) {
       <TableHeader>
         {columns.map((items, index) => (
           <TableColumn
-            className="text-sm font-normal text-[#808080] border-b border-[rgba(128, 128, 128, 0.8)] pb-2 min-w-[100px]"
+            className={`text-sm font-normal text-[#808080] border-b border-[rgba(128, 128, 128, 0.8)] pb-2  ${
+              items.name == "More"
+                ? "text-right"
+                : items.name == "Source" || "Tier" || "Task" || "Base Model"
+                ? "min-w-[100px] max-w-[100px]"
+                : ""
+            }`}
             key={index}
           >
             {items.name}
@@ -63,9 +97,12 @@ function DomainDashboardTable({ modelsList }) {
                     {item.model_name}
                   </h2>
                   <p className="text-xs	text-[#666] font-medium">
-                    Model ID 32 bit
+                    Model ID: {item.model_id.substring(0, 6)}...
                   </p>
                 </div>
+              </TableCell>
+              <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
+                {item.base_model}
               </TableCell>
               <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
                 {item.source}
@@ -81,6 +118,36 @@ function DomainDashboardTable({ modelsList }) {
               </TableCell>
               <TableCell className="text-sm font-medium text-[#2D2E34] capitalize">
                 {item.task}
+              </TableCell>
+              <TableCell
+                className="text-sm font-medium text-[#2D2E34] capitalize text-right flex justify-end relative"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <Image
+                  src="/more_horiz.svg"
+                  alt="more"
+                  width={20}
+                  height={20}
+                  className="object-contain cursor-pointer"
+                  onClick={() => openPopup(index)}
+                />
+                {openPopupRowIndex === index && (
+                  <ModelListPopup
+                    onClose={closePopup}
+                    openDeletePopup={openDeletePopup}
+                    openPopupRowIndex={openPopupRowIndex}
+                  />
+                )}
+                {showDeletePopup === index && (
+                  <DeletePopup
+                    modelName={item.model_name}
+                    modelId={item.model_id}
+                    getModelsList={getModelsList}
+                    handleClose={closeDeletePopup}
+                  />
+                )}
               </TableCell>
             </TableRow>
           );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
 
-function DatasetUploader({ handleClose, onUploadSuccess }) {
+function DatasetUploader({ handleClose, getDataSetsList }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setisUploading] = useState(false);
   const fileInputRef = useRef(null);
@@ -44,6 +44,7 @@ function DatasetUploader({ handleClose, onUploadSuccess }) {
 
       if (response.ok) {
         const data = await response.json();
+        getDataSetsList();
         toast.success("uploaded successfully!", {
           position: "top-right",
           autoClose: 5000,
@@ -54,7 +55,6 @@ function DatasetUploader({ handleClose, onUploadSuccess }) {
           progress: undefined,
           theme: "light",
         });
-        onUploadSuccess();
         setisUploading(false);
         handleClose();
         return data;

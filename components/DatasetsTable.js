@@ -11,6 +11,7 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import DatasetListPopup from "./DatasetListPopup";
+import { DeletePopup } from ".";
 
 function DatasetsTable({ datasetsList, getDataSetsList }) {
   const [columns] = useState([
@@ -28,6 +29,15 @@ function DatasetsTable({ datasetsList, getDataSetsList }) {
   }, [datasetsList]);
 
   const [openPopupRowIndex, setOpenPopupRowIndex] = useState(-1);
+  const [showDeletePopup, setshowDeletePopup] = useState(-1);
+
+  const openDeletePopup = (index) => {
+    setshowDeletePopup(index);
+  };
+
+  const closeDeletePopup = () => {
+    setshowDeletePopup(-1);
+  };
 
   const openPopup = (index) => {
     setOpenPopupRowIndex(index);
@@ -87,7 +97,16 @@ function DatasetsTable({ datasetsList, getDataSetsList }) {
                   {openPopupRowIndex === index && (
                     <DatasetListPopup
                       onClose={closePopup}
-                      dataset_id={item.dataset_id}
+                      openDeletePopup={openDeletePopup}
+                      openPopupRowIndex={openPopupRowIndex}
+                    />
+                  )}
+                  {showDeletePopup === index && (
+                    <DeletePopup
+                      modelName={item.dataset_name}
+                      modelId={item.dataset_id}
+                      handleClose={closeDeletePopup}
+                      type="dataset"
                       getDataSetsList={getDataSetsList}
                     />
                   )}

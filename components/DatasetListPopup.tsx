@@ -1,63 +1,66 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { toast } from "react-toastify";
 
-function DatasetListPopup({ onClose, dataset_id, getDataSetsList }: any) {
+function DatasetListPopup({
+  onClose,
+  openDeletePopup,
+  openPopupRowIndex,
+}: any) {
   const [loading, setloading] = useState(false);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
-  const deleteFunction = async () => {
-    setloading(true);
-    try {
-      const queryParams = new URLSearchParams({
-        dataset_id: dataset_id,
-      });
+  // const deleteFunction = async () => {
+  //   setloading(true);
+  //   try {
+  //     const queryParams = new URLSearchParams({
+  //       dataset_id: dataset_id,
+  //     });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/datasets/delete?${queryParams}`;
+  //     const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/datasets/delete?${queryParams}`;
 
-      const response = await fetch(apiUrl, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      });
-      const status = response.status;
-      if (status == 200) {
-        getDataSetsList();
-        setloading(false);
-        toast.success("Dataset deleted", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        onClose();
-      } else {
-        throw new Error("something went wrong");
-      }
-    } catch (error) {
-      toast.error("something went wrong", {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setloading(false);
-      onClose();
-    } finally {
-      setloading(false);
-      onClose();
-    }
-  };
+  //     const response = await fetch(apiUrl, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const status = response.status;
+  //     if (status == 200) {
+  //       getDataSetsList();
+  //       setloading(false);
+  //       toast.success("Dataset deleted", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //       onClose();
+  //     } else {
+  //       throw new Error("something went wrong");
+  //     }
+  //   } catch (error) {
+  //     toast.error("something went wrong", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //     setloading(false);
+  //     onClose();
+  //   } finally {
+  //     setloading(false);
+  //     onClose();
+  //   }
+  // };
 
   useEffect(() => {
     function handleClickOutside(event: any) {
@@ -80,7 +83,7 @@ function DatasetListPopup({ onClose, dataset_id, getDataSetsList }: any) {
     >
       <div
         className="flex items-center justify-center gap-4 p-2 my-2 hover:bg-[#F7FAFB] "
-        onClick={() => deleteFunction()}
+        onClick={() => openDeletePopup(openPopupRowIndex)}
       >
         {" "}
         <h2 className="text-xs font-medium">Delete Dataset</h2>

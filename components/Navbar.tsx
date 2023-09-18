@@ -41,15 +41,15 @@ const Navbar = () => {
       <nav className="mx-auto flex justify-between items-center px-6 py-4 bg-transparent">
         {pathname == "/dashboard" ? (
           <div className="flex gap-2">
-            <Link href="/" className="flex justify-center items-center">
-              <Image
-                src="/office.svg"
-                alt="office"
-                width={22}
-                height={20}
-                className="object-contain"
-              />
-            </Link>
+            {/* <Link href="/" className="flex justify-center items-center"> */}
+            <Image
+              src="/office.svg"
+              alt="office"
+              width={22}
+              height={20}
+              className="object-contain"
+            />
+            {/* </Link> */}
             <h1 className="nav__title capitalize">{OrganizationName}</h1>
           </div>
         ) : (
@@ -60,15 +60,15 @@ const Navbar = () => {
           <h2 className="black-100 text-[13px] font-semibold mb-1 capitalize">
             {session?.user?.name}
           </h2>
-          <Link href="/" className="flex justify-center items-center">
-            <Image
-              src="/user_icon.svg"
-              alt="user_icon"
-              width={40}
-              height={40}
-              className="object-contain"
-            />
-          </Link>
+          {/* <Link href="/" className="flex justify-center items-center"> */}
+          <Image
+            src="/user_icon.svg"
+            alt="user_icon"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+          {/* </Link> */}
         </div>
       </nav>
     </header>

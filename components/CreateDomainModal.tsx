@@ -23,7 +23,7 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
   if (modalState === createDomainModalStates.default) {
     return (
       <div className="modal-overlay">
-        <div className="modal w-[628px] h-[400px] rounded-[8px]">
+        <div className="modal w-[784px] h-[460px] rounded-[8px] flex justify-start flex-col items-center px-6 pb-4">
           <Image
             src="/close.svg"
             alt="close"
@@ -32,14 +32,20 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
             className="close hover-white"
             onClick={handleClose}
           />
-          <div className="w-full bg-fill py-4 px-6 text-lg font-medium text-text-secondary">
+          <div className="w-full py-4 text-lg font-semibold text-text-secondary capitalize">
             Create a Domain
           </div>
-          <div className="w-full flex flex-col justify-center items-center grow	">
-            <h2 className="text-lg	font-light text-dark-blue py-6 text-center">
-              A domain must be created in order to train and <br></br>test the
-              models
-            </h2>
+          <div className="w-full flex flex-col justify-between items-center grow">
+            <div className="h-8 border py-4 my-2 border-[#E8E7E7] rounded-[8px] text-[13px] font-light w-full flex justify-center items-center">
+              <Image
+                src="/info_black.svg"
+                alt="info"
+                width={16}
+                height={16}
+                className="object-contain mr-2"
+              />
+              A domain must be created in order to train and test the models
+            </div>
             <input
               placeholder="Enter the Domain Name here"
               className="input_primary mb-6"
@@ -48,9 +54,9 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
           </div>
           <div className="w-full bg-fill py-4 px-6 text-lg font-medium text-text-secondary flex justify-center">
             <CustomButton
-              title="Create a Domain"
-              containerStyles="bg-[#C0C0C0] rounded-[4px] py-[4px] px-4 hover-blue"
-              textStyles="text-sm font-medium text-white"
+              title="Create Domain"
+              containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-2 hover-blue w-[153px]"
+              textStyles="text-[15px] font-medium text-white"
               handleClick={createDomainFunction}
             />
           </div>
@@ -62,7 +68,7 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
   if (modalState === createDomainModalStates.select_users) {
     return (
       <div className="modal-overlay">
-        <div className="modal w-[1060px] rounded-[8px]">
+        <div className="modal w-[1060px] rounded-[8px] flex justify-start flex-col items-center p-4">
           <Image
             src="/close.svg"
             alt="close"
@@ -71,14 +77,14 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
             className="close hover-white"
             onClick={handleClose}
           />
-          <div className="w-full bg-fill py-4 px-6 text-lg font-medium text-text-secondary">
+          <div className="w-full text-lg font-semibold text-text-secondary capitalize">
             Domain 1
           </div>
-          <div className="w-full bg-light-grey border-b border-light grey py-2 px-6 text-lg font-medium text-text-secondary">
-            <h2 className="text-base font-normal text-dark-blue">Add Users</h2>
+          <div className="h-8 border py-4 my-2 border-[#E8E7E7] rounded-[8px] text-[13px] font-light w-full flex justify-start items-center px-4">
+            <h2 className="text-lg font-medium text-dark-blue">Add Users</h2>
           </div>
           <div className="flex justify-center gap-4 py-6 items-stretch">
-            <div className="w-[276px] rounded-lg flex items-center flex-col border border-light-grey bg-white">
+            <div className="w-[276px] rounded-lg flex items-center flex-col shadow bg-white">
               <div className="flex justify-between items-center w-full pt-4 px-4">
                 <h2 className="text-base font-medium">All Users</h2>
                 <Image src="/search.svg" alt="search" width={24} height={24} />
@@ -105,16 +111,14 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
                 );
               })}
             </div>
-            <div className="w-[582px] rounded-lg flex items-start justify-between flex-col border border-light-grey bg-white">
+            <div className="w-[582px] rounded-lg flex items-start justify-between flex-col shadow bg-white">
               <h2 className="text-base font-medium p-4">Selected Users</h2>
-              <div className="w-full bg-light-grey py-4 px-6 text-lg font-medium text-text-secondary flex justify-center">
-                <CustomButton
-                  title="Next"
-                  containerStyles="bg-[#444445] rounded-[4px] py-[4px] px-4 hover-blue"
-                  textStyles="text-sm font-medium text-white"
-                  handleClick={addUsersFunction}
-                />
-              </div>
+              <CustomButton
+                title="Next"
+                containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-2 hover-blue w-[153px] w-full"
+                textStyles="text-[15px] font-medium text-white"
+                handleClick={addUsersFunction}
+              />
             </div>
           </div>
         </div>
@@ -125,7 +129,7 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
   if (modalState === createDomainModalStates.add_models) {
     return (
       <div className="modal-overlay">
-        <div className="modal w-[1060px] rounded-[8px] flex justify-center flex-col items-center">
+        <div className="modal w-[1060px] rounded-[8px] flex justify-start flex-col items-center p-4">
           <Image
             src="/close.svg"
             alt="close"
@@ -134,13 +138,13 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
             className="close hover-white"
             onClick={handleClose}
           />
-          <div className="w-full bg-fill py-4 px-6 text-lg font-medium text-text-secondary">
+          <div className="w-full text-lg font-semibold text-text-secondary capitalize">
             Domain 1
           </div>
-          <div className="w-full bg-light-grey border-b border-light grey py-2 px-6 text-lg font-medium text-text-secondary">
-            <h2 className="text-base font-normal text-dark-blue">Add Models</h2>
+          <div className="w-full bg-dark-blue border-b border-light grey py-2 px-6 text-lg font-medium text-text-secondary mt-4">
+            <h2 className="text-lg font-medium text-white">Add Models</h2>
           </div>
-          <div className="w-[80%] my-6 rounded-lg flex items-start justify-between flex-col border border-light-grey bg-white">
+          <div className="w-[80%] my-6 rounded-lg flex items-start justify-between flex-col shadow bg-white">
             <div className="flex justify-between items-center w-full border-b border-light-grey">
               <h2 className="text-base font-medium p-4">All Models</h2>
               <div className="flex gap-4 items-center justify-center">
@@ -149,7 +153,7 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
                 <div className="h-8 border border-light-grey"></div>
                 <CustomButton
                   title="Explore Models"
-                  containerStyles="bg-[#444445] rounded-[4px] py-[4px] px-[16px] hover-blue mr-2"
+                  containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[16px] hover-blue mr-2"
                   textStyles="text-sm font-medium text-white"
                   handleClick={addUsersFunction}
                 />
@@ -221,10 +225,10 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
                 </div>
               </div>
             </div>
-            <div className="w-full bg-light-grey flex justify-center p-2">
+            <div className="w-full bg-dark-blue flex justify-center p-2">
               <CustomButton
                 title="Submit"
-                containerStyles="bg-[#444445] rounded-[4px] py-[4px] px-[16px] hover-blue mr-2"
+                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[16px] hover-blue mr-2"
                 textStyles="text-sm font-medium text-white"
                 handleClick={submitFunction}
               />
@@ -240,17 +244,23 @@ function CreateDomainModal({ handleClose }: createDomainProps) {
       <div className="modal-overlay">
         <div className="modal w-[628px] rounded-[8px] flex justify-center flex-col items-center">
           {" "}
-          <h2 className="text-[22px] font-light text-center py-16">
+          <Image
+            src="/close.svg"
+            alt="close"
+            width={24}
+            height={24}
+            className="close hover-white"
+            onClick={handleClose}
+          />
+          <h2 className="text-lg font-medium text-center py-16">
             Domain 1 is created successfully.
           </h2>
-          <div className="w-full bg-light-grey flex justify-center p-2">
-            <CustomButton
-              title="Close"
-              containerStyles="bg-[#444445] rounded-[4px] py-[4px] px-[16px] hover-blue mr-2"
-              textStyles="text-sm font-medium text-white"
-              handleClick={handleClose}
-            />
-          </div>
+          <CustomButton
+            title="Close"
+            containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[16px] hover-blue mr-2 mb-4"
+            textStyles="text-sm font-medium text-white"
+            handleClick={handleClose}
+          />
         </div>
       </div>
     );

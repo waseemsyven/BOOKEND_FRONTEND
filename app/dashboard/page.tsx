@@ -1,9 +1,13 @@
 "use client";
 
 import {
+  AddDomainCard,
+  CarauselCard,
   DomainDashboardHeader,
   DomainDashboardTable,
   DomainOverview,
+  HeroCard,
+  Navbar,
 } from "@/components";
 import { useEffect, useState } from "react";
 
@@ -36,6 +40,16 @@ const Page = () => {
   useEffect(() => {
     getModelsList();
   }, []);
+
+  if (false) {
+    return (
+      <div className="h-full w-full rounded-bl-2xl bg-[#F7FAFB]">
+        <Navbar />
+        <HeroCard />
+        <AddDomainCard />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#F7FAFB] h-full w-full rounded-bl-2xl overflow-y-scroll max-h-screen">

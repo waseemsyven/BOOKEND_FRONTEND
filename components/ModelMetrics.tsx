@@ -1,8 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ModelOverview, QuestionAnswering, Summarization } from ".";
 
 function ModelMetrics({ filteredModel }: any) {
+  // const getMetrics = async () => {
+  //   try {
+  //     const queryParams = new URLSearchParams({
+  //       epoch_start: "1694449800",
+  //       epoch_end: "1694462100",
+  //       metric_filters: "",
+  //       endpoint_filters: "2603856839829356544",
+  //     });
+
+  //     const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/metrics/get-metrics?${queryParams}`;
+
+  //     const response = await fetch(apiUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     const data = await response.json();
+
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getMetrics();
+  // }, []);
+
   const [currentTab, setcurrentTab] = useState("overview");
   return (
     <>

@@ -38,6 +38,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
     return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-200";
   };
+
   if ((!session && status === "unauthenticated") || pathname == "/") {
     return <div className="flex flex-col w-full">{children}</div>;
   }

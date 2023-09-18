@@ -4,14 +4,25 @@ import Image from "next/image";
 import { CustomButton, DatasetsDropdown } from ".";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import TierDropdown from "./TierDropdown";
 
 function TrainModelPopup({ handleClose, modelName, task }: any) {
   const router = useRouter();
   const [modelNameInputValue, setmodelNameInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedTier, setselectedTier] = useState("silver");
   const [loading, setLoading] = useState(false);
 
-  const isDisabled = !modelNameInputValue || !selectedOption || loading;
+  const isDisabled =
+    !modelNameInputValue ||
+    !selectedOption ||
+    !selectedTier ||
+    !modelNameInputValue ||
+    loading;
+
+  const setTierFunction = (Tier: any) => {
+    setselectedTier(Tier);
+  };
 
   const trainModelFunction = async () => {
     try {
@@ -21,7 +32,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
         base_model: modelName,
         dataset_name: selectedOption,
         task: task,
-        tier: "silver",
+        tier: selectedTier,
         sync: "false",
       });
 
@@ -91,47 +102,44 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
             height={16}
             className="object-contain mr-2"
           />
-          In order to train a model, user need to set a name and then select
-          dataset accordingly.
+          To train a model, users need to set a name, select the dataset and the
+          model tier.
         </div>
-        <div className="w-full flex justify-around items-center h-full">
-          <div className="flex flex-col justify-center items-center gap-6 my-8">
-            <div className="flex justify-center items-center">
-              Step
-              <Image
-                src="/counter.svg"
-                alt="info"
-                width={16}
-                height={16}
-                className="object-contain ml-2"
-              />
-            </div>
+        <div className="w-full h-[200px] grid grid-cols-2 gap-2 justify-items-center items-center">
+          <div className="input-secondary-container">
+            <h3>Base Model</h3>
             <input
-              placeholder="Enter a Model name"
-              className="input_primary"
-              value={modelNameInputValue}
-              onChange={(e) => setmodelNameInputValue(e.target.value)}
+              placeholder={`${modelName}`}
+              disabled
+              className="input-secondary"
             />
           </div>
-          <div className="flex flex-col justify-center items-center gap-6 my-8">
-            <div className="flex justify-center items-center">
-              Step
-              <Image
-                src="/counter_two.svg"
-                alt="info"
-                width={16}
-                height={16}
-                className="object-contain ml-2"
-              />
-            </div>
+          <div className="input-secondary-container">
+            <h3>Model Name</h3>
+            <input
+              placeholder="Enter model name"
+              className="input-secondary"
+              value={modelNameInputValue}
+              onChange={(e: any) => setmodelNameInputValue(e.target.value)}
+            />
+          </div>
+          <div className="input-secondary-container">
+            <h3 className="z-10">Select Datasets</h3>
             <DatasetsDropdown
-              setSelectedOption={setSelectedOption}
-              selectedOption={selectedOption}
               task={task}
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+            />
+          </div>
+          <div className="input-secondary-container">
+            <h3 className="z-10">Tier</h3>
+            <TierDropdown
+              setselectedTier={setTierFunction}
+              selectedTier={selectedTier}
             />
           </div>
         </div>
-        <div className="justify-center flex py-4 w-full">
+        <div className="justify-center items-end flex py-4 w-full h-[220px]">
           <CustomButton
             title="Train Now"
             containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-2 hover-blue w-[153px]"

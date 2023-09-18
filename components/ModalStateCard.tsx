@@ -2,13 +2,18 @@
 import React, { useState } from "react";
 import { CustomButton, TrainModelPopup } from ".";
 import { toast } from "react-toastify";
+import DeployPopup from "./DeployPopup";
 
 function ModalStateCard({ model }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isDeployPopupOpen, setisDeployPopupOpen] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
+  };
+  const handleCloseDeploy = () => {
+    setisDeployPopupOpen(false);
   };
 
   const isTrained = model && model.status && model.status == "TRAINED";
@@ -16,7 +21,7 @@ function ModalStateCard({ model }: any) {
   const isDeploying = model && model.status && model.status == "DEPLOYING";
   const isDeployed = model && model.status && model.status == "DEPLOYED";
 
-  const deployModelFunction = async () => {
+  const deployModelFunction = async (Tier: any) => {
     if (isDeployed) {
       toast.success("Model is Already Deployed!", {
         position: "top-right",
@@ -48,7 +53,7 @@ function ModalStateCard({ model }: any) {
       const queryParams = new URLSearchParams({
         model_id: model.model_id,
         task: model.task,
-        tier: "silver",
+        tier: Tier,
         sync: "false",
       });
 
@@ -74,11 +79,14 @@ function ModalStateCard({ model }: any) {
           progress: undefined,
           theme: "light",
         });
+        setisDeployPopupOpen(false);
         setLoading(false);
       } else {
+        setisDeployPopupOpen(false);
         throw new Error(`something went wrong`);
       }
     } catch (error) {
+      setisDeployPopupOpen(false);
       toast.error("something went wrong", {
         position: "top-right",
         autoClose: 5000,
@@ -92,6 +100,7 @@ function ModalStateCard({ model }: any) {
       setLoading(false);
       console.error("Error fetching data:", error);
     } finally {
+      setisDeployPopupOpen(false);
       setLoading(false);
     }
   };
@@ -135,7 +144,7 @@ function ModalStateCard({ model }: any) {
                 leftIcon="/rocket.svg"
                 rightIcon="/arrow_down.svg"
                 isDisabled={loading}
-                handleClick={() => deployModelFunction()}
+                handleClick={() => setisDeployPopupOpen(true)}
               />
             ) : (
               <CustomButton
@@ -145,7 +154,7 @@ function ModalStateCard({ model }: any) {
                 leftIcon="/rocket.svg"
                 rightIcon="/arrow_down.svg"
                 isDisabled={loading}
-                handleClick={() => deployModelFunction()}
+                handleClick={() => setisDeployPopupOpen(true)}
               />
             )}
           </div>
@@ -202,6 +211,16 @@ function ModalStateCard({ model }: any) {
           handleClose={handleClose}
           modelName={model.model_name}
           task={model.task}
+        />
+      )}
+      {isDeployPopupOpen && (
+        <DeployPopup
+          handleClose={handleCloseDeploy}
+          baseModel={model.base_model}
+          modelName={model.model_name}
+          task={model.task}
+          datasetName={model.dataset_name}
+          deployModelFunction={deployModelFunction}
         />
       )}
     </div>

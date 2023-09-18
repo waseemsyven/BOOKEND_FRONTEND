@@ -4,7 +4,63 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import { CustomButton } from ".";
 
-function DeletePopup({ getModelsList, modelId, handleClose, modelName }: any) {
+function DeletePopup({
+  getModelsList,
+  modelId,
+  handleClose,
+  modelName,
+  type,
+  getDataSetsList,
+}: any) {
+  const deleteDatasetFunction = async () => {
+    try {
+      const queryParams = new URLSearchParams({
+        dataset_id: modelId,
+      });
+
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/datasets/delete?${queryParams}`;
+
+      const response = await fetch(apiUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const status = response.status;
+      if (status == 200) {
+        getDataSetsList();
+        toast.success("Dataset deleted", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        handleClose();
+      } else {
+        throw new Error("something went wrong");
+      }
+    } catch (error) {
+      toast.error("something went wrong", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      handleClose();
+    } finally {
+      handleClose();
+    }
+  };
+
   const deleteFunction = async () => {
     handleClose();
     try {
@@ -63,16 +119,30 @@ function DeletePopup({ getModelsList, modelId, handleClose, modelName }: any) {
           className="close hover-white"
           onClick={handleClose}
         />
-        <h2 className="text-lg text-bold">
-          Confirm Delete Model ({modelName}) ?
-        </h2>
+        {type == "dataset" ? (
+          <h2 className="text-lg text-bold">Delete Dataset ({modelName})?</h2>
+        ) : (
+          <h2 className="text-lg text-bold">
+            Confirm Delete Model ({modelName}) ?
+          </h2>
+        )}
         <div className="flex justify-center items-center gap-6">
-          <CustomButton
-            title="Confirm"
-            containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
-            textStyles="text-[15px] font-medium text-white"
-            handleClick={() => deleteFunction()}
-          />
+          {type == "dataset" ? (
+            <CustomButton
+              title="Confirm"
+              containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
+              textStyles="text-[15px] font-medium text-white"
+              handleClick={() => deleteDatasetFunction()}
+            />
+          ) : (
+            <CustomButton
+              title="Confirm"
+              containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
+              textStyles="text-[15px] font-medium text-white"
+              handleClick={() => deleteFunction()}
+            />
+          )}
+
           <CustomButton
             title="Cancel"
             containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"

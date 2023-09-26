@@ -43,19 +43,19 @@ function DeployPopup({
         </div>
         <div className="w-full h-[200px] grid grid-cols-2 gap-2 justify-items-center items-center">
           <div className="input-secondary-container">
+            <h3>Model Name</h3>
+            <input
+              placeholder={`${modelName}`}
+              className="input-secondary"
+              disabled
+            />
+          </div>
+          <div className="input-secondary-container">
             <h3>Base Model</h3>
             <input
               placeholder={`${baseModel}`}
               disabled
               className="input-secondary"
-            />
-          </div>
-          <div className="input-secondary-container">
-            <h3>Deploy Model</h3>
-            <input
-              placeholder={`${modelName}`}
-              className="input-secondary"
-              disabled
             />
           </div>
           <div className="input-secondary-container">

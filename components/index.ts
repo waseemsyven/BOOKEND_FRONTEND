@@ -17,6 +17,8 @@ import DatasetsDropdown from './DatasetsDropdown'
 import DatasetUploader from './DatasetUploader';
 import QuestionAnswering from "./QuestionAnswering";
 import DeletePopup from './DeletePopup';
+import CreateUserPopup from './CreateUserPopup'
+import UserInfoPopup from './UserInfoPopup'
 
 export {
   HeroCard,
@@ -37,5 +39,8 @@ export {
   DatasetsDropdown,
   DatasetUploader,
   QuestionAnswering,
-  DeletePopup
+  DeletePopup,
+  CreateUserPopup,
+  UserInfoPopup
+
 };

@@ -59,7 +59,14 @@ function InferenceModal({ handleClose }: createDomainProps) {
       {
         headers: { Authorization: "Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
         method: "POST",
-        body: JSON.stringify(data),
+        body: { 
+          model_id
+          task,
+          text,
+          question: "None",
+          context: "None",
+          instruction: "None",
+        }
       }
     );
     const result = await response.json();

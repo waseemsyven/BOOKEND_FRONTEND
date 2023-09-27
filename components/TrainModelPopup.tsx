@@ -36,7 +36,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
         sync: "false",
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/train?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/train?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "POST",

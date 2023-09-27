@@ -5,7 +5,7 @@ export function formatCountWithLeadingZeros(count:number) {
   export const getUsersList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/list`,
         {
           method: "GET",
           headers: {

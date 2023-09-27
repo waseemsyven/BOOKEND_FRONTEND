@@ -58,7 +58,7 @@ function ModalStateCard({ model }: any) {
       });
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/deploy?${queryParams}`,
         {
           method: "POST",
           headers: {

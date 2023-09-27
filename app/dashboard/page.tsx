@@ -2,7 +2,6 @@
 
 import {
   AddDomainCard,
-  CarauselCard,
   DomainDashboardHeader,
   DomainDashboardTable,
   DomainOverview,
@@ -17,7 +16,7 @@ const Page = () => {
   const getModelsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/models/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/list`,
         {
           method: "GET",
           headers: {

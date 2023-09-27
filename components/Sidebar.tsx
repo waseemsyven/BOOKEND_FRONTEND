@@ -4,13 +4,12 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession();
   const router = useRouter();
-
+  const { data: session } = useSession();
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
   const handleHover = () => {
@@ -21,16 +20,6 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     setIsHovered(false);
   };
 
-  useEffect(() => {
-    if (!session && status !== "loading") {
-      router.push("/");
-    }
-  }, [session]);
-
-  const handleSignOut = async () => {
-    await signOut();
-  };
-
   const renderSidebarStyles = () => {
     if (isHovered) {
       return "w-[200px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-200";
@@ -39,8 +28,8 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     return "w-[80px] h-screen px-2 py-4 bg-dark-blue flex flex-col duration-200";
   };
 
-  if ((!session && status === "unauthenticated") || pathname == "/") {
-    return <div className="flex flex-col w-full">{children}</div>;
+  if (!session) {
+    return <div>{children}</div>;
   }
 
   return (
@@ -152,7 +141,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               />
               {isHovered && (
                 <h2 className="text-[13px] font-semibold text-white ml-3">
-                  Waseem
+                  Rajendra
                 </h2>
               )}
             </div>
@@ -160,7 +149,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
               } items-center mt-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px] cursor-pointer`}
-              onClick={() => handleSignOut()}
+              onClick={() => signOut()}
             >
               <Image
                 src="/logout.svg"

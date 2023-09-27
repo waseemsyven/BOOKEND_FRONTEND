@@ -16,7 +16,7 @@ function DeleteUserPopup({
       email: email,
     });
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/users/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",

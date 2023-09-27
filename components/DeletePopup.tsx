@@ -18,7 +18,7 @@ function DeletePopup({
         dataset_id: modelId,
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/datasets/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",
@@ -68,7 +68,7 @@ function DeletePopup({
         model_id: modelId,
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",

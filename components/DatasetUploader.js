@@ -25,7 +25,7 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
 
   const handleUpload = async () => {
     setisUploading(true);
-    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/datasets/add`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/add`;
     const authToken = `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`;
 
     const queryParams = new URLSearchParams({

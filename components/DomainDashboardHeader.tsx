@@ -60,7 +60,7 @@ function DomainDashboardHeader() {
         {users &&
           users.map((user: any, index: any) => (
             <div
-              className="cursor-pointer relative w-10 h-10 flex items-center justify-center rounded-full bg-blue-500 text-white uppercase group"
+              className="cursor-pointer relative w-8 h-8 flex items-center justify-center rounded-full bg-dark-blue text-white uppercase group text-sm"
               key={index}
               onClick={() =>
                 handleOpenUserInfo(user.email, user.first_name, user.last_name)
@@ -73,8 +73,8 @@ function DomainDashboardHeader() {
 
               <div className="flex gap-1 absolute h-10 bottom-[-40px] left-0 border bg-white text-black text-xs  font-semibold p-2 rounded-md opacity-0 group-hover:opacity-100">
                 {" "}
-                <h2> {user.first_name}</h2>
-                <h2>{user.last_name}</h2>
+                <h3> {user.first_name}</h3>
+                <h3>{user.last_name}</h3>
               </div>
             </div>
           ))}
@@ -82,8 +82,9 @@ function DomainDashboardHeader() {
       <div className="flex grow justify-end">
         <CustomButton
           title="Add User"
-          containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
-          textStyles="text-[15px] font-medium text-white"
+          containerStyles="rounded-[4px] border-2 border-[#131A44] bg-white px-2 gap-2 py-1 text-[#131A44] hover:bg-dark-blue hover:text-white"
+          textStyles="text-[15px] font-medium"
+          rightIcon="/plus_blue.svg"
           handleClick={() => setshowCreateUserPopup(true)}
         />
       </div>

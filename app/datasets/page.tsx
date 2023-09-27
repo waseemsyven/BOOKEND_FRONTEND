@@ -17,7 +17,7 @@ function Page() {
   const getDataSetsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/datasets/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/list`,
         {
           method: "GET",
           headers: {

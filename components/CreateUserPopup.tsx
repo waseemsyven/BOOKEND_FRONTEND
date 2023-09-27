@@ -26,7 +26,7 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
         return;
       }
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/users/add`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/add`;
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -86,7 +86,7 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal w-[584px] rounded-[8px] flex justify-start flex-col items-center px-8 pb-6">
+      <div className="modal w-[584px] rounded-[8px] flex justify-start flex-col items-center px-8 pb-6 shadow">
         <Image
           src="/close.svg"
           alt="close"
@@ -96,7 +96,7 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
           onClick={handleClose}
         />
         <div className="w-full py-4 text-lg font-semibold text-text-secondary capitalize">
-          Add User To Domain
+          Add User{" "}
         </div>
         <div className="flex flex-col gap-4 w-full my-4">
           {" "}

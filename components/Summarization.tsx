@@ -18,22 +18,27 @@ function Summarization({ filteredModel, task }: any) {
     try {
       const queryParams = new URLSearchParams({
         model_id: filteredModel.model_id,
-        task: filteredModel.task,
-        text: input,
-        question: "None",
-        context: "None",
-        instruction: "None",
+        task: "summarization",
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/predict?${queryParams}`;
+      const body = JSON.stringify({
+        text: input,
+        question: null,
+        context: null,
+        instruction: null,
+      });
+
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/predict?${queryParams}`;
 
       const response = await fetch(apiUrl, {
-        method: "GET",
+        method: "POST",
         headers: {
           Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
           "Content-Type": "application/json",
         },
+        body,
       });
+
       const data = await response.json();
       setoutput(data[0].summary);
       toast.success("Computation Completed", {
@@ -57,7 +62,6 @@ function Summarization({ filteredModel, task }: any) {
         progress: undefined,
         theme: "light",
       });
-    } finally {
     }
   };
 

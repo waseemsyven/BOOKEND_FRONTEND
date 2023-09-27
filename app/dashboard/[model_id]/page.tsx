@@ -10,7 +10,7 @@ function Page({ params }: any) {
   const getModelsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/models/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/list`,
         {
           method: "GET",
           headers: {

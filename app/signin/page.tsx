@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CustomButton } from "@/components";
 import { signIn } from "next-auth/react";
 
-function page() {
+function Page() {
   const [domain, setdomain] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -82,4 +82,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -86,7 +86,7 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal w-[584px] rounded-[8px] flex justify-start flex-col items-center px-8 pb-6 shadow">
+      <div className="modal w-[884px] rounded-[8px] flex justify-start flex-col items-center px-6 pb-6 shadow">
         <Image
           src="/close.svg"
           alt="close"
@@ -95,12 +95,62 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
           className="close hover-white"
           onClick={handleClose}
         />
-        <div className="w-full py-4 text-lg font-semibold text-text-secondary capitalize">
+        <div className="w-full py-4 text-lg font-medium text-text-secondary capitalize">
           Add User{" "}
         </div>
-        <div className="flex flex-col gap-4 w-full my-4">
-          {" "}
-          <input
+        <div className="flex flex-col gap-4 w-full my-4 px-10">
+          <div className="flex justify-between items-center mb-4">
+            {" "}
+            <div className="input-secondary-container">
+              <h3>First Name</h3>
+              <input
+                placeholder="Enter first name"
+                className="input-secondary"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="input-secondary-container">
+              <h3>Last Name</h3>
+              <input
+                placeholder="Enter last name"
+                className="input-secondary"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="input-secondary-container mb-4">
+            <h3>Email ID</h3>
+            <input
+              placeholder="Enter official email id"
+              className="input-secondary"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="flex justify-between items-center mb-6">
+            <div className="input-secondary-container">
+              <h3>New Password</h3>
+              <input
+                placeholder="Create a Password"
+                className="input-secondary"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+              />
+            </div>{" "}
+            <div className="input-secondary-container">
+              <h3>Confirm Password</h3>
+              <input
+                placeholder="Confirm the password"
+                className="input-secondary"
+                type="password"
+              />
+            </div>
+          </div>
+
+          {/* <input
             placeholder="Enter User Email"
             className="input_primary min-w-full"
             value={email}
@@ -125,11 +175,11 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
             className="input_primary min-w-full"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+          /> */}
         </div>
         <CustomButton
-          title="Add"
-          containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4 w-full"
+          title="Submit"
+          containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4 w-[153px]"
           textStyles="text-[15px] font-medium text-white"
           handleClick={trainModelFunction}
         />

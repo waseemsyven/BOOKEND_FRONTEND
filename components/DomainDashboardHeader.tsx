@@ -56,11 +56,11 @@ function DomainDashboardHeader() {
           className="object-contain"
         />
       </h2>
-      <div className="flex">
+      <div className="flex items-center">
         {users &&
-          users.map((user: any, index: any) => (
+          users.slice(0, 4).map((user: any, index: any) => (
             <div
-              className="cursor-pointer relative w-8 h-8 flex items-center justify-center rounded-full bg-dark-blue text-white uppercase group text-sm"
+              className="cursor-pointer border border-white relative w-8 h-8 flex items-center justify-center rounded-full bg-dark-blue text-white uppercase group text-xs"
               key={index}
               onClick={() =>
                 handleOpenUserInfo(user.email, user.first_name, user.last_name)
@@ -78,12 +78,15 @@ function DomainDashboardHeader() {
               </div>
             </div>
           ))}
+        <h2 className="text-sm font-semibold ml-2 text-[#111AE8] hover:underline cursor-pointer">
+          View all
+        </h2>
       </div>
       <div className="flex grow justify-end">
         <CustomButton
           title="Add User"
-          containerStyles="rounded-[4px] border-2 border-[#131A44] bg-white px-2 gap-2 py-1 text-[#131A44] hover:bg-dark-blue hover:text-white"
-          textStyles="text-[15px] font-medium"
+          containerStyles="rounded-[4px] border-2 border-[#131A44] bg-white gap-1 px-2 py-1 text-[#131A44] hover-blue"
+          textStyles="text-[15px] font-semibold"
           rightIcon="/plus_blue.svg"
           handleClick={() => setshowCreateUserPopup(true)}
         />

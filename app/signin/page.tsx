@@ -22,7 +22,7 @@ function Page() {
   const isDisabled = !email || !password || !domain;
 
   return (
-    <div className="h-screen w-full bg-[#FAFCFF] flex justify-center items-center">
+    <div className="h-screen w-full bg-[#F7FAFB] flex justify-center items-center">
       <div className="w-[1060px] h-[568px] shadow grid grid-cols-2 rounded-[20px]">
         <div className="bg-[#131A44] flex justify-center items-center rounded-tl-[20px] rounded-bl-[20px]">
           <Image

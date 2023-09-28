@@ -4,8 +4,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { formatCountWithLeadingZeros } from "@/utils";
 import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
 
 function Page() {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
   const [datasetsList, setdatasetsList] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -17,11 +20,11 @@ function Page() {
   const getDataSetsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/datasets/list`,
         {
           method: "GET",
           headers: {
-            Authorization: `basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            Authorization: `basic ${user.token}`,
           },
         }
       );

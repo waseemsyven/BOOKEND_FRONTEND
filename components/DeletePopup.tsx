@@ -3,6 +3,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { CustomButton } from ".";
+import { useSession } from "next-auth/react";
 
 function DeletePopup({
   getModelsList,
@@ -12,18 +13,21 @@ function DeletePopup({
   type,
   getDataSetsList,
 }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
+
   const deleteDatasetFunction = async () => {
     try {
       const queryParams = new URLSearchParams({
         dataset_id: modelId,
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/datasets/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });
@@ -68,12 +72,12 @@ function DeletePopup({
         model_id: modelId,
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });

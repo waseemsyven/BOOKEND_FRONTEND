@@ -2,19 +2,22 @@
 import { ModalStateCard } from "@/components";
 import React, { useEffect, useState } from "react";
 import ModelMetrics from "@/components/ModelMetrics";
+import { signOut, useSession } from "next-auth/react";
 
 function Page({ params }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const { model_id } = params;
   const [modelList, setModelList] = useState<any>([]);
 
   const getModelsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/list`,
         {
           method: "GET",
           headers: {
-            Authorization: `basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            Authorization: `basic ${user.token}`,
           },
         }
       );

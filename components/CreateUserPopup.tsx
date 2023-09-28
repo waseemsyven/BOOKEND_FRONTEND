@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 function CreateUserPopup({ handleClose, callGetUsers }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,12 +29,12 @@ function CreateUserPopup({ handleClose, callGetUsers }: any) {
         return;
       }
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/add`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/users/add`;
 
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),

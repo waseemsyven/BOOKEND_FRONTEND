@@ -4,8 +4,11 @@ import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
 import InferenceModal from "./InferenceModal";
+import { useSession } from "next-auth/react";
 
 function Summarization({ filteredModel, task }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const [showModal, setshowModal] = useState(false);
   const [input, setinput] = useState("");
   const [output, setoutput] = useState("");
@@ -28,12 +31,12 @@ function Summarization({ filteredModel, task }: any) {
         instruction: null,
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/predict?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/predict?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
         body,

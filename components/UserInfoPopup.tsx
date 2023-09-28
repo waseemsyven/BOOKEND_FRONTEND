@@ -4,8 +4,11 @@ import Image from "next/image";
 import { CustomButton } from ".";
 import DeleteUserPopup from "./DeleteUserPopup";
 import UpdatePasswordPopup from "./UpdatePasswordPopup";
+import { useSession } from "next-auth/react";
 
 function UserInfoPopup({ handleClose, userInfo, callGetUsers }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const [showDeletePopup, setshowDeletePopup] = useState(false);
   const [showUpdatePasswordPopup, setshowUpdatePasswordPopup] = useState(false);
   const handleCloseConfrimationPopup = () => {
@@ -16,12 +19,12 @@ function UserInfoPopup({ handleClose, userInfo, callGetUsers }: any) {
 
   const getUserDetails = async () => {
     try {
-      const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/syven-pdp/users/get?email=${userInfo.email}`;
+      const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/${user.domain}/users/get?email=${userInfo.email}`;
       const res = await fetch(apiUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
         },
       });
 

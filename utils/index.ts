@@ -1,15 +1,19 @@
+import { useSession } from "next-auth/react";
+
 export function formatCountWithLeadingZeros(count:number) {
     return count.toString().padStart(2, '0');
   }
 
   export const getUsersList = async () => {
+    const { data: session, status } = useSession();
+    const user: any = session?.user;
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/users/list`,
         {
           method: "GET",
           headers: {
-            Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            Authorization: `Basic ${user.token}`,
           },
         }
       );

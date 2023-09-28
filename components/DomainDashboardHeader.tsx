@@ -3,8 +3,12 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { getUsersList } from "../utils";
 import { CreateUserPopup, CustomButton, UserInfoPopup } from ".";
+import { useSession } from "next-auth/react";
 
 function DomainDashboardHeader() {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
+
   const [users, setusers] = useState([]);
   const [showCreateUserPopup, setshowCreateUserPopup] = useState(false);
   const [showUserInfoPopup, setshowUserInfoPopup] = useState(false);
@@ -47,7 +51,7 @@ function DomainDashboardHeader() {
         className="object-contain"
       />
       <h2 className="text-[22px] font-bold flex justify-center items-center capitalize">
-        {process.env.NEXT_PUBLIC_BOOKEND_DOMAIN}{" "}
+        {user && user.domain}{" "}
         <Image
           src="/arrow_dropdown.svg"
           alt="dropdown logo"

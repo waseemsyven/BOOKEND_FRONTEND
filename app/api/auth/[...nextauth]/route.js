@@ -1,6 +1,7 @@
+import { user } from "@nextui-org/theme";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { toast } from "react-toastify";
+import { NextResponse } from "next/server";
 
 const handler = NextAuth({
   providers: [
@@ -11,7 +12,7 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
         domain: { lable: "domain", type: "string" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const { email, password, domain } = credentials;
 
         const token = btoa(`${email}:${password}`);
@@ -25,27 +26,38 @@ const handler = NextAuth({
             },
           });
           const user = await res.json();
+
           if (!res.ok) {
-            throw new Error(user.message);
+            console.log("error thrown ");
+            throw new Error("This is error message.");
           }
           if (res.ok && user) {
+            user.token = token;
+            user.domain = domain;
             return user;
           }
           return null;
         } catch (error) {
-          console.error("API request error:", error);
-          return null;
+          throw new Error("error while sign in");
         }
       },
     }),
   ],
 
   callbacks: {
-    jwt: async (user) => {
-      return user;
+    jwt: async ({ token, user }) => {
+      if (user) {
+        return {
+          ...token,
+          user,
+        };
+      }
+      return token;
     },
-    session: async (user) => {
-      return user;
+    session: async ({ session, token }) => {
+      console.log("Session callback executed", token.user);
+      session.user = token.user;
+      return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

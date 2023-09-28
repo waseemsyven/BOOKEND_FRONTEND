@@ -3,6 +3,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { CustomButton } from ".";
+import { useSession } from "next-auth/react";
 
 function DeleteUserPopup({
   handleClose,
@@ -11,17 +12,19 @@ function DeleteUserPopup({
   callGetUsers,
   closeParent,
 }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const deleteUserFunction = async () => {
     const queryParams = new URLSearchParams({
       email: email,
     });
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/users/delete?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/users/delete?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "DELETE",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });

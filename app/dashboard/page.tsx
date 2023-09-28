@@ -9,18 +9,22 @@ import {
   Navbar,
 } from "@/components";
 import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 const Page = () => {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
+
   const [modelList, setmodelList] = useState<any>([]);
 
   const getModelsList = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/list`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/list`,
         {
           method: "GET",
           headers: {
-            Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            Authorization: `Basic ${user.token}`,
           },
         }
       );

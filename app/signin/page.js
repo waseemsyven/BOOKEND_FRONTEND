@@ -14,14 +14,38 @@ function Page() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
-  const handleLogin = async (email: any, password: any) => {
-    const signin = await signIn("credentials", {
+  const handleLogin = async (email, password) => {
+    await signIn("credentials", {
       email,
       password,
       domain,
-      callbackUrl: "/dashboard",
+      redirect: false,
+    }).then((res) => {
+      if (res?.error === null) {
+        toast.success("login successful", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/dashboard");
+      } else {
+        toast.error("An error occurred during sign-in.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     });
-    console.log(signin);
   };
 
   const isDisabled = !email || !password || !domain;

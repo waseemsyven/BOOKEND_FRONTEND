@@ -1,20 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 export default function DatasetsDropdown({
   setSelectedOption,
   selectedOption,
   task,
 }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const [dataSetsList, setdataSetsList] = useState<any>([]);
   const getDataSets = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/datasets/list`,
+      `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/datasets/list`,
       {
         method: "GET",
         headers: {
-          Authorization: `basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `basic ${user.token}`,
         },
       }
     );

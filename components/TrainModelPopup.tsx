@@ -5,8 +5,11 @@ import { CustomButton, DatasetsDropdown } from ".";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import TierDropdown from "./TierDropdown";
+import { useSession } from "next-auth/react";
 
 function TrainModelPopup({ handleClose, modelName, task }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
   const router = useRouter();
   const [modelNameInputValue, setmodelNameInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -36,12 +39,12 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
         sync: "false",
       });
 
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/syven-pdp/models/train?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/train?${queryParams}`;
 
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });

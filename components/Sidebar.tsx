@@ -5,11 +5,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
-  const router = useRouter();
+  const user: any = session?.user;
 
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
@@ -150,7 +149,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
               />
               {isHovered && (
                 <h2 className="text-[13px] font-semibold text-white ml-3">
-                  Rajendra
+                  {user && user.first_name}
                 </h2>
               )}
             </div>

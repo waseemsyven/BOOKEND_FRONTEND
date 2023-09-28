@@ -10,19 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
+- task: vercel-deployment-task@1
   inputs:
-    versionSpec: '16.20.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: '/.next/server/app'
-    azure_static_web_apps_api_token: $(deployment_token)
-    skip_app_build: true
-    skip_api_build: true
+    vercelProjectId: 'prj_cR7vwrBM52T9RYNHmpaNGfSPDbHB'
+    vercelOrgId: 'n2sTWhUggKIG46BfYxY5OIlc'
+    vercelToken: $(VERCEL_TOKEN)
+    production: true

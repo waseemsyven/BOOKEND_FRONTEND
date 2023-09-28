@@ -112,7 +112,7 @@ function DomainOverview({ modelsList }: any) {
               <h2 className="text-[36px] text-[#727383] font-medium">
                 {formatCountWithLeadingZeros(trainingCount)}
               </h2>
-              <h2 className="font-normal text-[11px]">InProgress</h2>
+              <h2 className="font-normal text-[11px]">In Progress</h2>
             </div>
           </div>
         </div>

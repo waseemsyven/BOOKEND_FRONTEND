@@ -4,19 +4,24 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 function Page() {
+  const router = useRouter();
+
   const [domain, setdomain] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
 
   const handleLogin = async (email: any, password: any) => {
-    await signIn("credentials", {
+    const signin = await signIn("credentials", {
       email,
       password,
       domain,
       callbackUrl: "/dashboard",
     });
+    console.log(signin);
   };
 
   const isDisabled = !email || !password || !domain;

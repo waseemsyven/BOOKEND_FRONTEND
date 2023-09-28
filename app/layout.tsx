@@ -19,13 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NextAuthProvider>
-          <NextUiProvider>
-            <ToastProvider>
+        <ToastProvider>
+          <NextAuthProvider>
+            <NextUiProvider>
               <Sidebar>{children}</Sidebar>
-            </ToastProvider>
-          </NextUiProvider>
-        </NextAuthProvider>
+            </NextUiProvider>
+          </NextAuthProvider>
+        </ToastProvider>
       </body>
     </html>
   );

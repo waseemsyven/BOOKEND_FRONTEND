@@ -3,9 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { toast } from "react-toastify";
 
 const handler = NextAuth({
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -14,8 +11,9 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
         domain: { lable: "domain", type: "string" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         const { email, password, domain } = credentials;
+
         const token = btoa(`${email}:${password}`);
         const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/${domain}/users/get?email=${email}`;
         try {
@@ -26,14 +24,14 @@ const handler = NextAuth({
               Authorization: `Basic ${token}`,
             },
           });
-
-          if (res.ok) {
-            const user = await res.json();
-
-            return user;
-          } else {
-            return null;
+          const user = await res.json();
+          if (!res.ok) {
+            throw new Error(user.message);
           }
+          if (res.ok && user) {
+            return user;
+          }
+          return null;
         } catch (error) {
           console.error("API request error:", error);
           return null;
@@ -41,12 +39,13 @@ const handler = NextAuth({
       },
     }),
   ],
+
   callbacks: {
-    jwt: async ({ user }) => {
+    jwt: async (user) => {
       return user;
     },
-    session: async ({ session }) => {
-      return { session };
+    session: async (user) => {
+      return user;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

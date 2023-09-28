@@ -87,7 +87,7 @@ function DatasetsTable({ datasetsList, getDataSetsList }) {
                   }}
                 >
                   <Image
-                    src="/more_horiz.svg"
+                    src="/more_horiz_color.svg"
                     alt="more"
                     width={20}
                     height={20}

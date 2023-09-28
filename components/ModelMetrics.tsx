@@ -67,7 +67,7 @@ function ModelMetrics({ filteredModel }: any) {
         {filteredModel && filteredModel.model_name ? (
           <div className="border rounded-[4px] cursor-pointer">
             <Image
-              src="/more_vert.svg"
+              src="/more_vert_color.svg"
               alt="more"
               width={28}
               height={28}

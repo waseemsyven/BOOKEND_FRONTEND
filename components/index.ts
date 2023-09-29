@@ -19,6 +19,8 @@ import QuestionAnswering from "./QuestionAnswering";
 import DeletePopup from './DeletePopup';
 import CreateUserPopup from './CreateUserPopup'
 import UserInfoPopup from './UserInfoPopup'
+import ViewAllUsersPopup from "./VeiwAllUsersPopup";
+import EditUserPopup from "./EditUserPopup";
 
 export {
   HeroCard,
@@ -41,6 +43,8 @@ export {
   QuestionAnswering,
   DeletePopup,
   CreateUserPopup,
-  UserInfoPopup
+  UserInfoPopup,
+  ViewAllUsersPopup,
+  EditUserPopup
 
 };

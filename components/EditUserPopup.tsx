@@ -2,16 +2,19 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
+import DeleteUserPopup from "./DeleteUserPopup";
+import UpdatePasswordPopup from "./UpdatePasswordPopup";
 import { useSession } from "next-auth/react";
 
-function UserInfoPopup({
-  handleClose,
-  userInfo,
-  handleOpenEditUserPopup,
-  handleShowDeletePopup,
-}: any) {
+function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
   const { data: session, status } = useSession();
   const user: any = session?.user;
+  const [showDeletePopup, setshowDeletePopup] = useState(false);
+  const [showUpdatePasswordPopup, setshowUpdatePasswordPopup] = useState(false);
+  const handleCloseConfrimationPopup = () => {
+    setshowDeletePopup(false);
+  };
+
   const [userDetails, setuserDetails] = useState<any>();
 
   const getUserDetails = async () => {
@@ -56,7 +59,7 @@ function UserInfoPopup({
           className="close hover-white"
           onClick={handleClose}
         />
-        <h2 className="text-lg font-medium">User Details</h2>
+        <h2 className="text-lg font-medium">Edit User Details</h2>
         <div className="grid px-8 grid-cols-2 py-4 gap-4">
           {" "}
           <div className="input-secondary-container my-4">
@@ -89,21 +92,46 @@ function UserInfoPopup({
         </div>
         <div className="flex justify-around items-center w-full mt-6">
           <CustomButton
+            title="Update"
+            containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
+            textStyles="text-[15px] font-medium text-white"
+            // handleClick={() => setshowUpdatePasswordPopup(true)}
+          />{" "}
+        </div>
+
+        {/* <div className="p-4 text-base font-medium mb-4">
+          {" "}
+          <h2>{`Email: ${userInfo.email}`}</h2>
+          <h2>{`First Name: ${userInfo.firstName}`}</h2>
+          <h2>{`Last Name: ${userInfo.lastName}`}</h2>
+        </div>
+        <div className="flex justify-between items-center gap-2">
+          <CustomButton
+            title="Update Password"
+            containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
+            textStyles="text-[15px] font-medium text-white"
+            handleClick={() => setshowUpdatePasswordPopup(true)}
+          />{" "}
+          <CustomButton
             title="Delete User"
             containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
             textStyles="text-[15px] font-medium text-white"
-            handleClick={handleShowDeletePopup}
+            handleClick={() => setshowDeletePopup(true)}
           />
-          <CustomButton
-            title="Edit Details"
-            containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
-            textStyles="text-[15px] font-medium text-white"
-            handleClick={handleOpenEditUserPopup}
-          />{" "}
         </div>
+        {showDeletePopup && (
+          <DeleteUserPopup
+            handleClose={handleCloseConfrimationPopup}
+            username={userInfo.firstName}
+            email={userInfo.email}
+            callGetUsers={callGetUsers}
+            closeParent={handleClose}
+          />
+        )}
+        {showUpdatePasswordPopup && <UpdatePasswordPopup />} */}
       </div>
     </div>
   );
 }
 
-export default UserInfoPopup;
+export default EditUserPopup;

@@ -1,18 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { CustomButton } from ".";
 import { useSession } from "next-auth/react";
 
-function DeleteUserPopup({
-  handleClose,
-  username,
-  email,
-  callGetUsers,
-  closeParent,
-}: any) {
-  const { data: session, status } = useSession();
+function DeleteUserPopup({ handleClose, userInfo, callGetUsers }: any) {
+  const { email, firstName } = userInfo;
+  const { data: session } = useSession();
   const user: any = session?.user;
   const deleteUserFunction = async () => {
     const queryParams = new URLSearchParams({
@@ -29,7 +24,6 @@ function DeleteUserPopup({
         },
       });
       const status = response.status;
-      closeParent();
       callGetUsers();
       if (status == 200) {
         toast.success("user deleted", {
@@ -47,7 +41,6 @@ function DeleteUserPopup({
         throw new Error("something went wrong");
       }
     } catch (error) {
-      closeParent();
       toast.error("something went wrong", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 5000,
@@ -60,24 +53,17 @@ function DeleteUserPopup({
       });
       handleClose();
     } finally {
-      closeParent();
       handleClose();
     }
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-      <div className="modal w-[428px] h-[180px] rounded-[8px] flex justify-center items-center flex-col gap-8">
-        <Image
-          src="/close.svg"
-          alt="close"
-          width={24}
-          height={24}
-          className="close hover-white"
-          onClick={handleClose}
-        />
-        <h2 className="text-lg text-bold">
-          Confirm Delete User ({username}) ?
+    <div className="modal-overlay">
+      <div className="modal rounded-[8px] flex justify-center flex-col items-center px-6 py-4 w-[520px] shadow">
+        <Image src="/delete_red_icon.svg" alt="delete" width={80} height={80} />
+        <h2 className="text-lg text-bold text-center mb-6">
+          Are you sure you want to delete this user ({firstName})? This action
+          cannot be undone.
         </h2>
         <div className="flex justify-center items-center gap-6">
           <CustomButton

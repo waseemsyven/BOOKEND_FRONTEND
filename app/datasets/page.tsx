@@ -5,9 +5,16 @@ import Image from "next/image";
 import { formatCountWithLeadingZeros } from "@/utils";
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 function Page() {
-  const { data: session, status } = useSession();
+  const router = useRouter();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/signin");
+    },
+  });
   const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
   const [datasetsList, setdatasetsList] = useState<any>([]);
@@ -39,7 +46,7 @@ function Page() {
 
   useEffect(() => {
     getDataSetsList();
-  }, []);
+  }, [user]);
 
   return (
     <div className="h-full w-full bg-[#F7FAFB] rounded-bl-2xl overflow-y-scroll max-h-screen">

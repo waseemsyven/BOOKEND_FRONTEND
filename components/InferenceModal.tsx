@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { CustomButton } from ".";
-import { createDomainProps } from "@/types";
+import { useSession } from "next-auth/react";
 
-function InferenceModal({ handleClose }: createDomainProps) {
+function InferenceModal({ handleClose, filteredModel }: any) {
+  const { data: session } = useSession();
+  const user: any = session?.user;
   const [currentTab, setcurrentTab] = useState("js");
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/predict`;
   return (
     <div className="modal-overlay">
-      <div className="modal w-[1060px] h-[608px] rounded-[10px] shadow p-6">
+      <div className="modal w-[1060px] rounded-[10px] shadow p-6">
         <Image
           src="/close.svg"
           alt="close"
@@ -48,70 +50,50 @@ function InferenceModal({ handleClose }: createDomainProps) {
           </div>
         </div>
         {currentTab == "js" ? (
-          <div className="bg-fill my-6 border text-xs font-normal text-left pl-4 overflow-x-scroll p-4 max-h-[440px] overflow-y-scroll">
-            <h2 className="text-base font-medium">API Tokens</h2>
+          <div className="bg-fill my-6 border text-xs font-normal text-left overflow-x-scroll max-h-[440px] min-h-[340px] overflow-y-scroll ">
             <pre>
               <code>
                 {`
-  async function query(data) {
-    const response = await fetch(
-      "https://control-plane-gateway-44gp1iu3.uc.gateway.dev/syven-pdp/models/predict",
-      {
-        headers: { Authorization: "Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" },
-        method: "POST",
-        body: { 
-          model_id
-          task,
-          text,
-          question: "None",
-          context: "None",
-          instruction: "None",
-        }
-      }
-    );
-    const result = await response.json();
-    return result;
-  }
-  
-  query({"inputs": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct."}).then((response) => {
-      console.log(JSON.stringify(response));
-  });
-        `}
+ curl -X POST 
+ -H "Authorization: Basic xxxxtokenxxxx" 
+ -H "Content-Type: application/json" 
+ -d '{"text":"YOUR_INPUT_TEXT","question":null,"context":null,"instruction":null}' 
+ "https://control-plane-qomhxh6ofa-uc.a.run.app/syven-pdp/models/predict?model_id=${filteredModel.model_id}&task=summarization"
+              `}
               </code>
             </pre>
           </div>
         ) : (
-          <div className="bg-fill my-6 border text-xs font-normal text-left pl-4 overflow-x-scroll p-4 max-h-[440px] overflow-y-scroll">
-            <h2 className="text-base font-medium">API Tokens</h2>
+          <div className="bg-fill my-6 border text-xs font-normal text-left pl-4 overflow-x-scroll p-4 max-h-[340px] overflow-y-scroll">
+            {/* <h2 className="text-base font-medium">API Tokens</h2> */}
             <pre>
               <code>
                 {`
-  import requests
-
-  API_URL = "https://control-plane-qomhxh6ofa-uc.a.run.app/syven-pdp/models/predict"
-  headers = {"Authorization": "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
-  
-  def predict(model_id, task, text=None, question=None, context=None, instruction=None,
-  url=API_URL, domain=DOMAIN, path="/models/predict"):
-  try:
-  __predict_input_validation(task, text, question, context, instruction)
-  except Exception as e:
-  return str(e)
-
-  headers = AUTH_HEADER
-  params = {
-  "model_id": model_id,
-  "task": task.lower(),
-  "text": text,
-  "question": question,
-  "context": context,
-  "instruction": instruction
-  }
-  r = requests.request('GET', url+domain+path, headers=headers, params=params)
-  return r.text
-  output = query({
-  "inputs": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
-   })
+import requests
+url = "https://control-plane-qomhxh6ofa-uc.a.run.app/syven-pdp/models/predict"
+headers = {
+"Authorization": "Basic xxxxtokenxxxx",
+"Content-Type": "application/json",
+}
+data = {
+"text": "YOUR_INPUT_TEXT",
+"question": None,
+"context": None,
+"instruction": None,
+}
+params = {
+"model_id": "${filteredModel.model_id}",
+"task": "summarization",
+}
+response = requests.post(url, headers=headers, json=data, params=params)
+if response.status_code == 200:
+print("Request succeeded.")
+print("Response content:")
+print(response.text)
+else:
+print("Request failed with status code:", response.status_code)
+print("Response content:")
+print(response.text)
         `}
               </code>
             </pre>

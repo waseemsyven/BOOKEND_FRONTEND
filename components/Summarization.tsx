@@ -7,7 +7,7 @@ import InferenceModal from "./InferenceModal";
 import { useSession } from "next-auth/react";
 
 function Summarization({ filteredModel, task }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
   const [showModal, setshowModal] = useState(false);
   const [input, setinput] = useState("");
@@ -145,7 +145,12 @@ function Summarization({ filteredModel, task }: any) {
         textStyles="text-[15px] text-[#C0C0C0] font-medium"
         rightIcon="/history.svg"
       />
-      {showModal && <InferenceModal handleClose={handleClose} />}
+      {showModal && (
+        <InferenceModal
+          handleClose={handleClose}
+          filteredModel={filteredModel}
+        />
+      )}
     </div>
   );
 }

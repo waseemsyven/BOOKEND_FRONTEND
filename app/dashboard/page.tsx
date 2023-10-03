@@ -9,10 +9,17 @@ import {
   Navbar,
 } from "@/components";
 import { useEffect, useState } from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const { data: session, status } = useSession();
+  const router = useRouter();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/signin");
+    },
+  });
   const user: any = session?.user;
 
   const [modelList, setmodelList] = useState<any>([]);
@@ -42,7 +49,7 @@ const Page = () => {
 
   useEffect(() => {
     getModelsList();
-  }, []);
+  }, [user]);
 
   if (false) {
     return (

@@ -35,7 +35,7 @@ export default function DatasetsDropdown({
 
   useEffect(() => {
     getDataSets();
-  }, []);
+  }, [user]);
 
   return (
     <div className="dropdown">

@@ -30,12 +30,12 @@ function Page({ params }: any) {
 
   useEffect(() => {
     getModelsList();
-  }, []);
+  }, [user]);
 
   const filteredModel = modelList.find(
     (model: any) => model.model_id === model_id
   );
-
+  
   return (
     <div className="h-full w-full bg-fill overflow-y-scroll max-h-screen">
       <ModalStateCard model={filteredModel} />

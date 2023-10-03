@@ -2,10 +2,10 @@
 import { ModalStateCard } from "@/components";
 import React, { useEffect, useState } from "react";
 import ModelMetrics from "@/components/ModelMetrics";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 function Page({ params }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
   const { model_id } = params;
   const [modelList, setModelList] = useState<any>([]);
@@ -35,7 +35,7 @@ function Page({ params }: any) {
   const filteredModel = modelList.find(
     (model: any) => model.model_id === model_id
   );
-  
+
   return (
     <div className="h-full w-full bg-fill overflow-y-scroll max-h-screen">
       <ModalStateCard model={filteredModel} />

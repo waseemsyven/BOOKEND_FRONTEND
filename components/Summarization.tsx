@@ -5,7 +5,7 @@ import { CustomButton } from ".";
 import { toast } from "react-toastify";
 import InferenceModal from "./InferenceModal";
 
-function Summarization({ filteredModel, task }: any) {
+function Summarization({ filteredModel }: any) {
   const [showModal, setshowModal] = useState(false);
   const [input, setinput] = useState("");
   const [output, setoutput] = useState("");
@@ -20,16 +20,16 @@ function Summarization({ filteredModel, task }: any) {
         model_id: filteredModel.model_id,
         task: "summarization",
       });
- 
+
       const body = JSON.stringify({
         text: input,
         question: null,
         context: null,
         instruction: null,
       });
- 
+
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/models/predict?${queryParams}`;
- 
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ function Summarization({ filteredModel, task }: any) {
         },
         body,
       });
- 
+
       const data = await response.json();
       setoutput(data[0].summary);
       toast.success("Computation Completed", {
@@ -142,7 +142,12 @@ function Summarization({ filteredModel, task }: any) {
         textStyles="text-[15px] text-[#C0C0C0] font-medium"
         rightIcon="/history.svg"
       />
-      {showModal && <InferenceModal handleClose={handleClose} />}
+      {showModal && (
+        <InferenceModal
+          handleClose={handleClose}
+          filteredModel={filteredModel}
+        />
+      )}
     </div>
   );
 }

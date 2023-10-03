@@ -134,7 +134,7 @@ function ModalStateCard({ model }: any) {
                 textStyles="text-[15px] font-medium text-white"
                 leftIcon="/rocket.svg"
                 rightIcon="/arrow_down.svg"
-                isDisabled={loading}
+                isDisabled={loading || !isTrained}
                 handleClick={() => deployModelFunction()}
               />
             ) : (

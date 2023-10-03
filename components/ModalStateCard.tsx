@@ -2,21 +2,13 @@
 import React, { useState } from "react";
 import { CustomButton, TrainModelPopup } from ".";
 import { toast } from "react-toastify";
-import DeployPopup from "./DeployPopup";
-import { useSession } from "next-auth/react";
 
 function ModalStateCard({ model }: any) {
-  const { data: session, status } = useSession();
-  const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isDeployPopupOpen, setisDeployPopupOpen] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
-  };
-  const handleCloseDeploy = () => {
-    setisDeployPopupOpen(false);
   };
 
   const isTrained = model && model.status && model.status == "TRAINED";
@@ -24,7 +16,7 @@ function ModalStateCard({ model }: any) {
   const isDeploying = model && model.status && model.status == "DEPLOYING";
   const isDeployed = model && model.status && model.status == "DEPLOYED";
 
-  const deployModelFunction = async (Tier: any) => {
+  const deployModelFunction = async () => {
     if (isDeployed) {
       toast.success("Model is Already Deployed!", {
         position: "top-right",
@@ -56,16 +48,16 @@ function ModalStateCard({ model }: any) {
       const queryParams = new URLSearchParams({
         model_id: model.model_id,
         task: model.task,
-        tier: Tier,
+        tier: "silver",
         sync: "false",
       });
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/deploy?${queryParams}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
         {
           method: "POST",
           headers: {
-            Authorization: `Basic ${user.token}`,
+            Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
             "Content-Type": "application/json",
           },
         }
@@ -82,14 +74,11 @@ function ModalStateCard({ model }: any) {
           progress: undefined,
           theme: "light",
         });
-        setisDeployPopupOpen(false);
         setLoading(false);
       } else {
-        setisDeployPopupOpen(false);
         throw new Error(`something went wrong`);
       }
     } catch (error) {
-      setisDeployPopupOpen(false);
       toast.error("something went wrong", {
         position: "top-right",
         autoClose: 5000,
@@ -103,7 +92,6 @@ function ModalStateCard({ model }: any) {
       setLoading(false);
       console.error("Error fetching data:", error);
     } finally {
-      setisDeployPopupOpen(false);
       setLoading(false);
     }
   };
@@ -146,8 +134,8 @@ function ModalStateCard({ model }: any) {
                 textStyles="text-[15px] font-medium text-white"
                 leftIcon="/rocket.svg"
                 rightIcon="/arrow_down.svg"
-                isDisabled={loading || !isTrained}
-                handleClick={() => setisDeployPopupOpen(true)}
+                isDisabled={loading}
+                handleClick={() => deployModelFunction()}
               />
             ) : (
               <CustomButton
@@ -157,7 +145,7 @@ function ModalStateCard({ model }: any) {
                 leftIcon="/rocket.svg"
                 rightIcon="/arrow_down.svg"
                 isDisabled={loading}
-                handleClick={() => setisDeployPopupOpen(true)}
+                handleClick={() => deployModelFunction()}
               />
             )}
           </div>
@@ -185,12 +173,9 @@ function ModalStateCard({ model }: any) {
           </div>
           <div className="flex flex-col items-center gap-2">
             <h2 className="font-normal border-r-2 w-full text-center border-[#C0C0C0] text-xs text-[#666] px-8">
-              Base Model
+              Added-on
             </h2>
-            <p className="font-medium text-xs text-black px-8 capitalize">
-              {" "}
-              {model.base_model ? model.base_model.toLowerCase() : "NA"}
-            </p>
+            <p className="font-medium text-xs text-black px-8">NA</p>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -217,16 +202,6 @@ function ModalStateCard({ model }: any) {
           handleClose={handleClose}
           modelName={model.model_name}
           task={model.task}
-        />
-      )}
-      {isDeployPopupOpen && (
-        <DeployPopup
-          handleClose={handleCloseDeploy}
-          baseModel={model.base_model}
-          modelName={model.model_name}
-          task={model.task}
-          datasetName={model.dataset_name}
-          deployModelFunction={deployModelFunction}
         />
       )}
     </div>

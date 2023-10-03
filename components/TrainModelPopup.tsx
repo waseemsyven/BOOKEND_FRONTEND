@@ -144,7 +144,7 @@ function TrainModelPopup({ handleClose, modelName, task }: any) {
         </div>
         <div className="justify-center items-end flex py-4 w-full h-[220px]">
           <CustomButton
-            title="Train Now"
+            title="Train"
             containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-2 hover-blue w-[153px]"
             textStyles="text-[15px] font-medium text-white"
             handleClick={() => trainModelFunction()}

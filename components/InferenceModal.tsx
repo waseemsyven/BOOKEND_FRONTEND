@@ -87,13 +87,12 @@ params = {
 }
 response = requests.post(url, headers=headers, json=data, params=params)
 if response.status_code == 200:
-print("Request succeeded.")
-print("Response content:")
-print(response.text)
+    print("Request succeeded.")
+    print(response.text)
 else:
-print("Request failed with status code:", response.status_code)
-print("Response content:")
-print(response.text)
+    print("Request failed with status code:", response.status_code)
+    print("Response content:")
+    print(response.text)
         `}
               </code>
             </pre>

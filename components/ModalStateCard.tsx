@@ -173,9 +173,12 @@ function ModalStateCard({ model }: any) {
           </div>
           <div className="flex flex-col items-center gap-2">
             <h2 className="font-normal border-r-2 w-full text-center border-[#C0C0C0] text-xs text-[#666] px-8">
-              Added-on
+              Base model
             </h2>
-            <p className="font-medium text-xs text-black px-8">NA</p>
+            <p className="font-medium text-xs text-black px-8">
+              {" "}
+              {model.base_model ? model.base_model : "NA"}
+            </p>
           </div>
 
           <div className="flex flex-col items-center gap-2">

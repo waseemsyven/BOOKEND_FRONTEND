@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import LineChart from "./LineChart";
 import BarChart from "./BarChart";
 import LineChartMultiple from "./LineChartMultiple";
+
 // const LineChart = dynamic(import("./LineChart"), {
 //   ssr: false,
 // });
@@ -22,7 +23,7 @@ interface Graph {
 }
 
 function ModelOverview({ filteredModel, timeDuration }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
 
   const [graphData, setGraphData] = useState<any>([]);

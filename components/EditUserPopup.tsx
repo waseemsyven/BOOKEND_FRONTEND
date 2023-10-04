@@ -5,17 +5,57 @@ import { CustomButton } from ".";
 import DeleteUserPopup from "./DeleteUserPopup";
 import UpdatePasswordPopup from "./UpdatePasswordPopup";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
-  const [showDeletePopup, setshowDeletePopup] = useState(false);
-  const [showUpdatePasswordPopup, setshowUpdatePasswordPopup] = useState(false);
-  const handleCloseConfrimationPopup = () => {
-    setshowDeletePopup(false);
-  };
 
   const [userDetails, setuserDetails] = useState<any>();
+
+  const updateUserDetails = async () => {
+    try {
+      const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/${user.domain}/users/update`;
+      const updatedData = {
+        email: "update@gmail.com",
+        password: "updated",
+      };
+      const res = await fetch(apiUrl, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${user.token}`,
+        },
+      });
+
+      if (res.ok) {
+        toast.success("User Details Updated", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      toast.error("something went wrong", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.error("API request error:", error);
+      return null;
+    }
+  };
 
   const getUserDetails = async () => {
     try {
@@ -95,7 +135,7 @@ function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
             title="Update"
             containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
             textStyles="text-[15px] font-medium text-white"
-            // handleClick={() => setshowUpdatePasswordPopup(true)}
+            handleClick={updateUserDetails}
           />{" "}
         </div>
 

@@ -3,21 +3,28 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-const LineChart = dynamic(import("./LineChart"), {
-  ssr: false,
-});
-const BarChart = dynamic(import("./BarChart"), {
-  ssr: false,
-});
-const LineChartMultiple = dynamic(import("./LineChartMultiple"), {
-  ssr: false,
-});
+import { useSession } from "next-auth/react";
+import LineChart from "./LineChart";
+import BarChart from "./BarChart";
+import LineChartMultiple from "./LineChartMultiple";
+// const LineChart = dynamic(import("./LineChart"), {
+//   ssr: false,
+// });
+// const BarChart = dynamic(import("./BarChart"), {
+//   ssr: false,
+// });
+// const LineChartMultiple = dynamic(import("./LineChartMultiple"), {
+//   ssr: false,
+// });
 
 interface Graph {
   [key: string]: any;
 }
 
 function ModelOverview({ filteredModel, timeDuration }: any) {
+  const { data: session, status } = useSession();
+  const user: any = session?.user;
+
   const [graphData, setGraphData] = useState<any>([]);
 
   const groupBy = (array: any, key: any) => {
@@ -46,7 +53,6 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
     let seconds = "0" + date.getSeconds();
     let formatTime = hours + ":" + minutes.substr(-2);
     return formatTime;
-    //return new Date(start_time * 1000).toLocaleTimeString()
   };
 
   const formatData = (data: any) => {
@@ -87,24 +93,25 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
   const getMetrics = async () => {
     let timeDuration = getTimeDuration();
     let request = {
-      metric_filters: "",
+      metric_filters:
+        "aiplatform.googleapis.com/prediction/online/accelerator/duty_cycle,aiplatform.googleapis.com/prediction/online/accelerator/memory/bytes_used,aiplatform.googleapis.com/prediction/online/cpu/utilization,aiplatform.googleapis.com/prediction/online/error_count,aiplatform.googleapis.com/prediction/online/memory/bytes_used,aiplatform.googleapis.com/prediction/online/network/received_bytes_count,aiplatform.googleapis.com/prediction/online/network/sent_bytes_count,aiplatform.googleapis.com/prediction/online/prediction_count,aiplatform.googleapis.com/prediction/online/private/response_count,aiplatform.googleapis.com/prediction/online/replicas,aiplatform.googleapis.com/prediction/online/response_count,aiplatform.googleapis.com/prediction/online/target_replicas",
       endpoint_filters: filteredModel.endpoint_id,
     };
     let requestObject = Object.assign(request, timeDuration);
     try {
       const queryParams = new URLSearchParams(requestObject);
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/metrics/get-metrics?${queryParams}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/metrics/get-metrics?${queryParams}`;
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+          Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });
       const data = await response.json();
       let grouped = groupBy(data, "metric");
       let graphData = formatData(grouped);
-      setGraphData(graphData);
+            setGraphData(graphData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

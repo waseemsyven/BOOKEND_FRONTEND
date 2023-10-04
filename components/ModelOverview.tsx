@@ -111,7 +111,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
       const data = await response.json();
       let grouped = groupBy(data, "metric");
       let graphData = formatData(grouped);
-            setGraphData(graphData);
+      setGraphData(graphData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -119,7 +119,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
 
   useEffect(() => {
     getMetrics();
-  });
+  }, []);
 
   return (
     <div className="grid grid-cols-3 mx-6 my-4 gap-4">

@@ -8,7 +8,6 @@ import dynamic from "next/dynamic";
 import NoDataContainer from "./NoDataContainer";
 
 function BarChart({ type, data }: any) {
-  console.log("barchart caleed");
   let color = "#92B2FC";
   if (type == "error_count") {
     color = "#D71E28";

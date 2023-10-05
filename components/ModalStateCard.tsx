@@ -2,8 +2,11 @@
 import React, { useState } from "react";
 import { CustomButton, TrainModelPopup } from ".";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 function ModalStateCard({ model }: any) {
+  const { data: session } = useSession();
+  const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -53,11 +56,11 @@ function ModalStateCard({ model }: any) {
       });
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/models/deploy?${queryParams}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/deploy?${queryParams}`,
         {
           method: "POST",
           headers: {
-            Authorization: `Basic ${process.env.NEXT_PUBLIC_BOOKEND_TOKEN}`,
+            Authorization: `Basic ${user.token}`,
             "Content-Type": "application/json",
           },
         }

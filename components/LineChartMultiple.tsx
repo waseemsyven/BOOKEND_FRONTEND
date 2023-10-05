@@ -8,9 +8,6 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 });
 
 function LineChartMultiple({ type, data }: any) {
-  useEffect(() => {
-    console.log(data);
-  });
   return (
     <>
       <Plot

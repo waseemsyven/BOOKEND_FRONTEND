@@ -1,6 +1,10 @@
 "use client";
+const Plot = dynamic(() => import("react-plotly.js"), {
 
-import Plot from "react-plotly.js";
+  ssr: false,
+
+});
+import dynamic from "next/dynamic";
 import NoDataContainer from "./NoDataContainer";
 
 function BarChart({ type, data }: any) {

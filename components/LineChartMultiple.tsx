@@ -1,7 +1,11 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
-import Plot from 'react-plotly.js';
+const Plot = dynamic(() => import("react-plotly.js"), {
+ssr: false,
+
+});
 
 function LineChartMultiple({ type, data }: any) {
   useEffect(() => {

@@ -95,7 +95,7 @@ function UserInfoPopup({
             handleClick={handleShowDeletePopup}
           />
           <CustomButton
-            title="Edit Details"
+            title="Update Password"
             containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
             textStyles="text-[15px] font-medium text-white"
             handleClick={handleOpenEditUserPopup}

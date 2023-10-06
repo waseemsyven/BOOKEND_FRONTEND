@@ -35,12 +35,12 @@ function ModelLogs({ filteredModel }: any) {
 
   useEffect(() => {
     getModelLogs();
-  }, []);
+  }, [session]);
 
   if (!filteredModel.status) {
     return (
-      <h2 className="text-sm font-semibold">
-        No Logs available for this model
+      <h2 className="text-sm font-semibold h-40">
+        No Logs available for this model!
       </h2>
     );
   }
@@ -52,7 +52,7 @@ function ModelLogs({ filteredModel }: any) {
   }
 
   return (
-    <div className="h-full w-full p-4">
+    <div className="h-full w-full p-4 rounded-[8px]">
       <div className="flex justify-start items-center gap-6 mb-2">
         <Image
           src="/account_tree.svg"

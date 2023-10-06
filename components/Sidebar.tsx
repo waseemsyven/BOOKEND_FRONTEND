@@ -148,7 +148,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 className="object-contain py-4"
               />
               {isHovered && (
-                <h2 className="text-[13px] font-semibold text-white ml-3">
+                <h2 className="text-[13px] font-semibold text-white ml-3 capitalize">
                   {user && user.first_name}
                 </h2>
               )}

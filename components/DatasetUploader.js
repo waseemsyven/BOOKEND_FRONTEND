@@ -3,8 +3,12 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 function DatasetUploader({ handleClose, getDataSetsList }) {
+  const { data: session } = useSession();
+  const user = session?.user;
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setisUploading] = useState(false);
   const fileInputRef = useRef(null);

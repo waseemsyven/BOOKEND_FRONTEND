@@ -4,7 +4,7 @@ import { ModelLogs, ModelOverview, QuestionAnswering, Summarization } from ".";
 import ModelStateLoader from "./ModelStateLoader";
 
 function ModelMetrics({ filteredModel }: any) {
-  const [currentTab, setcurrentTab] = useState("history");
+  const [currentTab, setcurrentTab] = useState("overview");
   const [selectedTime, setSelectedTime] = useState<any>(60);
   return (
     <>
@@ -51,15 +51,6 @@ function ModelMetrics({ filteredModel }: any) {
               <option value={90}>Last 90 Mins</option>
               <option value={120}>Last 2 Hours</option>
             </select>
-            {/* <div className="border rounded-[4px] cursor-pointer">
-              <Image
-                src="/more_vert.svg"
-                alt="more"
-                width={28}
-                height={28}
-                className="object-contain py-2"
-              />
-            </div> */}
           </>
         ) : currentTab === "history" ? (
           ""

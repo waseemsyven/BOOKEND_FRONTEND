@@ -1,36 +1,52 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { CustomButton } from ".";
-import DeleteUserPopup from "./DeleteUserPopup";
-import UpdatePasswordPopup from "./UpdatePasswordPopup";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
+function EditUserPopup({ handleClose, userInfo }: any) {
+  const { email } = userInfo;
   const { data: session } = useSession();
   const user: any = session?.user;
+  const [passwordOne, setpasswordOne] = useState("");
+  const [passwordTwo, setpasswordTwo] = useState("");
 
-  const [userDetails, setuserDetails] = useState<any>();
+  const isDisabled = !passwordTwo || !passwordOne;
+  const updateUserPassword = async () => {
+    if (passwordTwo !== passwordOne) {
+      toast.error(
+        "Please ensure that the new password and confirm new password fields match exactly.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
 
-  const updateUserDetails = async () => {
     try {
       const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/${user.domain}/users/update`;
-      const updatedData = {
-        email: "update@gmail.com",
-        password: "updated",
+      const payload = {
+        email: email,
+        password: passwordTwo,
       };
       const res = await fetch(apiUrl, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
           Authorization: `Basic ${user.token}`,
         },
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
-        toast.success("User Details Updated", {
+        toast.success("User Password Updated", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -41,6 +57,7 @@ function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
           theme: "light",
         });
       }
+      handleClose();
     } catch (error) {
       toast.error("something went wrong", {
         position: "top-right",
@@ -57,37 +74,6 @@ function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
     }
   };
 
-  const getUserDetails = async () => {
-    try {
-      const apiUrl = `https://control-plane-qomhxh6ofa-uc.a.run.app/${user.domain}/users/get?email=${userInfo.email}`;
-      const res = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${user.token}`,
-        },
-      });
-
-      if (res.ok) {
-        const user = await res.json();
-        setuserDetails(user);
-      } else {
-        return null;
-      }
-    } catch (error) {
-      console.error("API request error:", error);
-      return null;
-    }
-  };
-
-  const originalDateTimeString = userDetails?.registration_timestamp;
-  const dateTime = new Date(originalDateTimeString);
-  const formattedDateTime = dateTime.toLocaleString();
-
-  useEffect(() => {
-    getUserDetails();
-  }, []);
-
   return (
     <div className="modal-overlay">
       <div className="modal rounded-[8px] flex justify-start flex-col items-start px-8 py-6 w-[884px] shadow">
@@ -99,35 +85,27 @@ function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
           className="close hover-white"
           onClick={handleClose}
         />
-        <h2 className="text-lg font-medium">Edit User Details</h2>
-        <div className="grid px-8 grid-cols-2 py-4 gap-4">
-          {" "}
-          <div className="input-secondary-container my-4">
-            <h3>First Name</h3>
+        <h2 className="text-lg font-medium">Update User Password</h2>
+        <div className="px-8 py-4 my-4 flex justify-center w-full gap-4">
+          <div className="input-secondary-container">
+            <h3>New Password</h3>
             <input
+              placeholder="New Password"
+              type="password"
               className="input-secondary"
-              value={userDetails && userDetails.first_name}
-            />
-          </div>
-          <div className="input-secondary-container my-4">
-            <h3>Last Name</h3>
-            <input
-              placeholder="Enter model name"
-              className="input-secondary"
-              value={userDetails && userDetails.last_name}
+              value={passwordOne}
+              onChange={(e) => setpasswordOne(e.target.value)}
             />
           </div>
           <div className="input-secondary-container">
-            <h3>Email</h3>
+            <h3>Confirm New Password</h3>
             <input
-              placeholder="Email"
+              placeholder="Confirm New Password"
+              type="password"
               className="input-secondary"
-              value={userInfo.email}
+              value={passwordTwo}
+              onChange={(e) => setpasswordTwo(e.target.value)}
             />
-          </div>
-          <div className="input-secondary-container">
-            <h3>Added On</h3>
-            <input className="input-secondary" value={formattedDateTime} />
           </div>
         </div>
         <div className="flex justify-around items-center w-full mt-6">
@@ -135,40 +113,10 @@ function EditUserPopup({ handleClose, userInfo, callGetUsers }: any) {
             title="Update"
             containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
             textStyles="text-[15px] font-medium text-white"
-            handleClick={updateUserDetails}
+            handleClick={updateUserPassword}
+            isDisabled={isDisabled}
           />{" "}
         </div>
-
-        {/* <div className="p-4 text-base font-medium mb-4">
-          {" "}
-          <h2>{`Email: ${userInfo.email}`}</h2>
-          <h2>{`First Name: ${userInfo.firstName}`}</h2>
-          <h2>{`Last Name: ${userInfo.lastName}`}</h2>
-        </div>
-        <div className="flex justify-between items-center gap-2">
-          <CustomButton
-            title="Update Password"
-            containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
-            textStyles="text-[15px] font-medium text-white"
-            handleClick={() => setshowUpdatePasswordPopup(true)}
-          />{" "}
-          <CustomButton
-            title="Delete User"
-            containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-4"
-            textStyles="text-[15px] font-medium text-white"
-            handleClick={() => setshowDeletePopup(true)}
-          />
-        </div>
-        {showDeletePopup && (
-          <DeleteUserPopup
-            handleClose={handleCloseConfrimationPopup}
-            username={userInfo.firstName}
-            email={userInfo.email}
-            callGetUsers={callGetUsers}
-            closeParent={handleClose}
-          />
-        )}
-        {showUpdatePasswordPopup && <UpdatePasswordPopup />} */}
       </div>
     </div>
   );

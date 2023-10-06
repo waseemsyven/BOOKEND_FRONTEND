@@ -46,11 +46,7 @@ export const formatData = (data: any) => {
             ""
         );
         if (["replicas", "target_replicas"].indexOf(newKey) != -1) {
-            finalGraphObj[newKey] = newob[key]
-                .map((r: any) => {
-                    return r.value;
-                })
-                .pop();
+            finalGraphObj[newKey] = { value: newob[key].map((r: any) => { return r.value;}).pop(), time: new Date( newob[key].map((r: any) => { return r.start_time;}).pop() * 1000 ).toLocaleTimeString() }; //newob[key].map((r: any) => { return r.value;}).pop();
         } else if (["cpu/utilization"].indexOf(newKey) != -1) {
             finalGraphObj[newKey] = {
                 y: newob[key].map((r: any) => {

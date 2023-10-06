@@ -21,6 +21,7 @@ import CreateUserPopup from './CreateUserPopup'
 import UserInfoPopup from './UserInfoPopup'
 import ViewAllUsersPopup from "./VeiwAllUsersPopup";
 import EditUserPopup from "./EditUserPopup";
+import ModelLogs from "./ModelLogs";
 
 export {
   HeroCard,
@@ -45,6 +46,8 @@ export {
   CreateUserPopup,
   UserInfoPopup,
   ViewAllUsersPopup,
-  EditUserPopup
+  EditUserPopup,
+  ModelLogs
+  
 
 };

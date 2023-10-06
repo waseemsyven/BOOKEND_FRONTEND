@@ -9,10 +9,8 @@ function BarChart({ type, data }: any) {
     color = "#D71E28";
   }
   if (type == "prediction_count") color = "#6490F7";
-
   return (
     <>
-      {data && (
         <Plot
           data={[
             {
@@ -21,7 +19,7 @@ function BarChart({ type, data }: any) {
               marker: { color: color },
             },
           ]}
-          config={{ displayModeBar: false }}
+          config={{ displayModeBar: false, responsive: true }}
           layout={{
             width: 500,
             height: 300,
@@ -33,13 +31,12 @@ function BarChart({ type, data }: any) {
             yaxis: {
               autorange: true,
               showline: false,
+              dtick: 1,
               showgrid: false,
+              ticks: 'outside'
             },
           }}
         />
-      )}
-
-      {!data && <NoDataContainer />}
     </>
   );
 }

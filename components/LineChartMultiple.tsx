@@ -34,7 +34,7 @@ function LineChartMultiple({ type, data }: any) {
             connectgaps: true
           }
         ]}
-        config={{ 'displayModeBar': false }}
+        config={{ 'displayModeBar': false, responsive: true }}
         layout={{
           autosize: false, width: 500, height: 300, title: 'demo', xaxis: {
             autorange: 'reversed',
@@ -46,6 +46,8 @@ function LineChartMultiple({ type, data }: any) {
             autorange: true,
             showline: false,
             showgrid: false,
+            ticks: 'outside',
+              tick0:0,
           }, margin: { t: 0 }
         }}
       />

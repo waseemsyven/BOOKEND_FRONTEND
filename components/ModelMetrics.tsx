@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { ModelOverview, QuestionAnswering, Summarization } from ".";
 import ModelStateLoader from "./ModelStateLoader";
+import {forwardRef, useImperativeHandle, useRef} from 'react';
 
 function ModelMetrics({ filteredModel }: any) {
   const [currentTab, setcurrentTab] = useState("overview");
-  const [selectedTime, setSelectedTime] = useState<any>(60);
+  const [selectedTime, setSelectedTime] = useState<any>(10);
+  const setTimeAndRetriveGraph = (duration:any) => {
+    setSelectedTime(duration)
+  }
+  
   return (
     <>
       <div className="flex justify-between items-center my-4 px-6">
@@ -35,22 +39,13 @@ function ModelMetrics({ filteredModel }: any) {
         )}
         {filteredModel && filteredModel.model_name ? (
           <>
-            <select defaultValue="10" onChange={(val) => setSelectedTime(val.target.value)} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select defaultValue="10" onChange={(val) => setTimeAndRetriveGraph(val.target.value) } id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option value={10}>Last 10 Mins</option>
               <option value={30}>Last 30 Mins</option>
               <option value={60}>Last 1 Hour</option>
               <option value={90}>Last 90 Mins</option>
               <option value={120}>Last 2 Hours</option>
             </select>
-            {/* <div className="border rounded-[4px] cursor-pointer">
-              <Image
-                src="/more_vert.svg"
-                alt="more"
-                width={28}
-                height={28}
-                className="object-contain py-2"
-              />
-            </div> */}
           </>
         ) : (
           <div className="h-12 w-[100px] bg-gray-200 rounded animate-pulse"></div>
@@ -87,46 +82,7 @@ function ModelMetrics({ filteredModel }: any) {
                 className={`text-black  cursor-pointer font-semibold text-base flex`}
                 onClick={() => setcurrentTab("overview")}
               >
-                Deployment History
-                <Image
-                  src="/rocket_filled.svg"
-                  alt="more"
-                  width={17}
-                  height={17}
-                  className="object-contain ml-2"
-                />
-              </div>
-              <div
-                className={`text-[#464646] cursor-pointer ${currentTab === "history"
-                    ? "font-semibold text-base flex"
-                    : "font-medium text-base"
-                  }`}
-                onClick={() => setcurrentTab("history")}
-              >
-                Training History
-                <Image
-                  src="/bolt_filled.svg"
-                  alt="more"
-                  width={17}
-                  height={17}
-                  className="object-contain ml-2"
-                />
-              </div>
-              <div
-                className={`text-[#464646] cursor-pointer ${currentTab === "history"
-                    ? "font-semibold text-base flex"
-                    : "font-medium text-base"
-                  }`}
-                onClick={() => setcurrentTab("history")}
-              >
-                Request History{" "}
-                <Image
-                  src="/history.svg"
-                  alt="more"
-                  width={17}
-                  height={17}
-                  className="object-contain ml-2"
-                />
+                
               </div>
             </div>
           ) : (

@@ -23,7 +23,7 @@ function LineChart({ type, data }: any) {
               },
             },
           ]}
-          config={{ displayModeBar: false }}
+          config={{ displayModeBar: false, responsive: true }}
           layout={{
             width: 550,
             hovermode: "closest",
@@ -42,6 +42,8 @@ function LineChart({ type, data }: any) {
               showgrid: false,
               zeroline: false,
               autotick: true,
+              ticks: 'outside',
+              tick0:0,
             },
             margin: { t: 0 },
           }}

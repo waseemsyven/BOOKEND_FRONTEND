@@ -1,11 +1,8 @@
 "use client";
 const Plot = dynamic(() => import("react-plotly.js"), {
-
   ssr: false,
-
 });
 import dynamic from "next/dynamic";
-import NoDataContainer from "./NoDataContainer";
 
 function BarChart({ type, data }: any) {
   let color = "#92B2FC";
@@ -15,32 +12,32 @@ function BarChart({ type, data }: any) {
   if (type == "prediction_count") color = "#6490F7";
   return (
     <>
-        <Plot
-          data={[
-            {
-              ...data,
-              type: "bar",
-              marker: { color: color },
-            },
-          ]}
-          config={{ displayModeBar: false, responsive: true }}
-          layout={{
-            width: 500,
-            height: 300,
-            xaxis: {
-              autorange: "reversed",
-              showline: false,
-              showgrid: false,
-            },
-            yaxis: {
-              autorange: true,
-              showline: false,
-              dtick: 1,
-              showgrid: false,
-              ticks: 'outside'
-            },
-          }}
-        />
+      <Plot
+        data={[
+          {
+            ...data,
+            type: "bar",
+            marker: { color: color },
+          },
+        ]}
+        config={{ displayModeBar: false, responsive: true }}
+        layout={{
+          width: 500,
+          height: 300,
+          xaxis: {
+            autorange: "reversed",
+            showline: false,
+            showgrid: false,
+          },
+          yaxis: {
+            autorange: true,
+            showline: false,
+            dtick: 1,
+            showgrid: false,
+            ticks: "outside",
+          },
+        }}
+      />
     </>
   );
 }

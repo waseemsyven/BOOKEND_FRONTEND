@@ -1,9 +1,7 @@
 "use client";
 
 const Plot = dynamic(() => import("react-plotly.js"), {
-
   ssr: false,
-
 });
 import dynamic from "next/dynamic";
 import NoDataContainer from "./NoDataContainer";
@@ -47,8 +45,8 @@ function LineChart({ type, data }: any) {
               showgrid: false,
               zeroline: false,
               autotick: true,
-              ticks: 'outside',
-              tick0:0,
+              ticks: "outside",
+              tick0: 0,
             },
             margin: { t: 0 },
           }}

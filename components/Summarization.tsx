@@ -7,11 +7,14 @@ import InferenceModal from "./InferenceModal";
 import { useSession } from "next-auth/react";
 
 function Summarization({ filteredModel }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
   const [showModal, setshowModal] = useState(false);
   const [input, setinput] = useState("");
   const [output, setoutput] = useState("");
+  const isDeployed = filteredModel.status == "DEPLOYED";
+
+  const isComputeDisabled = !isDeployed || !input;
 
   const handleClose = () => {
     setshowModal(false);
@@ -119,6 +122,7 @@ function Summarization({ filteredModel }: any) {
               containerStyles="bg-dark-blue rounded-[6px] gap-2 hover-blue py-2 px-4"
               textStyles="text-[16px] font-medium text-white"
               handleClick={() => predictFunction()}
+              isDisabled={isComputeDisabled}
             />
             <textarea
               className="w-full bg-[#F5F9FF] h-40 border rounded-sm flex items-start p-2"

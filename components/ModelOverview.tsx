@@ -7,14 +7,21 @@ import { useRouter } from "next/navigation";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import LineChartMultiple from "./LineChartMultiple";
-import { getTimeDuration, formatData, getChartTypes } from './../utils/chartFunctions';
-
+import {
+  getTimeDuration,
+  formatData,
+  getChartTypes,
+} from "./../utils/chartFunctions";
 
 function useInterval(callback: any, delay: number) {
   const savedCallback = useRef(() => {});
-  useEffect(() => { savedCallback.current = callback; }, [callback]);
   useEffect(() => {
-    function func() { savedCallback.current() }
+    savedCallback.current = callback;
+  }, [callback]);
+  useEffect(() => {
+    function func() {
+      savedCallback.current();
+    }
     if (delay !== null) {
       let id = setInterval(func, delay);
       return () => clearInterval(id);
@@ -32,9 +39,9 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
   const user: any = session?.user;
   const router = useRouter();
   const [graphData, setGraphData] = useState<any>([]);
-  const [interval, setInterval] = useState(0); 
+  const [interval, setInterval] = useState(0);
 
-  const getMetrics = async (timeDuration:number) => {
+  const getMetrics = async (timeDuration: number) => {
     let timeDurationForAPI = getTimeDuration(timeDuration, false);
     let request = {
       metric_filters: getChartTypes(false),
@@ -42,7 +49,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
     };
     let requestObject = Object.assign(request, timeDurationForAPI) as any;
     try {
-      const queryParams = new URLSearchParams(requestObject)
+      const queryParams = new URLSearchParams(requestObject);
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/metrics/get-metrics?${queryParams}`;
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -61,17 +68,14 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
 
   useInterval(() => {
     getMetrics(timeDuration);
-  }, 1000 * 30)
+  }, 1000 * 30);
 
   useEffect(() => {
     getMetrics(timeDuration);
   }, [timeDuration]);
 
-  
-
   return (
     <>
-
       <div className="grid grid-cols-3 mx-6 my-4 gap-4">
         {Object.keys(graphData).length == 0 &&
           Array.from(Array(8).keys()).map((key) => {

@@ -1,0 +1,18 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- release/UAT
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: vercel-deployment-task@1
+  inputs:
+    vercelProjectId: 'prj_JjT79BMz2GrIhvu3t4cLeD5s2Sq3'
+    vercelOrgId: 'ZykkNZZsUwWtT3EeKOr7fhNn'
+    vercelToken: $(VERCEL_TOKEN)
+    production: true

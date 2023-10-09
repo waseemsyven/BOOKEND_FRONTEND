@@ -107,7 +107,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 key={key}
                 className="p-6 bg-white border border-gray-200 rounded-lg shadow"
               >
-                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
+                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
                   {graph.label}
                 </h5>
                 <BarChart type={name} data={graphData[graph.name]} />
@@ -118,7 +118,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
         {Object.keys(graphData).length > 0 &&
           [
             { name: "cpu/utilization", label: "CPU Utilization" },
-            { name: "memory/bytes_used", label: "Memory Utilization" },
+            { name: "memory/bytes_used", label: "Memory Utilization (Mb)" },
             // { name: "accelerator/duty_cycle", label: "Accelerator Duty Cycle" },
             // {
             //   name: "accelerator/memory/bytes_used",
@@ -131,7 +131,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 key={key}
                 className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow "
               >
-                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
+                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
                   {graph.label}
                 </h5>
                 <LineChart type={graph.name} data={graphData[graph.name]} />
@@ -141,7 +141,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
 
         {Object.keys(graphData).length > 0 && (
           <div className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
+            <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
               Network Stats
             </h5>
             <LineChartMultiple
@@ -168,7 +168,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 key={key}
                 className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow "
               >
-                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">
+                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
                   {graph.label}
                 </h5>
                 <div className="mb-10 pb-10">

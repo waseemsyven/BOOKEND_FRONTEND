@@ -56,7 +56,19 @@ export const formatData = (data: any) => {
                     return getTime(r.start_time);
                 }),
             };
-        } else
+        }
+        else if(["memory/bytes_used"].indexOf(newKey) != -1){
+            
+            finalGraphObj[newKey] = {
+                y: newob[key].map((r: any) => {
+                    return r.value / 1048576;
+                }),
+                x: newob[key].map((r: any) => {
+                    return getTime(r.start_time);
+                }),
+            };
+        }
+        else
             finalGraphObj[newKey] = fillGraphData({
                 y: newob[key].map((r: any) => {
                     return r.value;
@@ -66,6 +78,7 @@ export const formatData = (data: any) => {
                 }),
             }, newKey);
     });
+    console.log(finalGraphObj)
     return finalGraphObj;
 };
 

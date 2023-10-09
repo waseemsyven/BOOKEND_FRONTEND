@@ -25,6 +25,30 @@ function Page() {
     setIsOpen(false);
   };
 
+  const [datasetsLogs, setdatasetsLogs] = useState<any>();
+
+  const getModelLogs = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/logs/dataset?start_time=2023-05-31T14:30:00Z`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `basic ${user.token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setdatasetsLogs(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getModelLogs();
+  }, [session]);
+
   const getDataSetsList = async () => {
     try {
       const response = await fetch(
@@ -124,7 +148,9 @@ function Page() {
           </div>
         )}
 
-        {currentTab == "History" && <DatasetsLogs />}
+        {currentTab == "History" && (
+          <DatasetsLogs datasetsLogs={datasetsLogs} />
+        )}
       </div>
 
       {isOpen && (

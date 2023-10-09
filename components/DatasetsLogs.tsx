@@ -1,36 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 
-function DatasetLogs() {
-  const { data: session } = useSession();
-  const user: any = session?.user;
-  const [datasetsLogs, setdatasetsLogs] = useState<any>();
-
-  const getModelLogs = async () => {
-    console.log("datasetLogs");
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/logs/dataset?start_time=2023-05-31T14:30:00Z`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `basic ${user.token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setdatasetsLogs(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    getModelLogs();
-  }, [session]);
-
+function DatasetLogs({ datasetsLogs }: any) {
   if (!datasetsLogs) {
     return (
       <div className="h-60 w-full bg-gray-200 rounded animate-pulse p-4"></div>

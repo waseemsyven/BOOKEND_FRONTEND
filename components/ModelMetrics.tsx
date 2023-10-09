@@ -1,11 +1,40 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { ModelLogs, ModelOverview, QuestionAnswering, Summarization } from ".";
 import ModelStateLoader from "./ModelStateLoader";
+import { useSession } from "next-auth/react";
 
 function ModelMetrics({ filteredModel }: any) {
   const [currentTab, setcurrentTab] = useState("overview");
   const [selectedTime, setSelectedTime] = useState<any>(60);
+  const { data: session } = useSession();
+  const user: any = session?.user;
+
+  const model_name = filteredModel && filteredModel.model_name;
+
+  const [modelLogs, setmodelLogs] = useState<any>();
+
+  const getModelLogs = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/logs/model?model_name=${model_name}&start_time=2023-09-09T14:30:00Z`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `basic ${user.token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setmodelLogs(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getModelLogs();
+  }, [session, filteredModel]);
+
   return (
     <>
       <div className="flex justify-between items-center my-4 px-6">
@@ -92,7 +121,7 @@ function ModelMetrics({ filteredModel }: any) {
         <>
           {filteredModel && filteredModel.model_name ? (
             <div className="flex justify-start items-start gap-12 mx-6 bg-white rounded-sm shadow p-4">
-              <ModelLogs filteredModel={filteredModel} />
+              <ModelLogs filteredModel={filteredModel} modelLogs={modelLogs} />
             </div>
           ) : (
             <div className="h-80 w-full bg-gray-200 rounded animate-pulse mx-6"></div>

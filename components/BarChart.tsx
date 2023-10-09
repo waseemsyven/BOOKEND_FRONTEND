@@ -9,7 +9,7 @@ function BarChart({ type, data }: any) {
   if (type == "error_count") {
     color = "#D71E28";
   }
-  if (type == "prediction_count") color = "#6490F7";
+  if (type == "prediction_count") color = "rgba(100, 144, 247,1)";
   return (
     <>
       <Plot
@@ -22,20 +22,27 @@ function BarChart({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
+          hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
           width: 500,
           height: 300,
           xaxis: {
             autorange: "reversed",
             showline: false,
             showgrid: false,
+            nticks:4
           },
           yaxis: {
-            autorange: true,
+            autorange: false,
             showline: false,
             dtick: 1,
-            showgrid: false,
+            tick0: 0,
+            range:[0, Math.max(...data.y) | 2],
+            rangemode:'tozero',
             ticks: "outside",
+            nticks:4,
+            showgrid: true,
           },
+          margin: { t: 20 , l:20, r:10},
         }}
       />
     </>

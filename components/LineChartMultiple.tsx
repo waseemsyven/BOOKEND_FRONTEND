@@ -16,9 +16,9 @@ function LineChartMultiple({ type, data }: any) {
             fill: "tozeroy",
             type: "scatter",
             name: "Received",
-            fillcolor: "rgba(17,26,232, 0.2)",
+            fillcolor: "rgba(17,26,232, 0.1)",
             line: {
-              color: "rgba(17,26,232, 0.2)",
+              color: "rgba(17,26,232, 0.8)",
             },
             connectgaps: true,
           },
@@ -27,33 +27,34 @@ function LineChartMultiple({ type, data }: any) {
             fill: "tozeroy",
             type: "scatter",
             name: "Sent",
-            fillcolor: "rgba(237,81,194, 0.2)",
+            fillcolor: "rgba(237,81,194, 0.1)",
             line: {
-              color: "rgba(237,81,194, 0.2)",
+              color: "rgba(237,81,194, 0.8)",
             },
             connectgaps: true,
           },
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
+          legend: {orientation: 'h', y: 1.1, x: 0.6},
           autosize: false,
           width: 500,
           height: 300,
-          title: "demo",
           xaxis: {
             autorange: "reversed",
-            linewidth: 2,
+            linewidth: 1,
             showline: false,
             showgrid: false,
+            nticks:4
           },
           yaxis: {
             autorange: true,
             showline: false,
-            showgrid: false,
+            showgrid: true,
             ticks: "outside",
-            tick0: 0,
+            nticks:4,
           },
-          margin: { t: 0 },
+          margin: { t: 15 , l:50, r:20},
         }}
       />
     </>

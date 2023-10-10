@@ -31,6 +31,9 @@ function LineChartMultiple({ type, data }: any) {
             fill: "tozeroy",
             type: "scatter",
             name: "Sent",
+            hovertemplate:
+              "Value: %{y}<br> " +
+              "Time: %{x}<br>",
             fillcolor: "rgba(237,81,194, 0.1)",
             line: {
               color: "rgba(237,81,194, 0.8)",

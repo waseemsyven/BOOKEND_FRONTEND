@@ -27,7 +27,7 @@ function BarChart({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
-          hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
+          hoverlabel: { bgcolor: "#FFF", bordercolor: color, align: "auto" },
           width: 500,
           height: 300,
           xaxis: {

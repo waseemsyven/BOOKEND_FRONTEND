@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { CustomButton } from "@/components";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 function Page() {
+  const { status } = useSession();
   const router = useRouter();
 
   const [domain, setdomain] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+
+  useEffect(() => {
+    if (status == "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status]);
 
   const handleLogin = async (email, password) => {
     await signIn("credentials", {

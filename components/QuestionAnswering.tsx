@@ -141,16 +141,9 @@ function QuestionAnswering({ filteredModel }: any) {
           />
         </div>
         <div className="bg-[#F7FAFB] flex flex-col w-[324px] my-2 gap-2 p-4 rounded-lg h-[400px]">
-          <h3 className="text-[#444445] font-medium text-base">
+          {/* <h3 className="text-[#444445] font-medium text-base">
             Instructions and Prompt Help
-          </h3>
-          <p className="text-xs my-2">
-            Morem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu
-            turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus
-            nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum
-            tellus elit sed risus. Maecenas eget condimentum velit, sit amet
-            feugiat lectus. Class aptent taciti sociosqu ad litora torquent per.
-          </p>
+          </h3> */}
         </div>
       </div>
       <CustomButton

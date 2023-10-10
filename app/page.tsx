@@ -4,11 +4,19 @@ import Link from "next/link";
 import HomeNavbar from "@/components/HomeNavbar";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const router = useRouter();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/signin");
+    },
+  });
+
   useEffect(() => {
-    router.push("./signin");
+    router.push("./dashboard");
   }, []);
 
   return (

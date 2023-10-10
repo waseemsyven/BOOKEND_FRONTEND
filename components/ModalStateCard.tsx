@@ -1,17 +1,28 @@
 "use client";
 import React, { useState } from "react";
-import { CustomButton, TrainModelPopup } from ".";
+import { CustomButton, TrainModelPopup, UndeployPopup } from ".";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import DeployPopup from "./DeployPopup";
 
 function ModalStateCard({ model }: any) {
   const { data: session } = useSession();
   const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeployOpen, setisDeployOpen] = useState(false);
+  const [isUndeployOpen, setisUndeployOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
+  };
+
+  const handleDeployPopupClose = () => {
+    setisDeployOpen(false);
+  };
+
+  const handleUndeployClose = () => {
+    setisUndeployOpen(false);
   };
 
   const isTrained = model && model.status && model.status == "TRAINED";
@@ -130,25 +141,33 @@ function ModalStateCard({ model }: any) {
               />
             )}
 
-            {!isDeploying ? (
+            {isDeploying ? (
               <CustomButton
-                title="Deploy"
+                title="Deployment In Progress"
                 containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
-                leftIcon="/rocket.svg"
-                rightIcon="/arrow_down.svg"
-                isDisabled={loading || !isTrained}
+                rightIcon="/rocket.svg"
+                // rightIcon="/arrow_down.svg"
                 handleClick={() => deployModelFunction()}
+              />
+            ) : isDeployed ? (
+              <CustomButton
+                title="Undeploy"
+                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
+                textStyles="text-[15px] font-medium text-white"
+                rightIcon="/rocket.svg"
+                // rightIcon="/arrow_down.svg"
+                handleClick={() => setisUndeployOpen(true)}
               />
             ) : (
               <CustomButton
-                title="Deploying"
-                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
+                title="Deploy"
+                containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[18px] gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
-                leftIcon="/rocket.svg"
-                rightIcon="/arrow_down.svg"
-                isDisabled={loading}
-                handleClick={() => deployModelFunction()}
+                rightIcon="/rocket.svg"
+                // rightIcon="/arrow_down.svg"
+                isDisabled={loading || !isTrained}
+                handleClick={() => setisDeployOpen(true)}
               />
             )}
           </div>
@@ -208,6 +227,25 @@ function ModalStateCard({ model }: any) {
           handleClose={handleClose}
           modelName={model.model_name}
           task={model.task}
+        />
+      )}
+
+      {isDeployOpen && (
+        <DeployPopup
+          handleClose={handleDeployPopupClose}
+          modelName={model.model_name}
+          baseModel={model.base_model}
+          datasetName={model.dataset_name}
+          task={model.task}
+          deployModelFunction={deployModelFunction}
+        />
+      )}
+
+      {isUndeployOpen && (
+        <UndeployPopup
+          handleClose={handleUndeployClose}
+          modelName={model.model_name}
+          modelId={model.model_id}
         />
       )}
     </div>

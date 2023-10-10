@@ -8,7 +8,6 @@ function DeployPopup({
   handleClose,
   baseModel,
   modelName,
-  task,
   datasetName,
   deployModelFunction,
 }: any) {

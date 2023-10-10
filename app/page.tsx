@@ -1,8 +1,16 @@
+"use client";
 import { CustomButton } from "@/components";
 import Link from "next/link";
 import HomeNavbar from "@/components/HomeNavbar";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("./signin");
+  }, []);
+
   return (
     <main className="flex flex-col items-center justify-start text-white h-screen">
       <HomeNavbar />

@@ -23,6 +23,7 @@ import ViewAllUsersPopup from "./VeiwAllUsersPopup";
 import EditUserPopup from "./EditUserPopup";
 import ModelLogs from "./ModelLogs";
 import DatasetsLogs from "./DatasetsLogs";
+import UndeployPopup from "./UndeployPopup";
 
 
 export {
@@ -50,7 +51,8 @@ export {
   ViewAllUsersPopup,
   EditUserPopup,
   ModelLogs,
-  DatasetsLogs
+  DatasetsLogs,
+  UndeployPopup
   
 
 };

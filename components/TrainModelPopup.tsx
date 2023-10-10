@@ -8,7 +8,7 @@ import TierDropdown from "./TierDropdown";
 import { useSession } from "next-auth/react";
 
 function TrainModelPopup({ handleClose, modelName, task }: any) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const user: any = session?.user;
   const router = useRouter();
   const [modelNameInputValue, setmodelNameInputValue] = useState("");

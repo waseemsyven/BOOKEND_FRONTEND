@@ -1,14 +1,39 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-function ModelLogs({ filteredModel, modelLogs }: any) {
+function ModelLogs({ filteredModel }: any) {
+  const { data: session } = useSession();
+  const user: any = session?.user;
   const { model_name, model_id, task, base_model, tier, dataset_name, source } =
     filteredModel;
-
-  const firstLog = modelLogs && modelLogs[0];
+  const [modelLogs, setmodelLogs] = useState<any>();
   //@ts-ignore
+  const firstLog = modelLogs && modelLogs[0];
   const addedOn = firstLog && firstLog.timestamp;
+
+  const getModelLogs = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/logs/model?model_name=${model_name}&start_time=2023-09-09T14:30:00Z`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `basic ${user.token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      setmodelLogs(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getModelLogs();
+  }, [session, filteredModel]);
 
   if (!filteredModel.status) {
     return (
@@ -17,7 +42,6 @@ function ModelLogs({ filteredModel, modelLogs }: any) {
       </h2>
     );
   }
-
   if (!modelLogs || modelLogs.length == 0) {
     return (
       <div className="h-60 w-full bg-gray-200 rounded animate-pulse p-4"></div>

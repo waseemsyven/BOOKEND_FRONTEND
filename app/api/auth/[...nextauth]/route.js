@@ -1,9 +1,8 @@
-import { user } from "@nextui-org/theme";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
 
 const handler = NextAuth({
+  site: process.env.NEXTAUTH_URL,
   providers: [
     CredentialsProvider({
       name: "Credentials",

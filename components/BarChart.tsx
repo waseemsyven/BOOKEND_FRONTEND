@@ -10,12 +10,17 @@ function BarChart({ type, data }: any) {
     color = "#D71E28";
   }
   if (type == "prediction_count") color = "rgba(100, 144, 247,1)";
+  console.log(type, color)
   return (
     <>
       <Plot
         data={[
           {
             ...data,
+            hovertemplate:
+              "Value: %{y}<br> " +
+              "Time: %{x}<br>",
+              name:'',
             type: "bar",
             marker: { color: color },
           },
@@ -29,12 +34,13 @@ function BarChart({ type, data }: any) {
             autorange: "reversed",
             showline: false,
             showgrid: false,
+            ticks: "outside",
             nticks:4
           },
           yaxis: {
-            autorange: false,
+            autorange: true,
             showline: false,
-            dtick: 1,
+            dtick: (Math.max(...data.y) > 1)? undefined: 1,
             tick0: 0,
             range:[0, Math.max(...data.y) | 2],
             rangemode:'tozero',
@@ -42,9 +48,17 @@ function BarChart({ type, data }: any) {
             nticks:4,
             showgrid: true,
           },
-          margin: { t: 20 , l:20, r:10},
+          margin: { t: 30 , l:30, r:20},
         }}
       />
+      <style jsx>{`
+        .ygrid crisp {
+          stroke: #red !important;
+        }
+        p {
+          color: blue;
+        }
+      `}</style>
     </>
   );
 }

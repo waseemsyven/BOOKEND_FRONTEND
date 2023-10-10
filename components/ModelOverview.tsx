@@ -110,7 +110,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
                   {graph.label}
                 </h5>
-                <BarChart type={name} data={graphData[graph.name]} />
+                <BarChart type={graph.name} data={graphData[graph.name]} />
               </div>
             );
           })}

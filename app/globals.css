@@ -435,3 +435,7 @@ padding: 10px 24px;
   @apply cursor-default select-none py-2 pl-10 pr-4;
 }
 /* END: search manufacturer styles */
+.crisp{
+  stroke: #ccc !important;
+  stroke-dasharray: 2;
+}

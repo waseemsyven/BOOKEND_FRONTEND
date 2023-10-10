@@ -13,6 +13,9 @@ function LineChartMultiple({ type, data }: any) {
         data={[
           {
             ...data[0],
+            hovertemplate:
+              "Value: %{y}<br> " +
+              "Time: %{x}<br>",
             fill: "tozeroy",
             type: "scatter",
             name: "Received",
@@ -20,6 +23,7 @@ function LineChartMultiple({ type, data }: any) {
             line: {
               color: "rgba(17,26,232, 0.8)",
             },
+            
             connectgaps: true,
           },
           {
@@ -36,6 +40,7 @@ function LineChartMultiple({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
+          hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
           legend: {orientation: 'h', y: 1.1, x: 0.6},
           autosize: false,
           width: 500,
@@ -45,7 +50,8 @@ function LineChartMultiple({ type, data }: any) {
             linewidth: 1,
             showline: false,
             showgrid: false,
-            nticks:4
+            nticks:4,
+            ticks: "outside",
           },
           yaxis: {
             autorange: true,
@@ -54,7 +60,7 @@ function LineChartMultiple({ type, data }: any) {
             ticks: "outside",
             nticks:4,
           },
-          margin: { t: 15 , l:50, r:20},
+          margin: { t: 15 , l:60, r:30},
         }}
       />
     </>

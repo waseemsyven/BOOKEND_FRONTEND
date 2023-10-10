@@ -25,12 +25,13 @@ function LineChart({ type, data }: any) {
               fill: "tozeroy",
               fillcolor: bgcolors[type],
               type: "scatter",
+              name:'', 
               line: {
                 color: colors[type],
               },
               hovertemplate:
-              "Y: %{y}<br>" +
-              "X: %{x}<br>",
+              "Value: %{y}<br> " +
+              "Time: %{x}<br>",
               
             },
           ]}
@@ -42,11 +43,12 @@ function LineChart({ type, data }: any) {
         hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
             xaxis: {
               autorange: "reversed",
-              showline: false,
+              showline: true,
               showgrid: false,
               zeroline: false,
               autotick: true,
               ticks: "outside",
+              constrain:'range',
               nticks:3
             },
             yaxis: {
@@ -55,10 +57,10 @@ function LineChart({ type, data }: any) {
               ticks: "outside",
               tick0: 0,
               nticks: 4,
-              range: [Math.min(...data.y) - 0.10, Math.max(...data.y) + 0.10],
+              range: type == "memory/bytes_used" ? [Math.min(...data.y) - 0.10, Math.max(...data.y) + 0.10] : [Math.min(...data.y), Math.max(...data.y)] ,
               rangemode:'tozero',
             },
-            margin: { t: 20 , l:50, r:20},
+            margin: { t: 20 , l:60, r:20},
           }}
         />
       )}

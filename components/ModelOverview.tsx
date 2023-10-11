@@ -7,13 +7,18 @@ import { useRouter } from "next/navigation";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import LineChartMultiple from "./LineChartMultiple";
-import { getTimeDuration, formatData, getChartTypes } from './../utils/chartFunctions';
+import {
+  getTimeDuration,
+  formatData,
+  getChartTypes,
+} from "./../utils/chartFunctions";
 import NoDataContainer from "./NoDataContainer";
 
-
 function useInterval(callback: any, delay: number) {
-  const savedCallback = useRef(() => { });
-  useEffect(() => { savedCallback.current = callback; }, [callback]);
+  const savedCallback = useRef(() => {});
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
@@ -124,7 +129,6 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
             //   name: "accelerator/memory/bytes_used",
             //   label: "Accelerator Memory Usage",
             // },
-
           ].map((graph, key) => {
             return (
               <div
@@ -161,7 +165,6 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
               name: "accelerator/memory/bytes_used",
               label: "Accelerator Memory Usage",
             },
-
           ].map((graph, key) => {
             return (
               <div
@@ -202,12 +205,12 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                     {graphData["replicas"]?.value}
                   </span>
                   <br />
-                  <span> {graphData['replicas']?.time}</span>
+                  <span> {graphData["replicas"]?.time}</span>
                 </p>
               </div>
             </li>
 
-            <li className="flex justify-between gap-x-6 py-5 px-8" >
+            <li className="flex justify-between gap-x-6 py-5 px-8">
               <div className="flex min-w-0 gap-x-8">
                 <Image
                   src="/replica_target.svg"
@@ -226,8 +229,9 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 <p className="text-md leading-6 text-gray-900">
                   <span className="mb-2 inline-flex items-center rounded-md px-2 py-1 text-3xl font-medium text-gray-600">
                     {graphData["target_replicas"]?.value}
-                  </span><br />
-                  <span>{graphData['target_replicas']?.time}</span>
+                  </span>
+                  <br />
+                  <span>{graphData["target_replicas"]?.time}</span>
                 </p>
               </div>
             </li>

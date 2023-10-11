@@ -25,22 +25,23 @@ function LineChart({ type, data }: any) {
               fill: "tozeroy",
               fillcolor: bgcolors[type],
               type: "scatter",
-              name:'', 
+              name: "",
               line: {
                 color: colors[type],
               },
-              hovertemplate:
-              "Value: %{y}<br> " +
-              "Time: %{x}<br>",
-              
+              hovertemplate: "Value: %{y}<br> " + "Time: %{x}<br>",
             },
           ]}
           config={{ displayModeBar: false, responsive: true }}
           layout={{
-            width: 550,
+            width: 544,
             hovermode: "closest",
             height: 300,
-        hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
+            hoverlabel: {
+              bgcolor: "#FFF",
+              bordercolor: "#406FDD",
+              align: "auto",
+            },
             xaxis: {
               autorange: "reversed",
               showline: true,
@@ -48,8 +49,8 @@ function LineChart({ type, data }: any) {
               zeroline: false,
               autotick: true,
               ticks: "outside",
-              constrain:'range',
-              nticks:3
+              constrain: "range",
+              nticks: 3,
             },
             yaxis: {
               tickformat: type == "cpu/utilization" ? ".0%" : undefined,
@@ -57,10 +58,13 @@ function LineChart({ type, data }: any) {
               ticks: "outside",
               tick0: 0,
               nticks: 4,
-              range: type == "memory/bytes_used" ? [Math.min(...data.y) - 0.10, Math.max(...data.y) + 0.10] : [Math.min(...data.y), Math.max(...data.y)] ,
-              rangemode:'tozero',
+              range:
+                type == "memory/bytes_used"
+                  ? [Math.min(...data.y) - 0.1, Math.max(...data.y) + 0.1]
+                  : [Math.min(...data.y), Math.max(...data.y)],
+              rangemode: "tozero",
             },
-            margin: { t: 20 , l:60, r:20},
+            margin: { t: 24, l: 64, r: 32 },
           }}
         />
       )}

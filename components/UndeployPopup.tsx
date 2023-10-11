@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function UndeployPopup({
   handleClose,
@@ -14,6 +14,7 @@ function UndeployPopup({
 }: any) {
   const { data: session } = useSession();
   const user: any = session?.user;
+  const pathname = usePathname();
   const router = useRouter();
 
   const undeployFunction = async () => {
@@ -70,6 +71,7 @@ function UndeployPopup({
       handleClose();
       console.error("Error fetching data:", error);
     } finally {
+      router.push(pathname);
       getModelsList();
       handleClose();
     }

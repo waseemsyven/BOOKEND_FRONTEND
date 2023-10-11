@@ -15,7 +15,18 @@ function Page() {
   const [password, setpassword] = useState("");
   const [currentTab, setcurrentTab] = useState("default");
 
-  
+  const functionContactus = () => {
+    toast.success("submitted successfully", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   useEffect(() => {
     if (status == "authenticated") {
@@ -138,53 +149,108 @@ function Page() {
               />
               Contact Us
             </h2>
-            <div className="input-secondary-container mb-6">
-              <h3>Full Name</h3>
-              <input
-                placeholder="Enter Full name"
-                className="input-secondary"
-                value={domain}
-                onChange={(e) => setdomain(e.target.value)}
-              />
-            </div>
-            <div className="input-secondary-container mb-6">
-              <h3>Email</h3>
-              <input
-                placeholder="Enter email ID"
-                className="input-secondary"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
-              />
-            </div>
-            <div className="input-secondary-container mb-6">
-              <h3>Domain</h3>
-              <input
-                placeholder="Enter domain name"
-                className="input-secondary"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
-              />
-            </div>
-            <div className="input-secondary-container mb-6 ">
-              <h3>Use case</h3>
-              <input
-                placeholder="Use Case
+            <form
+              action="https://formsubmit.co/bookend-ai_board_5228864008_7bee5136050d9a478dd8__47341525@use1.mx.monday.com"
+              method="POST"
+              className="flex justify-center flex-col items-center"
+            >
+              {/* <input type="hidden" name="_next" value="false"></input> */}
+              <input type="hidden" name="_captcha" value="false"></input>
+              <div className="input-secondary-container mb-6">
+                <h3>Full Name</h3>
+                {/* <input
+                  placeholder="Enter Full name"
+                  className="input-secondary"
+                  value={contactusDetails.fullName}
+                  onChange={(e) =>
+                    setcontactusDetails((value) => ({
+                      ...value,
+                      fullName: e.target.value,
+                    }))
+                  }
+                /> */}
+                <input
+                  type="text"
+                  name="Full Name"
+                  className="input-secondary"
+                  placeholder="Enter Full name"
+                  required
+                ></input>
+              </div>
+              <div className="input-secondary-container mb-6">
+                <h3>Email</h3>
+                {/* <input
+                  placeholder="Enter email ID"
+                  className="input-secondary"
+                  value={contactusDetails.email}
+                  onChange={(e) =>
+                    setcontactusDetails((value) => ({
+                      ...value,
+                      email: e.target.value,
+                    }))
+                  }
+                /> */}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email ID"
+                  required
+                  className="input-secondary"
+                ></input>
+              </div>
+              <div className="input-secondary-container mb-6">
+                <h3>Domain</h3>
+                {/* <input
+                  placeholder="Enter domain name"
+                  className="input-secondary"
+                  value={contactusDetails.domain}
+                  onChange={(e) =>
+                    setcontactusDetails((value) => ({
+                      ...value,
+                      domain: e.target.value,
+                    }))
+                  }
+                /> */}
+                <input
+                  type="text"
+                  placeholder="Enter domain name"
+                  name="domain"
+                  className="input-secondary"
+                  required
+                ></input>
+              </div>
+              <div className="input-secondary-container mb-6 ">
+                <h3>Use case</h3>
+                {/* <input
+                  placeholder="Use Case
                 Describe your requirements"
-                className="input-secondary h-20"
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
-              />
-            </div>
+                  className="input-secondary h-20"
+                  value={contactusDetails.useCase}
+                  onChange={(e) =>
+                    setcontactusDetails((value) => ({
+                      ...value,
+                      useCase: e.target.value,
+                    }))
+                  }
+                /> */}
+                <input
+                  type="text"
+                  name="usecase"
+                  required
+                  placeholder="Use Case
+                  Describe your requirements"
+                  className="input-secondary"
+                ></input>
+              </div>
 
-            <CustomButton
-              title="Submit"
-              containerStyles="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-8"
-              textStyles="text-[16px] font-medium text-white"
-              isDisabled={isDisabled}
-              handleClick={async () => {
-                await handleLogin(email, password);
-              }}
-            />
+              <button
+                type="submit"
+                className="bg-dark-blue rounded-[8px] gap-2 hover-blue py-2 px-8 text-[16px] font-medium text-white"
+                onClick={functionContactus}
+              >
+                Send
+              </button>
+            </form>
           </div>
         )}
       </div>

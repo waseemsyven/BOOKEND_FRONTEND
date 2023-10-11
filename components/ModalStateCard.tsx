@@ -80,7 +80,6 @@ function ModalStateCard({ model, getModelsList }: any) {
           theme: "light",
         });
         handleDeployPopupClose();
-        console.log("reload");
         router.push(pathname);
         setLoading(false);
       } else {

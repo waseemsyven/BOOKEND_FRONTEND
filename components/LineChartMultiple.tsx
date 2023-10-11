@@ -13,9 +13,7 @@ function LineChartMultiple({ type, data }: any) {
         data={[
           {
             ...data[0],
-            hovertemplate:
-              "Value: %{y}<br> " +
-              "Time: %{x}<br>",
+            hovertemplate: "Value: %{y}<br> " + "Time: %{x}<br>",
             fill: "tozeroy",
             type: "scatter",
             name: "Received",
@@ -23,7 +21,7 @@ function LineChartMultiple({ type, data }: any) {
             line: {
               color: "rgba(17,26,232, 0.8)",
             },
-            
+
             connectgaps: true,
           },
           {
@@ -31,9 +29,7 @@ function LineChartMultiple({ type, data }: any) {
             fill: "tozeroy",
             type: "scatter",
             name: "Sent",
-            hovertemplate:
-              "Value: %{y}<br> " +
-              "Time: %{x}<br>",
+            hovertemplate: "Value: %{y}<br> " + "Time: %{x}<br>",
             fillcolor: "rgba(237,81,194, 0.1)",
             line: {
               color: "rgba(237,81,194, 0.8)",
@@ -43,17 +39,21 @@ function LineChartMultiple({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
-          hoverlabel: { bgcolor: "#FFF", bordercolor: '#406FDD', align: "auto" },
-          legend: {orientation: 'h', y: 1.1, x: 0.6},
+          hoverlabel: {
+            bgcolor: "#FFF",
+            bordercolor: "#406FDD",
+            align: "auto",
+          },
+          legend: { orientation: "h", y: 1.1, x: 0.6 },
           autosize: false,
-          width: 500,
+          width: 544,
           height: 300,
           xaxis: {
             autorange: "reversed",
             linewidth: 1,
             showline: false,
             showgrid: false,
-            nticks:4,
+            nticks: 4,
             ticks: "outside",
           },
           yaxis: {
@@ -61,9 +61,9 @@ function LineChartMultiple({ type, data }: any) {
             showline: false,
             showgrid: true,
             ticks: "outside",
-            nticks:4,
+            nticks: 4,
           },
-          margin: { t: 15 , l:60, r:30},
+          margin: { t: 24, l: 64, r: 32 },
         }}
       />
     </>

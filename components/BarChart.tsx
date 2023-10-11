@@ -10,17 +10,15 @@ function BarChart({ type, data }: any) {
     color = "#D71E28";
   }
   if (type == "prediction_count") color = "rgba(100, 144, 247,1)";
-  console.log(type, color)
+  console.log(type, color);
   return (
     <>
       <Plot
         data={[
           {
             ...data,
-            hovertemplate:
-              "Value: %{y}<br> " +
-              "Time: %{x}<br>",
-              name:'',
+            hovertemplate: "Value: %{y}<br> " + "Time: %{x}<br>",
+            name: "",
             type: "bar",
             marker: { color: color },
           },
@@ -28,27 +26,27 @@ function BarChart({ type, data }: any) {
         config={{ displayModeBar: false, responsive: true }}
         layout={{
           hoverlabel: { bgcolor: "#FFF", bordercolor: color, align: "auto" },
-          width: 500,
+          width: 544,
           height: 300,
           xaxis: {
             autorange: "reversed",
             showline: false,
             showgrid: false,
             ticks: "outside",
-            nticks:4
+            nticks: 4,
           },
           yaxis: {
             autorange: true,
             showline: false,
-            dtick: (Math.max(...data.y) > 1)? undefined: 1,
+            dtick: Math.max(...data.y) > 1 ? undefined : 1,
             tick0: 0,
-            range:[0, Math.max(...data.y) | 2],
-            rangemode:'tozero',
+            range: [0, Math.max(...data.y) | 2],
+            rangemode: "tozero",
             ticks: "outside",
-            nticks:4,
+            nticks: 4,
             showgrid: true,
           },
-          margin: { t: 30 , l:30, r:20},
+          margin: { t: 24, l: 48, r: 32 },
         }}
       />
       <style jsx>{`

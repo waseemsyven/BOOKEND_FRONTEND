@@ -38,7 +38,7 @@ function Page({ params }: any) {
 
   return (
     <div className="h-full w-full bg-fill overflow-y-scroll max-h-screen">
-      <ModalStateCard model={filteredModel} />
+      <ModalStateCard model={filteredModel} getModelsList={getModelsList} />
       <ModelMetrics filteredModel={filteredModel} />
     </div>
   );

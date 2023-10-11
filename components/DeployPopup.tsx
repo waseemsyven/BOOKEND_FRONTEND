@@ -12,7 +12,7 @@ function DeployPopup({
   deployModelFunction,
 }: any) {
   const [selectedTier, setselectedTier] = useState("");
-
+  
   const isDisabled = !selectedTier;
 
   return (

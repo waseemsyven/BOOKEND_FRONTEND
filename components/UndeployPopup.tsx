@@ -4,10 +4,17 @@ import Image from "next/image";
 import { CustomButton } from ".";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-function UndeployPopup({ handleClose, modelName, modelId }: any) {
+function UndeployPopup({
+  handleClose,
+  modelName,
+  modelId,
+  getModelsList,
+}: any) {
   const { data: session } = useSession();
   const user: any = session?.user;
+  const router = useRouter();
 
   const undeployFunction = async () => {
     try {
@@ -18,26 +25,37 @@ function UndeployPopup({ handleClose, modelName, modelId }: any) {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/${user.domain}/models/undeploy?${queryParams}`;
 
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           Authorization: `Basic ${user.token}`,
           "Content-Type": "application/json",
         },
       });
-
-      const data = await response.json();
-      handleClose();
-      toast.success("Model undeployed", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      console.log(data);
+      const status = response.status;
+      if (status == 200) {
+        handleClose();
+        toast.success("undeploying Model", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else {
+        toast.error("something went wrong", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     } catch (error) {
       toast.error("something went wrong", {
         position: "top-right",
@@ -52,6 +70,7 @@ function UndeployPopup({ handleClose, modelName, modelId }: any) {
       handleClose();
       console.error("Error fetching data:", error);
     } finally {
+      getModelsList();
       handleClose();
     }
   };

@@ -4,8 +4,11 @@ import { CustomButton, TrainModelPopup, UndeployPopup } from ".";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import DeployPopup from "./DeployPopup";
+import { usePathname, useRouter } from "next/navigation";
 
-function ModalStateCard({ model }: any) {
+function ModalStateCard({ model, getModelsList }: any) {
+  const pathname = usePathname();
+  const router = useRouter();
   const { data: session } = useSession();
   const user: any = session?.user;
   const [isOpen, setIsOpen] = useState(false);
@@ -29,21 +32,9 @@ function ModalStateCard({ model }: any) {
   const isTraining = model && model.status && model.status == "TRAINING";
   const isDeploying = model && model.status && model.status == "DEPLOYING";
   const isDeployed = model && model.status && model.status == "DEPLOYED";
+  const isUndeployed = model && model.status && model.status == "UNDEPLOYED";
 
-  const deployModelFunction = async () => {
-    if (isDeployed) {
-      toast.success("Model is Already Deployed!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return;
-    }
+  const deployModelFunction = async (tier: any) => {
     if (isDeploying) {
       toast.success("Deployment Already in Process!", {
         position: "top-right",
@@ -62,8 +53,8 @@ function ModalStateCard({ model }: any) {
       const queryParams = new URLSearchParams({
         model_id: model.model_id,
         task: model.task,
-        tier: "silver",
-        sync: "false",
+        tier: tier,
+        sync: "False",
       });
 
       const response = await fetch(
@@ -76,7 +67,7 @@ function ModalStateCard({ model }: any) {
           },
         }
       );
-      const status = response.status;
+      const status = await response.status;
       if (status == 200) {
         toast.success("Deployment in process!", {
           position: "top-right",
@@ -88,9 +79,21 @@ function ModalStateCard({ model }: any) {
           progress: undefined,
           theme: "light",
         });
+        handleDeployPopupClose();
+        console.log("reload");
+        router.push(pathname);
         setLoading(false);
       } else {
-        throw new Error(`something went wrong`);
+        toast.error("something went wrong", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (error) {
       toast.error("something went wrong", {
@@ -103,10 +106,13 @@ function ModalStateCard({ model }: any) {
         progress: undefined,
         theme: "light",
       });
+      handleDeployPopupClose();
       setLoading(false);
       console.error("Error fetching data:", error);
     } finally {
+      getModelsList();
       setLoading(false);
+      handleDeployPopupClose();
     }
   };
 
@@ -147,8 +153,7 @@ function ModalStateCard({ model }: any) {
                 containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
                 rightIcon="/rocket.svg"
-                // rightIcon="/arrow_down.svg"
-                handleClick={() => deployModelFunction()}
+                handleClick={() => deployModelFunction("Bronze")}
               />
             ) : isDeployed ? (
               <CustomButton
@@ -156,7 +161,6 @@ function ModalStateCard({ model }: any) {
                 containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[12px] gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
                 rightIcon="/rocket.svg"
-                // rightIcon="/arrow_down.svg"
                 handleClick={() => setisUndeployOpen(true)}
               />
             ) : (
@@ -165,8 +169,9 @@ function ModalStateCard({ model }: any) {
                 containerStyles="bg-dark-blue rounded-[4px] py-[4px] px-[18px] gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
                 rightIcon="/rocket.svg"
-                // rightIcon="/arrow_down.svg"
-                isDisabled={loading || !isTrained}
+                isDisabled={
+                  (loading && !isUndeployed) || (!isTrained && !isUndeployed)
+                }
                 handleClick={() => setisDeployOpen(true)}
               />
             )}
@@ -246,6 +251,7 @@ function ModalStateCard({ model }: any) {
           handleClose={handleUndeployClose}
           modelName={model.model_name}
           modelId={model.model_id}
+          getModelsList={getModelsList}
         />
       )}
     </div>

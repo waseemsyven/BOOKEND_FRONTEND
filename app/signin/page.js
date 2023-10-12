@@ -150,7 +150,7 @@ function Page() {
               Contact Us
             </h2>
             <form
-              action="https://formsubmit.co/bookend-ai_board_5228864008_7bee5136050d9a478dd8__47341525@use1.mx.monday.com"
+              action="https://formsubmit.co/bookend-ai_board_5226427562_7bee5136050d9a478dd8__47341525@use1.mx.monday.com"
               method="POST"
               className="flex justify-center flex-col items-center"
             >
@@ -220,7 +220,7 @@ function Page() {
                 ></input>
               </div>
               <div className="input-secondary-container mb-6 ">
-                <h3>Use case</h3>
+                <h3>Message</h3>
                 {/* <input
                   placeholder="Use Case
                 Describe your requirements"
@@ -237,8 +237,7 @@ function Page() {
                   type="text"
                   name="usecase"
                   required
-                  placeholder="Use Case
-                  Describe your requirements"
+                  placeholder="Your Message"
                   className="input-secondary"
                 ></input>
               </div>

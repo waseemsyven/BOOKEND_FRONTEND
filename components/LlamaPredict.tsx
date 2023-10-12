@@ -133,7 +133,7 @@ function LlamaPredict({ model }: any) {
                 }`}
                 onClick={() => changeTab("prompt-driven")}
               >
-                Prompt Driven
+                Custom prompt
               </h2>{" "}
             </div>
 

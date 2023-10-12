@@ -43,13 +43,14 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
   const user: any = session?.user;
   const router = useRouter();
   const [graphData, setGraphData] = useState<any>([]);
+  const [error, seterror] = useState(false);
   const [interval, setInterval] = useState(0);
 
   const getMetrics = async (timeDuration: number) => {
     let timeDurationForAPI = getTimeDuration(timeDuration, false);
     let request = {
       metric_filters: getChartTypes(false),
-      endpoint_filters: filteredModel.endpoint_id.toString(),
+      endpoint_filters: filteredModel?.endpoint_id?.toString(),
     };
     let requestObject = Object.assign(request, timeDurationForAPI) as any;
     try {
@@ -62,6 +63,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
           "Content-Type": "application/json",
         },
       });
+      if (response.status != 200) seterror(true);
       const data = await response.json();
       let graphData = formatData(data);
       setGraphData(graphData);
@@ -77,6 +79,14 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
   useEffect(() => {
     getMetrics(timeDuration);
   }, [timeDuration]);
+
+  if (error) {
+    return (
+      <h2 className="text-sm font-semibold h-40 mx-6 my-4 flex justify-center items-center">
+        Metrics are unavailable
+      </h2>
+    );
+  }
 
   return (
     <>

@@ -42,6 +42,7 @@ function ModelLogs({ filteredModel }: any) {
       </h2>
     );
   }
+
   if (!modelLogs || modelLogs.length == 0) {
     return (
       <div className="h-60 w-full bg-gray-200 rounded animate-pulse p-4"></div>

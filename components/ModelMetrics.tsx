@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { ModelLogs, ModelOverview, QuestionAnswering, Summarization } from ".";
+import {
+  LlamaPredict,
+  ModelLogs,
+  ModelOverview,
+  QuestionAnswering,
+  Summarization,
+} from ".";
 import ModelStateLoader from "./ModelStateLoader";
+import Embeddings from "./Embeddings";
 
 function ModelMetrics({ filteredModel }: any) {
   const [currentTab, setcurrentTab] = useState("overview");
   const [selectedTime, setSelectedTime] = useState<any>(60);
+  const isModelLlame = filteredModel?.base_model == "llama2-7b";
 
   return (
     <>
@@ -58,6 +66,7 @@ function ModelMetrics({ filteredModel }: any) {
           <div className="h-12 w-[100px] bg-gray-200 rounded animate-pulse"></div>
         )}
       </div>
+
       {currentTab === "overview" && (
         <>
           {filteredModel && filteredModel.model_name ? (
@@ -72,7 +81,11 @@ function ModelMetrics({ filteredModel }: any) {
                   timeDuration={selectedTime}
                 />
               )}
-              {filteredModel.task === "summarization" ? (
+              {isModelLlame ? (
+                <LlamaPredict model={filteredModel} />
+              ) : filteredModel.task == "embeddings" ? (
+                <Embeddings filteredModel={filteredModel} />
+              ) : filteredModel.task === "summarization" ? (
                 <Summarization filteredModel={filteredModel} />
               ) : (
                 <QuestionAnswering filteredModel={filteredModel} />

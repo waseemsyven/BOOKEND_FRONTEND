@@ -24,6 +24,7 @@ import EditUserPopup from "./EditUserPopup";
 import ModelLogs from "./ModelLogs";
 import DatasetsLogs from "./DatasetsLogs";
 import UndeployPopup from "./UndeployPopup";
+import LlamaPredict from './LlamaPredict'
 
 
 export {
@@ -52,7 +53,8 @@ export {
   EditUserPopup,
   ModelLogs,
   DatasetsLogs,
-  UndeployPopup
+  UndeployPopup,
+  LlamaPredict
   
 
 };

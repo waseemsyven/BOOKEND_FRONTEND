@@ -11,9 +11,9 @@ function QuestionAnswering({ filteredModel }: any) {
   const { data: session } = useSession();
   const user: any = session?.user;
   const [showModal, setshowModal] = useState(false);
-  const [input, setinput] = useState("");
+  const [question, setquestion] = useState("");
+  const [context, setcontext] = useState("");
   const [output, setoutput] = useState("");
-  const [contextInput, setcontextInput] = useState("");
 
   const handleClose = () => {
     setshowModal(false);
@@ -21,19 +21,19 @@ function QuestionAnswering({ filteredModel }: any) {
 
   const isDeployed = filteredModel.status == "DEPLOYED";
 
-  const isComputeDisabled = !isDeployed || !input;
+  const isComputeDisabled = !isDeployed || !question;
 
   const predictFunction = async () => {
     try {
       const queryParams = new URLSearchParams({
         model_id: filteredModel.model_id,
-        task: filteredModel.task,
+        task: "question-answering",
       });
 
       const body = JSON.stringify({
-        text: input,
-        question: input,
-        context: contextInput,
+        text: question,
+        question: null,
+        context: null,
         instruction: null,
       });
 
@@ -117,8 +117,8 @@ function QuestionAnswering({ filteredModel }: any) {
             <input
               className="w-full border border-[#E8E7E7] rounded-[4px] text-sm font-normal p-2"
               placeholder="Enter the prompt here"
-              onChange={(e: any) => setinput(e.target.value)}
-              value={input}
+              onChange={(e: any) => setquestion(e.target.value)}
+              value={question}
             />
             <CustomButton
               title="Compute"
@@ -131,8 +131,8 @@ function QuestionAnswering({ filteredModel }: any) {
           <h2 className="text-sm font-normal text-[#666] ml-2 mb-2">Context</h2>
           <textarea
             className="w-full border border-[#E8E7E7] p-2"
-            onChange={(e) => setcontextInput(e.target.value)}
-            value={contextInput}
+            onChange={(e) => setcontext(e.target.value)}
+            value={context}
           ></textarea>
           <input
             className="w-full bg-[#F5F9FF] h-40 border rounded-sm"
@@ -140,11 +140,7 @@ function QuestionAnswering({ filteredModel }: any) {
             onChange={(e) => setoutput(e.target.value)}
           />
         </div>
-        <div className="bg-[#F7FAFB] flex flex-col w-[324px] my-2 gap-2 p-4 rounded-lg h-[400px]">
-          {/* <h3 className="text-[#444445] font-medium text-base">
-            Instructions and Prompt Help
-          </h3> */}
-        </div>
+        <div className="bg-[#F7FAFB] flex flex-col w-[324px] my-2 gap-2 p-4 rounded-lg h-[400px]"></div>
       </div>
       <CustomButton
         title="Deployment History"

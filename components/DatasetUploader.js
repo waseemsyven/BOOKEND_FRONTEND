@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CustomButton, TaskDropdown } from ".";
 import { useSession } from "next-auth/react";
@@ -14,17 +14,31 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
   const [selectedTask, setSelectedTask] = useState("");
   const [DatasetName, setDatasetName] = useState("");
   const [datasetUrl, setDatasetUrl] = useState("");
+  const [secretId, setsecretId] = useState("");
+  const [secretKey, setsecretKey] = useState("");
   const [secret, setSecret] = useState("");
   const [uploadInProgress, setuploadInProgress] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isUrlValid, setisUrlValid] = useState(false);
 
   const handleOptionChange = (event) => {
     setcurrentTab(event.target.value);
   };
 
+  useEffect(() => {
+    setSecret(`${secretId},${secretKey}`);
+  }, [secretId, secretKey]);
+
   const platformName = currentTab == "Amazon S3" ? "aws" : "aws";
+
   const isUploadDisable =
-    !selectedTask || !DatasetName || !datasetUrl || !secret || uploadInProgress;
+    !selectedTask ||
+    !DatasetName ||
+    !isUrlValid ||
+    !secretId ||
+    !secretKey ||
+    uploadInProgress;
+
   const isDisabledForLocal = !selectedFile || !DatasetName || !selectedTask;
 
   const handleUpload = async (secret_id = null) => {
@@ -91,6 +105,24 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
       setuploadInProgress(false);
       console.error("Error fetching data:", error);
       throw error;
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setDatasetUrl(inputValue);
+    if (currentTab == "Amazon S3") {
+      if (inputValue.startsWith("s3://")) {
+        setisUrlValid(true);
+      } else {
+        setisUrlValid(false);
+      }
+    } else {
+      if (inputValue.startsWith("gcs://")) {
+        setisUrlValid(true);
+      } else {
+        setisUrlValid(false);
+      }
     }
   };
 
@@ -226,7 +258,7 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
                 Configure Dataset
               </div>
               <div className="flex justify-between w-[540px] mt-4">
-                <div className="input-secondary-container mb-6 ">
+                <div className="input-secondary-container mb-6">
                   <h3>Dataset Name</h3>
                   <input
                     type="text"
@@ -241,25 +273,57 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
                   setselectedTask={setSelectedTask}
                 />
               </div>
-              <div className="input-secondary-container mb-6">
+              <div className="input-secondary-container mb-6 w-full">
                 <h3>Dataset URL</h3>
                 <input
                   type="text"
-                  className="input-secondary max-w-[434px]"
+                  className="input-secondary min-w-full"
                   placeholder="Enter dataset url"
                   value={datasetUrl}
-                  onChange={(e) => setDatasetUrl(e.target.value)}
+                  onChange={handleInputChange}
                 ></input>
+                {isUrlValid && !!datasetUrl && (
+                  <Image
+                    src="/verified_icon.svg"
+                    alt="verified_icon"
+                    width={24}
+                    height={24}
+                    className="absolute right-3 top-[50%] translate-y-[-30%]"
+                    onClick={handleClose}
+                  />
+                )}
+                {!isUrlValid && !!datasetUrl && (
+                  <Image
+                    src="/error_icon.svg"
+                    alt="error_icon"
+                    width={24}
+                    height={24}
+                    className="absolute right-3 top-[50%] translate-y-[-30%]"
+                    onClick={handleClose}
+                  />
+                )}
               </div>
-              <div className="input-secondary-container mb-6">
-                <h3>Secret</h3>
-                <input
-                  type="text"
-                  className="input-secondary max-w-[280px]"
-                  placeholder="Enter secret key of dataset"
-                  value={secret}
-                  onChange={(e) => setSecret(e.target.value)}
-                ></input>
+              <div className="flex justify-between w-[540px]">
+                <div className="input-secondary-container mb-6">
+                  <h3>Secret ID</h3>
+                  <input
+                    type="text"
+                    className="input-secondary max-w-[280px]"
+                    placeholder="Enter secret Id"
+                    value={secretId}
+                    onChange={(e) => setsecretId(e.target.value)}
+                  ></input>
+                </div>
+                <div className="input-secondary-container mb-6">
+                  <h3>Secret Key</h3>
+                  <input
+                    type="text"
+                    className="input-secondary max-w-[240px]"
+                    placeholder="Enter secret key"
+                    value={secretKey}
+                    onChange={(e) => setsecretKey(e.target.value)}
+                  ></input>
+                </div>
               </div>
             </div>
           )}
@@ -322,52 +386,6 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
             />
           )}
         </div>
-
-        {/* <div className="flex justify-center items-center gap-4 h-[275px]">
-          {" "}
-          <input
-            name="datasetName"
-            value={uploadInfo.datasetName}
-            onChange={handleInputChange}
-            placeholder="Enter the Dataset Name here"
-            className="input_primary"
-          />{" "}
-          <input
-            name="datasetTask"
-            value={uploadInfo.datasetTask}
-            onChange={handleInputChange}
-            placeholder="Enter the Dataset Task here"
-            className="input_primary"
-          />
-        </div> */}
-        {/* <div className="flex justify-center items-center gap-4">
-          <div className=" bg-dark-blue mx-2 text-white font-medium text-[14px] flex justify-center items-center h-[28px] gap-2 hover-blue p-5 rounded-lg">
-            <input
-              type="file"
-              accept=".csv, .xlsx ,.json"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              ref={fileInputRef}
-            />
-            <button onClick={() => fileInputRef.current.click()}>
-              {(selectedFile && selectedFile.name) || "Upload New"}
-            </button>
-            <Image
-              src="/upload.svg"
-              alt="upload"
-              width={20}
-              height={20}
-              className="object-contain py-4"
-            />
-          </div>
-          <CustomButton
-            title="Confirm Upload"
-            containerStyles="bg-dark-blue mx-2 text-[14px] flex justify-center items-center h-[28px] gap-2 hover-blue p-5 rounded-lg"
-            textStyles="text-[15px] font-medium text-white"
-            isDisabled={!selectedFile || isUploading}
-            handleClick={() => handleUpload()}
-          />
-        </div> */}
       </div>
     </div>
   );

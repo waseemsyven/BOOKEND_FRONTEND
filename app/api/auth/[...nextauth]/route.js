@@ -54,8 +54,14 @@ const handler = NextAuth({
       return token;
     },
     session: async ({ session, token }) => {
-      console.log("Session callback executed", token.user);
       session.user = token.user;
+      if (!session.user.session_expiry) {
+        const exp = new Date(
+          new Date().getTime() + 12 * 60 * 60 * 1000
+        ).toISOString();
+        session.user.session_expiry = exp;
+      }
+
       return session;
     },
   },

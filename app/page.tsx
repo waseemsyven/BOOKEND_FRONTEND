@@ -1,20 +1,41 @@
 "use client";
-import { CustomButton } from "@/components";
-import Link from "next/link";
 import Image from "next/image";
-import HomeNavbar from "@/components/HomeNavbar";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { type DefaultSession } from "next-auth";
+
+type UserWithSessionExpiry = {
+  session_expiry?: string;
+} & DefaultSession["user"];
+
+declare module "next-auth" {
+  interface Session {
+    user: UserWithSessionExpiry;
+  }
+}
 
 export default function Home() {
   const router = useRouter();
-  const { data: session } = useSession({
+  const { status, data: sessionData } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/signin");
     },
   });
+
+  const { user: { session_expiry: sessionExpiry = null } = {} } =
+    sessionData || {};
+
+  useEffect(() => {
+    if (sessionExpiry) {
+      const isSiteSessionExpired =
+        sessionExpiry || new Date(sessionExpiry) < new Date();
+      if (status === "authenticated" && isSiteSessionExpired) {
+        signOut();
+      }
+    }
+  }, [sessionExpiry, status]);
 
   useEffect(() => {
     router.push("./dashboard");

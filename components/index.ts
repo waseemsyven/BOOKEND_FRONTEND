@@ -26,6 +26,7 @@ import DatasetsLogs from "./DatasetsLogs";
 import UndeployPopup from "./UndeployPopup";
 import LlamaPredict from './LlamaPredict'
 import TaskDropdown from "./TaskDropdown";
+import HelpAndSupport from "./HelpAndSupport";
 
 
 export {
@@ -56,7 +57,8 @@ export {
   DatasetsLogs,
   UndeployPopup,
   LlamaPredict,
-  TaskDropdown
+  TaskDropdown,
+  HelpAndSupport
   
 
 };

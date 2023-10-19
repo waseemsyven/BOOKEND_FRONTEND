@@ -157,6 +157,7 @@ function Page() {
         <DatasetUploader
           handleClose={handleClose}
           getDataSetsList={getDataSetsList}
+          getLogs={getModelLogs}
         />
       )}
     </div>

@@ -5,9 +5,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import { HelpAndSupport } from ".";
+import { useRouter } from "next/router";
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
+  const [showHelpandSupport, setshowHelpandSupport] = useState(false);
   const user: any = session?.user;
 
   const [isHovered, setIsHovered] = useState(false);
@@ -22,6 +25,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   const handleMouseLeave = () => {
     setIsHovered(false);
+  };
+
+  const handleCloseHelpAndSupport = () => {
+    setshowHelpandSupport(false);
   };
 
   const renderSidebarStyles = () => {
@@ -115,11 +122,11 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             </Link>
           </div>
           <div>
-            <Link
-              href="/"
+            <div
               className={`flex ${
                 isHovered ? "justify-start" : "justify-center"
-              } items-center my-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px]`}
+              } items-center my-6 px-2 w-full hover:bg-[#2B59C5] rounded-[8px] cursor-pointer`}
+              onClick={() => setshowHelpandSupport(true)}
             >
               <Image
                 src="/question.svg"
@@ -133,7 +140,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                   Help & Support
                 </h2>
               )}
-            </Link>
+            </div>
             <div className="w-full bg-[#F7FAFB] opacity-30 h-[1px]"></div>
             <div
               className={`flex ${
@@ -177,6 +184,10 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
       </div>
 
       <div className="flex flex-col w-full"> {children}</div>
+
+      {showHelpandSupport && (
+        <HelpAndSupport handleClose={handleCloseHelpAndSupport} />
+      )}
     </div>
   );
 };

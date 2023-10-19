@@ -5,7 +5,7 @@ import { CustomButton, TaskDropdown } from ".";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-function DatasetUploader({ handleClose, getDataSetsList }) {
+function DatasetUploader({ handleClose, getDataSetsList, getLogs }) {
   const { data: session } = useSession();
   const fileInputRef = useRef(null);
 
@@ -63,7 +63,9 @@ function DatasetUploader({ handleClose, getDataSetsList }) {
       });
 
       if (response.ok) {
+        getLogs();
         getDataSetsList();
+
         toast.success("uploaded successfully!", {
           position: "top-right",
           autoClose: 5000,

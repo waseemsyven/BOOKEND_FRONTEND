@@ -7,6 +7,7 @@ import DeployPopup from "./DeployPopup";
 import { usePathname, useRouter } from "next/navigation";
 
 function ModalStateCard({ model, getModelsList }: any) {
+  const isModelLlame = model?.base_model == "llama2-7b";
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -142,6 +143,7 @@ function ModalStateCard({ model, getModelsList }: any) {
                 containerStyles="bg-dark-blue rounded-[8px] py-[8px] px-6 gap-2 hover-blue"
                 textStyles="text-[15px] font-medium text-white"
                 rightIcon="/bolt_white.svg"
+                isDisabled={isModelLlame}
                 handleClick={() => setIsOpen(true)}
               />
             )}

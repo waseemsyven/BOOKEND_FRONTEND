@@ -120,7 +120,7 @@ function DatasetUploader({ handleClose, getDataSetsList, getLogs }) {
         setisUrlValid(false);
       }
     } else {
-      if (inputValue.startsWith("gcs://")) {
+      if (inputValue.startsWith("gs://")) {
         setisUrlValid(true);
       } else {
         setisUrlValid(false);

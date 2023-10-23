@@ -4,7 +4,7 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 });
 import dynamic from "next/dynamic";
 
-function BarChart({ type, data }: any) {
+function BarChart({ type, data, title }: any) {
   let color = "#92B2FC";
   if (type == "error_count") {
     color = "#D71E28";
@@ -14,6 +14,7 @@ function BarChart({ type, data }: any) {
   return (
     <>
       <Plot
+      className="border border-gray-200 rounded-lg shadow"
         data={[
           {
             ...data,
@@ -25,9 +26,9 @@ function BarChart({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
+          height:300,
+          title: title,
           hoverlabel: { bgcolor: "#FFF", bordercolor: color, align: "auto" },
-          width: 544,
-          height: 300,
           xaxis: {
             autorange: "reversed",
             showline: false,
@@ -46,7 +47,7 @@ function BarChart({ type, data }: any) {
             nticks: 4,
             showgrid: true,
           },
-          margin: { t: 24, l: 48, r: 32 },
+          margin: { t: 70, l: 48, r: 32 },
         }}
       />
       <style jsx>{`

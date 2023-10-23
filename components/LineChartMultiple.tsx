@@ -10,6 +10,7 @@ function LineChartMultiple({ type, data }: any) {
   return (
     <>
       <Plot
+      className="border border-gray-200 rounded-lg shadow"
         data={[
           {
             ...data[0],
@@ -39,15 +40,14 @@ function LineChartMultiple({ type, data }: any) {
         ]}
         config={{ displayModeBar: false, responsive: true }}
         layout={{
+          title:'Network Stats',
           hoverlabel: {
             bgcolor: "#FFF",
             bordercolor: "#406FDD",
             align: "auto",
           },
-          legend: { orientation: "h", y: 1.1, x: 0.6 },
-          autosize: false,
-          width: 544,
-          height: 300,
+          legend: { orientation: "h", y: -0.2, x: 0 },
+          autosize: true,
           xaxis: {
             autorange: "reversed",
             linewidth: 1,
@@ -63,7 +63,7 @@ function LineChartMultiple({ type, data }: any) {
             ticks: "outside",
             nticks: 4,
           },
-          margin: { t: 24, l: 64, r: 32 },
+          margin: { t: 70, l: 64, r: 32 },
         }}
       />
     </>

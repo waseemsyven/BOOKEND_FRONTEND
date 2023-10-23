@@ -6,7 +6,7 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 import dynamic from "next/dynamic";
 import NoDataContainer from "./NoDataContainer";
 
-function LineChart({ type, data }: any) {
+function LineChart({ type, data, title }: any) {
   let colors: any = {
     "cpu/utilization": "rgba(39,145,255, 0.8)",
     "memory/bytes_used": "rgba(10,67,215, 0.8)",
@@ -19,6 +19,7 @@ function LineChart({ type, data }: any) {
     <>
       {data && (
         <Plot
+        className="border border-gray-200 rounded-lg shadow"
           data={[
             {
               ...data,
@@ -34,9 +35,10 @@ function LineChart({ type, data }: any) {
           ]}
           config={{ displayModeBar: false, responsive: true }}
           layout={{
-            width: 544,
+            title: title,
+            font:{size: 12},
+            height:300,
             hovermode: "closest",
-            height: 300,
             hoverlabel: {
               bgcolor: "#FFF",
               bordercolor: "#406FDD",
@@ -49,8 +51,9 @@ function LineChart({ type, data }: any) {
               zeroline: false,
               autotick: true,
               ticks: "outside",
+              rangemode:"tozero",
               constrain: "range",
-              nticks: 3,
+              nticks: 4,
             },
             yaxis: {
               tickformat: type == "cpu/utilization" ? ".0%" : undefined,
@@ -64,7 +67,7 @@ function LineChart({ type, data }: any) {
                   : [Math.min(...data.y), Math.max(...data.y)],
               rangemode: "tozero",
             },
-            margin: { t: 24, l: 64, r: 32 },
+            margin: { t: 70, l: 64, r: 32 },
           }}
         />
       )}

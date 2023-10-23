@@ -118,15 +118,15 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
             { name: "error_count", label: "Error Count" },
           ].map((graph, key) => {
             return (
-              <div
-                key={key}
-                className="p-6 bg-white border border-gray-200 rounded-lg shadow"
-              >
-                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
-                  {graph.label}
-                </h5>
-                <BarChart type={graph.name} data={graphData[graph.name]} />
-              </div>
+              // <div
+              //   key={key}
+              //   className="p-6 bg-white border border-gray-200 rounded-lg shadow"
+              // >
+              //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
+              //     {graph.label}
+              //   </h5>
+                <BarChart type={graph.name} title={graph.label} data={graphData[graph.name]} />
+             // </div>
             );
           })}
 
@@ -141,23 +141,23 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
             // },
           ].map((graph, key) => {
             return (
-              <div
-                key={key}
-                className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow "
-              >
-                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
-                  {graph.label}
-                </h5>
-                <LineChart type={graph.name} data={graphData[graph.name]} />
-              </div>
+              // <div
+              //   key={key}
+              //   className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow "
+              // >
+              //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
+              //     {graph.label}
+              //   </h5>
+                <LineChart type={graph.name} title={graph.label} data={graphData[graph.name]} />
+              // </div>
             );
           })}
 
         {Object.keys(graphData).length > 0 && (
-          <div className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow">
-            <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
-              Network Stats
-            </h5>
+          // <div className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow">
+          //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
+          //     Network Stats
+          //   </h5>
             <LineChartMultiple
               type={"cpu"}
               data={[
@@ -165,7 +165,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 graphData["network/sent_bytes_count"],
               ]}
             />
-          </div>
+          // </div>
         )}
 
         {Object.keys(graphData).length > 0 &&
@@ -181,7 +181,7 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
                 key={key}
                 className="p-6 pb-0 bg-white border border-gray-200 rounded-lg shadow "
               >
-                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
+                <h5 className="mb-2 text-lg tracking-tight text-gray-900 text-center">
                   {graph.label}
                 </h5>
                 <div className="mb-10 pb-10">

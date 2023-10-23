@@ -11,7 +11,7 @@ import Embeddings from "./Embeddings";
 
 function ModelMetrics({ filteredModel }: any) {
   const [currentTab, setcurrentTab] = useState("overview");
-  const [selectedTime, setSelectedTime] = useState<any>(60);
+  const [selectedTime, setSelectedTime] = useState<any>(10);
   const isModelLlame = filteredModel?.base_model == "llama2-7b";
 
   return (

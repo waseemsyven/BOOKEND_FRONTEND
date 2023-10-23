@@ -125,8 +125,13 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
               //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
               //     {graph.label}
               //   </h5>
-                <BarChart type={graph.name} title={graph.label} data={graphData[graph.name]} />
-             // </div>
+              <BarChart
+                type={graph.name}
+                title={graph.label}
+                data={graphData[graph.name]}
+                key={key}
+              />
+              // </div>
             );
           })}
 
@@ -148,7 +153,12 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
               //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
               //     {graph.label}
               //   </h5>
-                <LineChart type={graph.name} title={graph.label} data={graphData[graph.name]} />
+              <LineChart
+                type={graph.name}
+                title={graph.label}
+                data={graphData[graph.name]}
+                key={key}
+              />
               // </div>
             );
           })}
@@ -158,13 +168,13 @@ function ModelOverview({ filteredModel, timeDuration }: any) {
           //   <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-900">
           //     Network Stats
           //   </h5>
-            <LineChartMultiple
-              type={"cpu"}
-              data={[
-                graphData["network/received_bytes_count"],
-                graphData["network/sent_bytes_count"],
-              ]}
-            />
+          <LineChartMultiple
+            type={"cpu"}
+            data={[
+              graphData["network/received_bytes_count"],
+              graphData["network/sent_bytes_count"],
+            ]}
+          />
           // </div>
         )}
 
